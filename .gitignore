@@ -1,0 +1,34 @@
+#ignore thumbnails created by windows
+Thumbs.db
+#Ignore files build by Visual Studio
+bin
+obj
+*.obj
+*.exe
+*.pdb
+*.user
+*.aps
+*.pch
+*.vspscc
+*_i.c
+*_p.c
+*.gen
+*.cdC
+*.cdj
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
+*.lib
+*.sbr
+*.cfs
+*.del
+*.gen
+*.pdf
+*.jpg
+*.jpeg
+*.png
