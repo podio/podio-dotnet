@@ -46,6 +46,7 @@ namespace PodioAPI.Exceptions
         public PodioAuthorizationException(int status, PodioError error)
             : base(status, error)
         {
+            
         }
     }
 

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using PodioAPI.Utils;
-using System.Net;
 using System.IO;
+using System.Linq;
+using System.Net;
+using System.Text;
 using System.Web;
-using PodioAPI.Services;
 using PodioAPI.Exceptions;
+using PodioAPI.Models.Request;
 using PodioAPI.Models.Response;
+using PodioAPI.Services;
+using PodioAPI.Utils;
 
 namespace PodioAPI
 {
@@ -18,7 +18,6 @@ namespace PodioAPI
         protected string ClientId { get; private set; }
         protected string ClientSecret { get; private set; }
         public PodioOAuth OAuth { get; private set; }
-        public bool Debug { get; private set; }
         public int RateLimit { get; private set; }
         public int RateLimitRemaining { get; private set; }
         protected string ApiUrl { get; private set; }
@@ -34,7 +33,6 @@ namespace PodioAPI
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
-            Debug = debug;
             ApiUrl = "https://api.podio.com:443";
         }
 
@@ -289,6 +287,7 @@ namespace PodioAPI
                         podioResponse.Body = sr.ReadToEnd();
                     }
                     podioResponse.Headers = responseHeaders;
+                    podioResponse.RequestUri = originalUrl;
                 }
             }
             catch (WebException e)
@@ -306,6 +305,7 @@ namespace PodioAPI
                         podioResponse.Body = sr.ReadToEnd();
                     }
                      podioResponse.Headers = responseHeaders;
+                     podioResponse.RequestUri = originalUrl;
                 }
             }
 
@@ -375,6 +375,26 @@ namespace PodioAPI
             return responseObject;
         }
 
+        /// <summary>
+        /// Transform options object to query parameteres
+        /// </summary>
+        /// <param name="url"></param>
+        /// <param name="options"></param>
+        /// <returns></returns>
+        internal string PrepareUrlWithOptions(string url, CreateUpdateOptions options)
+        {
+            string urlWithOptions = "";
+            List<string> parameters = new List<string>();
+            if (options.Silent)
+                parameters.Add("silent=1");
+            if (!options.Hook)
+                parameters.Add("hook=false");
+            if (options.Fields != null && options.Fields.Any())
+                parameters.Add(string.Join(",", options.Fields.Select(s => s).ToArray()));
+
+            urlWithOptions = parameters.Any() ? url + "?" + string.Join("&", parameters.ToArray()) : url;
+            return urlWithOptions;
+        }
 
         /// <summary>
         /// Write an object to request stream

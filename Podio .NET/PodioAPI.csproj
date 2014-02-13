@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\PodioException.cs" />
+    <Compile Include="Models\Request\CreateUpdateOptions.cs" />
     <Compile Include="Models\Response\PodioResponse.cs" />
     <Compile Include="Models\Response\Ref.cs" />
     <Compile Include="Podio.cs" />
@@ -57,9 +58,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Request\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
