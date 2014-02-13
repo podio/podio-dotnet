@@ -107,7 +107,7 @@ namespace PodioAPI.Exceptions
     }
 
     /// <summary>
-    /// Represent the error response by API
+    /// Represent the error response from API
     /// </summary>
     public class PodioError
     {
