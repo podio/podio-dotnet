@@ -1,15 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Net;
 using System.Text;
-using System.Web;
-using PodioAPI.Exceptions;
-using PodioAPI.Models.Request;
-using PodioAPI.Models.Response;
-using PodioAPI.Services;
+using System.Threading.Tasks;
 using PodioAPI.Utils;
+using System.Net;
+using System.IO;
+using System.Web;
+using PodioAPI.Services;
+using PodioAPI.Exceptions;
+using PodioAPI.Models.Response;
+using PodioAPI.Models.Request;
 
 namespace PodioAPI
 {
@@ -18,22 +19,31 @@ namespace PodioAPI
         protected string ClientId { get; private set; }
         protected string ClientSecret { get; private set; }
         public PodioOAuth OAuth { get; private set; }
+        private IAuthStore AuthStore { get; set; }
         public int RateLimit { get; private set; }
         public int RateLimitRemaining { get; private set; }
         protected string ApiUrl { get; private set; }
 
         /// <summary>
-        /// 
+        /// Initialize the podio class with Client ID and Client Secret
+        /// <para>Get the Client ID and Client Secret from here: https://developers.podio.com/api-key </para>
         /// </summary>
-        /// <param name="clientId"></param>
-        /// <param name="clientSecret"></param>
+        /// <param name="clientId">Client ID</param>
+        /// <param name="clientSecret">Client Secret</param>
         /// <param name="debug"></param>
         /// <param name="authStore"></param>
-        public Podio(string clientId, string clientSecret, bool debug = false)
+        public Podio(string clientId, string clientSecret, IAuthStore authStore = null)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
             ApiUrl = "https://api.podio.com:443";
+
+            if (authStore != null)
+                AuthStore = authStore;
+            else
+                AuthStore = new SessionStore();
+
+            OAuth = AuthStore.Get();
         }
 
         #region Authentication
@@ -120,6 +130,8 @@ namespace PodioAPI
             };
 
             PodioOAuth podioOAuth = (PodioOAuth)Post<PodioOAuth>("/oauth/token", data, options);
+            OAuth = podioOAuth;
+            AuthStore.Set(podioOAuth);
             return podioOAuth;
         }
 
@@ -145,20 +157,20 @@ namespace PodioAPI
 
         internal object Get<T>(string url, dynamic attributes = null, dynamic options = null)
         {
-            return Request<T>(RequestMethod.GET, url, attributes, options);   
+            return Request<T>(RequestMethod.GET, url, attributes, options);
         }
 
-        internal object Post<T>(string url, dynamic attributes, dynamic options = null)
+        internal object Post<T>(string url, dynamic attributes = null, dynamic options = null)
         {
             return Request<T>(RequestMethod.POST, url, attributes, options);
         }
 
-        internal object Put<T>(string url, dynamic attributes, dynamic options = null)
+        internal object Put<T>(string url, dynamic attributes = null, dynamic options = null)
         {
             return Request<T>(RequestMethod.PUT, url, attributes);
         }
 
-        internal object Delete<T>(string url, dynamic attributes, dynamic options)
+        internal object Delete<T>(string url, dynamic attributes = null, dynamic options = null)
         {
             return Request<T>(RequestMethod.DELETE, url, attributes);
         }
@@ -224,9 +236,9 @@ namespace PodioAPI
             }
 
             if (OAuth != null && !string.IsNullOrEmpty(OAuth.AccessToken))
-            {                
+            {
                 requestHeaders["Authorization"] = "OAuth2 " + OAuth.AccessToken;
-                if(options != null && options.ContainsKey("oauth_request") && options["oauth_request"])
+                if (options != null && options.ContainsKey("oauth_request") && options["oauth_request"])
                 {
                     requestHeaders.Remove("Authorization");
                 }
@@ -243,7 +255,7 @@ namespace PodioAPI
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = httpMethod;
-          
+
             PodioResponse podioResponse = new PodioResponse();
             Dictionary<string, string> responseHeaders = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             object responseObject = new object();
@@ -287,7 +299,6 @@ namespace PodioAPI
                         podioResponse.Body = sr.ReadToEnd();
                     }
                     podioResponse.Headers = responseHeaders;
-                    podioResponse.RequestUri = originalUrl;
                 }
             }
             catch (WebException e)
@@ -304,8 +315,7 @@ namespace PodioAPI
                     {
                         podioResponse.Body = sr.ReadToEnd();
                     }
-                     podioResponse.Headers = responseHeaders;
-                     podioResponse.RequestUri = originalUrl;
+                    podioResponse.Headers = responseHeaders;
                 }
             }
 
@@ -330,7 +340,7 @@ namespace PodioAPI
                     {
                         //Reset auth info
                         OAuth = new PodioOAuth();
-                        throw new PodioInvalidGrantException(podioResponse.Status,podioError);
+                        throw new PodioInvalidGrantException(podioResponse.Status, podioError);
                     }
                     else
                     {
@@ -425,12 +435,12 @@ namespace PodioAPI
             return String.Empty;
         }
 
-       /// <summary>
-       /// Add a file to request stream
-       /// </summary>
-       /// <param name="filePath">Physical path to file</param>
-       /// <param name="fileName">File Name</param>
-       /// <param name="request">HttpWebRequest object of which request stream file is added to</param>
+        /// <summary>
+        /// Add a file to request stream
+        /// </summary>
+        /// <param name="filePath">Physical path to file</param>
+        /// <param name="fileName">File Name</param>
+        /// <param name="request">HttpWebRequest object of which request stream file is added to</param>
         private static void AddFileToRequestStream(string filePath, string fileName, HttpWebRequest request)
         {
             byte[] inputData;
@@ -452,7 +462,7 @@ namespace PodioAPI
 
                 var data = File.ReadAllBytes(filePath);
                 var mimeType = MimeTypeMapping.GetMimeType(Path.GetExtension(filePath));
-               
+
                 ms.Write(Encoding.UTF8.GetBytes("\r\n"), 0, Encoding.UTF8.GetByteCount("\r\n"));
 
                 string header = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\";\r\nContent-Type: {3}\r\n\r\n",
@@ -462,7 +472,7 @@ namespace PodioAPI
                    mimeType);
                 ms.Write(Encoding.UTF8.GetBytes(header), 0, Encoding.UTF8.GetByteCount(header));
                 ms.Write(data, 0, data.Length);
-            
+
                 string footer = "\r\n--" + boundary + "--\r\n";
 
                 ms.Write(Encoding.UTF8.GetBytes(footer), 0, Encoding.UTF8.GetByteCount(footer));
@@ -495,7 +505,6 @@ namespace PodioAPI
         {
             get { return new ItemService(this); }
         }
-        
         #endregion
     }
     public enum RequestMethod

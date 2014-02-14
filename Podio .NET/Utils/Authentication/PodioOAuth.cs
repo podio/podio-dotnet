@@ -1,8 +1,12 @@
 ﻿using Newtonsoft.Json;
+using System;
 using PodioAPI.Models.Response;
 
 namespace PodioAPI.Utils
 {
+    /// <summary>
+    /// Authenication response form API
+    /// </summary>
     public class PodioOAuth
     {
         [JsonProperty(PropertyName = "access_token")]
@@ -10,6 +14,8 @@ namespace PodioAPI.Utils
 
         [JsonProperty(PropertyName = "refresh_token")]
         public string RefreshToken { get; private set; }
+
+        public DateTime TimeObtained { get; set; }
 
         [JsonProperty(PropertyName = "expires_in")]
         public string ExpiresIn { get; private set; }

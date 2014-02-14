@@ -51,7 +51,9 @@
     <Compile Include="Podio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ItemService.cs" />
+    <Compile Include="Utils\Authentication\IAuthStore.cs" />
     <Compile Include="Utils\Authentication\PodioOAuth.cs" />
+    <Compile Include="Utils\Authentication\SessionStore.cs" />
     <Compile Include="Utils\JSONSerialization\JSONSerializer.cs" />
     <Compile Include="Utils\MimeTypeMapping.cs" />
   </ItemGroup>

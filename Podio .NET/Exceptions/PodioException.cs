@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PodioAPI.Exceptions
-{   
+{
     public class PodioException : Exception
     {
         /// <summary>
@@ -46,7 +42,6 @@ namespace PodioAPI.Exceptions
         public PodioAuthorizationException(int status, PodioError error)
             : base(status, error)
         {
-            
         }
     }
 
