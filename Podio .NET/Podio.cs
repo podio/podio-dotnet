@@ -428,19 +428,39 @@ namespace PodioAPI
 
         internal static string EncodeAttributes(Dictionary<string, string> attributes)
         {
-            if (attributes.Any())
+            var encodedString = string.Empty;
+            if(attributes.Any())
             {
-                return string.Join("&", attributes.Select(x => x.Key != "" ? HttpUtility.UrlEncode(x.Key) + "=" + HttpUtility.UrlEncode(x.Value) : HttpUtility.UrlEncode(x.Value)).ToArray());
+                var parameters = new List<string>();
+                foreach (var item in attributes)
+                {
+                    if (item.Key != string.Empty && !string.IsNullOrEmpty(item.Value))
+                    {
+                        parameters.Add(HttpUtility.UrlEncode(item.Key)+"="+(HttpUtility.UrlEncode(item.Value)));
+                    }
+                }
+                if(parameters.Any())
+                    encodedString = string.Join("&", parameters.ToArray());
             }
-            return String.Empty;
+
+            return encodedString;
         }
 
-        /// <summary>
-        /// Add a file to request stream
-        /// </summary>
-        /// <param name="filePath">Physical path to file</param>
-        /// <param name="fileName">File Name</param>
-        /// <param name="request">HttpWebRequest object of which request stream file is added to</param>
+        internal static string ArrayToCSV(int[] array)
+        {
+            var csv = "";
+            if (array != null && array.Length > 0)
+                csv = string.Join(",", array);
+
+            return csv;
+        }
+
+       /// <summary>
+       /// Add a file to request stream
+       /// </summary>
+       /// <param name="filePath">Physical path to file</param>
+       /// <param name="fileName">File Name</param>
+       /// <param name="request">HttpWebRequest object of which request stream file is added to</param>
         private static void AddFileToRequestStream(string filePath, string fileName, HttpWebRequest request)
         {
             byte[] inputData;
