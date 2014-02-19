@@ -26,12 +26,13 @@ namespace PodioAPI
 
         /// <summary>
         /// Initialize the podio class with Client ID and Client Secret
-        /// <para>Get the Client ID and Client Secret from here: https://developers.podio.com/api-key </para>
+        /// <para>You can get the Client ID and Client Secret from here: https://developers.podio.com/api-key </para>
         /// </summary>
         /// <param name="clientId">Client ID</param>
         /// <param name="clientSecret">Client Secret</param>
-        /// <param name="debug"></param>
-        /// <param name="authStore"></param>
+        /// <param name="authStore">If you need to persist the access tokens for a longer period (in your database or whereever), Implement IAuthStore Interface and pass it in. 
+        /// <para>By default it takes the SessionStore Implementation (Store access token is session). 
+        /// You can use the IsAuthenticated method to check if there is a stored access token already present</para></param>
         public Podio(string clientId, string clientSecret, IAuthStore authStore = null)
         {
             ClientId = clientId;
@@ -46,136 +47,29 @@ namespace PodioAPI
             OAuth = AuthStore.Get();
         }
 
-        #region Authentication
-        /// <summary> Authenticate with username and password 
-        /// <para>Podio API Reference: https://developers.podio.com/authentication/username_password </para>
-        /// </summary> 
-        public PodioOAuth AuthenicateWithApp(int appId, string appToken)
-        {
-            var authRequest = new Dictionary<string, string>(){
-                   {"app_id", appId.ToString()},
-                   {"app_token", appToken}
-                };
-            return Authenticate("app", authRequest);
-        }
+        #region Request Helpers
 
-        /// <summary> Authenticate as an App (with AppId and AppSecret).
-        /// <para>suitable in situations where you only need data from a single app and do not wish authenticate as a specific user</para>
-        /// <para>Podio API Reference: https://developers.podio.com/authentication/username_password </para>
-        /// </summary> 
-        public PodioOAuth AuthenicateWithPassword(string username, string password)
-        {
-            var authRequest = new Dictionary<string, string>(){
-                   {"username", username},
-                   {"password", password}
-                };
-            return Authenticate("password", authRequest);
-        }
-
-        /// <summary> Authenticate with an authorization code
-        /// <para>Suitable in situations where you only need data from a single app and do not wish authenticate as a specific user</para>
-        /// <para>Podio API Reference: https://developers.podio.com/authentication/server_side </para>
-        /// </summary> 
-        public PodioOAuth AuthenicateWithAuthorizationCode(string authorizationCode, string redirectUri)
-        {
-            var authRequest = new Dictionary<string, string>(){
-                   {"code", authorizationCode},
-                   {"redirect_uri", redirectUri}
-                };
-            return Authenticate("authorization_code", authRequest);
-        }
-
-        /// <summary> Refresh the Access Token.
-        /// <para>When the access token expires, you can use this method to refresh your access, and gain another access_token</para>
-        /// <para>Podio API Reference: https://developers.podio.com/authentication </para>
-        /// </summary> 
-        public PodioOAuth RefreshAccessToken()
-        {
-            var authRequest = new Dictionary<string, string>(){
-                   {"refresh_token", OAuth.RefreshToken}
-                };
-            return Authenticate("refresh_token", authRequest);
-        }
-
-        private PodioOAuth Authenticate(string grantType, Dictionary<string, string> attributes)
-        {
-            Dictionary<string, string> data = new Dictionary<string, string>();
-            switch (grantType)
-            {
-                case "password":
-                    data["grant_type"] = "password";
-                    data["username"] = attributes["username"];
-                    data["password"] = attributes["password"];
-                    break;
-                case "refresh_token":
-                    data["grant_type"] = "refresh_token";
-                    data["refresh_token"] = attributes["refresh_token"];
-                    break;
-                case "authorization_code":
-                    data["grant_type"] = "authorization_code";
-                    data["code"] = attributes["code"];
-                    data["redirect_uri"] = "redirect_uri";
-                    break;
-                case "app":
-                    data["grant_type"] = "app";
-                    data["app_id"] = attributes["app_id"];
-                    data["app_token"] = attributes["app_token"];
-                    break;
-            }
-            data["client_id"] = ClientId;
-            data["client_secret"] = ClientSecret;
-
-            Dictionary<string, object> options = new Dictionary<string, object>(){
-                {"oauth_request",true}
-            };
-
-            PodioOAuth podioOAuth = (PodioOAuth)Post<PodioOAuth>("/oauth/token", data, options);
-            OAuth = podioOAuth;
-            AuthStore.Set(podioOAuth);
-            return podioOAuth;
-        }
-
-        /// <summary>
-        /// Constructs the full url to Podio's authorization endpoint (To get AuthorizationCode in server-side flow)
-        /// <para>The redirectUri must be on the same domain as the domain you specified when you applied for your API Key</para>
-        /// </summary>
-        /// <param name="redirectUri"></param>
-        /// <returns></returns>
-        public string GetAuthorizeUrl(string redirectUri)
-        {
-            string authorizeUrl = "https://podio.com/oauth/authorize?response_type=code&client_id={0}&redirect_uri={1}";
-            return String.Format(authorizeUrl, this.ClientId, HttpUtility.UrlEncode(redirectUri));
-        }
-
-        public bool IsAuthenticated()
-        {
-            return (this.OAuth != null && !string.IsNullOrEmpty(this.OAuth.AccessToken));
-        }
-        #endregion
-
-        #region Request Helper
-
-        internal object Get<T>(string url, dynamic attributes = null, dynamic options = null)
+        internal T Get<T>(string url, dynamic attributes = null, dynamic options = null) where T : new()
         {
             return Request<T>(RequestMethod.GET, url, attributes, options);
         }
 
-        internal object Post<T>(string url, dynamic attributes = null, dynamic options = null)
+        internal T Post<T>(string url, dynamic attributes = null, dynamic options = null) where T : new()
         {
             return Request<T>(RequestMethod.POST, url, attributes, options);
         }
 
-        internal object Put<T>(string url, dynamic attributes = null, dynamic options = null)
+        internal T Put<T>(string url, dynamic attributes = null, dynamic options = null) where T : new()
         {
             return Request<T>(RequestMethod.PUT, url, attributes);
         }
 
-        internal object Delete<T>(string url, dynamic attributes = null, dynamic options = null)
+        internal T Delete<T>(string url, dynamic attributes = null, dynamic options = null) where T : new()
         {
             return Request<T>(RequestMethod.DELETE, url, attributes);
         }
 
-        private object Request<T>(RequestMethod requestMethod, string url, dynamic attributes, dynamic options = null)
+        private T Request<T>(RequestMethod requestMethod, string url, dynamic attributes, dynamic options = null) where T: new()
         {
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
             var data = new List<string>();
@@ -258,7 +152,7 @@ namespace PodioAPI
 
             PodioResponse podioResponse = new PodioResponse();
             Dictionary<string, string> responseHeaders = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
-            object responseObject = new object();
+            var responseObject = new T();
 
             if (requestHeaders.Any())
             {
@@ -326,7 +220,7 @@ namespace PodioAPI
 
             PodioError podioError = new PodioError();
             if (podioResponse.Status >= 400)
-                podioError = (PodioError)JSONSerializer.Deserilaize<PodioError>(podioResponse.Body);
+                podioError = JSONSerializer.Deserilaize<PodioError>(podioResponse.Body);
 
             switch (podioResponse.Status)
             {
@@ -513,6 +407,124 @@ namespace PodioAPI
 
         }
 
+        #endregion
+
+        #region Authentication
+        /// <summary> Authenticate with username and password 
+        /// <para>Podio API Reference: https://developers.podio.com/authentication/username_password </para>
+        /// </summary> 
+        public PodioOAuth AuthenicateWithApp(int appId, string appToken)
+        {
+            var authRequest = new Dictionary<string, string>(){
+                   {"app_id", appId.ToString()},
+                   {"app_token", appToken}
+                };
+            return Authenticate("app", authRequest);
+        }
+
+        /// <summary> Authenticate as an App (with AppId and AppSecret).
+        /// <para>suitable in situations where you only need data from a single app and do not wish authenticate as a specific user</para>
+        /// <para>Podio API Reference: https://developers.podio.com/authentication/username_password </para>
+        /// </summary> 
+        public PodioOAuth AuthenicateWithPassword(string username, string password)
+        {
+            var authRequest = new Dictionary<string, string>(){
+                   {"username", username},
+                   {"password", password}
+                };
+            return Authenticate("password", authRequest);
+        }
+
+        /// <summary> Authenticate with an authorization code
+        /// <para>Suitable in situations where you only need data from a single app and do not wish authenticate as a specific user</para>
+        /// <para>Podio API Reference: https://developers.podio.com/authentication/server_side </para>
+        /// </summary> 
+        public PodioOAuth AuthenicateWithAuthorizationCode(string authorizationCode, string redirectUri)
+        {
+            var authRequest = new Dictionary<string, string>(){
+                   {"code", authorizationCode},
+                   {"redirect_uri", redirectUri}
+                };
+            return Authenticate("authorization_code", authRequest);
+        }
+
+        /// <summary> Refresh the Access Token.
+        /// <para>When the access token expires, you can use this method to refresh your access, and gain another access_token</para>
+        /// <para>Podio API Reference: https://developers.podio.com/authentication </para>
+        /// </summary> 
+        public PodioOAuth RefreshAccessToken()
+        {
+            var authRequest = new Dictionary<string, string>(){
+                   {"refresh_token", OAuth.RefreshToken}
+                };
+            return Authenticate("refresh_token", authRequest);
+        }
+
+        private PodioOAuth Authenticate(string grantType, Dictionary<string, string> attributes)
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            switch (grantType)
+            {
+                case "password":
+                    data["grant_type"] = "password";
+                    data["username"] = attributes["username"];
+                    data["password"] = attributes["password"];
+                    break;
+                case "refresh_token":
+                    data["grant_type"] = "refresh_token";
+                    data["refresh_token"] = attributes["refresh_token"];
+                    break;
+                case "authorization_code":
+                    data["grant_type"] = "authorization_code";
+                    data["code"] = attributes["code"];
+                    data["redirect_uri"] = "redirect_uri";
+                    break;
+                case "app":
+                    data["grant_type"] = "app";
+                    data["app_id"] = attributes["app_id"];
+                    data["app_token"] = attributes["app_token"];
+                    break;
+            }
+            data["client_id"] = ClientId;
+            data["client_secret"] = ClientSecret;
+
+            Dictionary<string, object> options = new Dictionary<string, object>(){
+                {"oauth_request",true}
+            };
+
+            PodioOAuth podioOAuth = (PodioOAuth)Post<PodioOAuth>("/oauth/token", data, options);
+            OAuth = podioOAuth;
+            AuthStore.Set(podioOAuth);
+            return podioOAuth;
+        }
+
+        /// <summary>
+        /// Constructs the full url to Podio's authorization endpoint (To get AuthorizationCode in server-side flow)
+        /// </summary>
+        /// <param name="redirectUri">The redirectUri must be on the same domain as the domain you specified when you applied for your API Key</param>
+        /// <returns></returns>
+        public string GetAuthorizeUrl(string redirectUri)
+        {
+            string authorizeUrl = "https://podio.com/oauth/authorize?response_type=code&client_id={0}&redirect_uri={1}";
+            return String.Format(authorizeUrl, this.ClientId, HttpUtility.UrlEncode(redirectUri));
+        }
+
+        /// <summary>
+        /// Check if there is a stored access token already present in AuthStore.
+        /// </summary>
+        /// <returns></returns>
+        public bool IsAuthenticated()
+        {
+            return (this.OAuth != null && !string.IsNullOrEmpty(this.OAuth.AccessToken));
+        }
+
+        /// <summary>
+        /// Clear access token from AuthStore
+        /// </summary>
+        public void ClearAuth()
+        {
+            AuthStore.Distroy();
+        }
         #endregion
 
         #region Services

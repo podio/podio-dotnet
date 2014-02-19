@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\PodioException.cs" />
     <Compile Include="Models\Request\CreateUpdateOptions.cs" />
+    <Compile Include="Models\Response\Item.cs" />
     <Compile Include="Models\Response\PodioResponse.cs" />
     <Compile Include="Models\Response\Ref.cs" />
     <Compile Include="Podio.cs" />
