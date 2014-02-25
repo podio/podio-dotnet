@@ -4,10 +4,10 @@ namespace PodioAPI.Models.Response
 {
     public partial class Ref
     {
-        [JsonProperty(PropertyName = "type")]
+        [JsonProperty("type")]
         public string Type { get; set; }
 
-        [JsonProperty(PropertyName = "id")]
+        [JsonProperty("id")]
         public int? Id { get; set; }
     }
 }
