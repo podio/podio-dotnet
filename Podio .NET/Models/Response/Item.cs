@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace PodioAPI.Models.Response
@@ -119,17 +118,5 @@ namespace PodioAPI.Models.Response
 
         [JsonProperty("task_count")]
         public int TaskCount { get; set; }
-
-        public T Field<T>(string externalId) where T: new()
-        {
-            var fieldToConvert = this.Fields.Where(x => x.ExternalId == externalId);
-            if (fieldToConvert.Any())
-            {
-                var field = fieldToConvert.First();
-                var f = field.Values.First();
-                return f.ToObject<T>();
-            }
-            return default(T);
-        }
     }
 }

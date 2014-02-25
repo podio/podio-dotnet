@@ -18,21 +18,13 @@ namespace PodioAPI.Models.Response
         [JsonProperty("label")]
         public string Label { get; set; }
 
-        //[JsonProperty("values")]
-        //public List<Dictionary<string,object>> Values { get; set; }
-
         [JsonProperty("values")]
-        public List<JObject> Values { get; private set; }
+        public List<Dictionary<string,object>> Values { get; set; }
 
         [JsonProperty("config")]
         public FieldConfig Config { get; set; }
 
         [JsonProperty("status")]
         public string Status { get; set; }
-
-        public void SetValue(object value){
-            var oo = (Newtonsoft.Json.Linq.JObject)value;
-            Values.Add(oo);
-        }
     }
 }
