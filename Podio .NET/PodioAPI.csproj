@@ -100,6 +100,7 @@
     <Compile Include="Models\Response\Via.cs" />
     <Compile Include="Podio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\ItemService.cs" />
     <Compile Include="Utils\Authentication\IAuthStore.cs" />
     <Compile Include="Utils\Authentication\PodioOAuth.cs" />
