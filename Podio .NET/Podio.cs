@@ -302,8 +302,7 @@ namespace PodioAPI
         }
 
         /// <summary>
-        /// Write an object to request stream
-        /// <para>If object is string write it directly. else serialize the object to JSON and writes to current request stream </para>
+        /// Write an object to request stream.
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="request">HttpWebRequest object of which request to write</param>
