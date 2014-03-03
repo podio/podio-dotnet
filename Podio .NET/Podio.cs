@@ -49,9 +49,9 @@ namespace PodioAPI
 
         #region Request Helpers
 
-        internal T Get<T>(string url, dynamic attributes = null, dynamic options = null) where T : new()
+        internal T Get<T>(string url, Dictionary<string, string> attributes = null, dynamic options = null) where T : new()
         {
-            return Request<T>(RequestMethod.GET, url, attributes, options);
+            return Request<T>(RequestMethod.GET, url, attributes, options);   
         }
 
         internal T Post<T>(string url, dynamic attributes = null, dynamic options = null) where T : new()
@@ -69,7 +69,7 @@ namespace PodioAPI
             return Request<T>(RequestMethod.DELETE, url, attributes);
         }
 
-        private T Request<T>(RequestMethod requestMethod, string url, dynamic attributes, dynamic options = null) where T: new()
+        private T Request<T>(RequestMethod requestMethod, string url, dynamic attributes, dynamic options = null) where T : new()
         {
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
             var data = new List<string>();
@@ -118,21 +118,21 @@ namespace PodioAPI
                     }
                     else
                     {
-                        data.Add("post");
                         requestHeaders["Content-type"] = "application/json";
+                        data.Add("post");
                     }
                     break;
                 case "PUT":
                     httpMethod = "PUT";
-                    data.Add("put");
                     requestHeaders["Content-type"] = "application/json";
+                    data.Add("put");
                     break;
             }
 
             if (OAuth != null && !string.IsNullOrEmpty(OAuth.AccessToken))
-            {
+            {                
                 requestHeaders["Authorization"] = "OAuth2 " + OAuth.AccessToken;
-                if (options != null && options.ContainsKey("oauth_request") && options["oauth_request"])
+                if(options != null && options.ContainsKey("oauth_request") && options["oauth_request"])
                 {
                     requestHeaders.Remove("Authorization");
                 }
@@ -149,7 +149,7 @@ namespace PodioAPI
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = httpMethod;
-
+          
             PodioResponse podioResponse = new PodioResponse();
             Dictionary<string, string> responseHeaders = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             var responseObject = new T();
@@ -191,7 +191,7 @@ namespace PodioAPI
                     using (StreamReader sr = new StreamReader(response.GetResponseStream()))
                     {
                         podioResponse.Body = sr.ReadToEnd();
-                    }
+                    }                
                     podioResponse.Headers = responseHeaders;
                 }
             }
@@ -209,7 +209,7 @@ namespace PodioAPI
                     {
                         podioResponse.Body = sr.ReadToEnd();
                     }
-                    podioResponse.Headers = responseHeaders;
+                    podioResponse.Headers = responseHeaders;                    
                 }
             }
 
@@ -226,15 +226,17 @@ namespace PodioAPI
             {
                 case 200:
                 case 201:
+                    responseObject = JSONSerializer.Deserilaize<T>(podioResponse.Body);                   
+                    break;
                 case 204:
-                    responseObject = JSONSerializer.Deserilaize<T>(podioResponse.Body);
+                    responseObject = default(T);
                     break;
                 case 400:
                     if (podioError.Error == "invalid_grant")
                     {
                         //Reset auth info
                         OAuth = new PodioOAuth();
-                        throw new PodioInvalidGrantException(podioResponse.Status, podioError);
+                        throw new PodioInvalidGrantException(podioResponse.Status,podioError);
                     }
                     else
                     {
@@ -320,6 +322,11 @@ namespace PodioAPI
             }
         }
 
+        /// <summary>
+        /// Convert dictionay to to query string
+        /// </summary>
+        /// <param name="attributes"></param>
+        /// <returns></returns>
         internal static string EncodeAttributes(Dictionary<string, string> attributes)
         {
             var encodedString = string.Empty;
@@ -376,7 +383,7 @@ namespace PodioAPI
 
                 var data = File.ReadAllBytes(filePath);
                 var mimeType = MimeTypeMapping.GetMimeType(Path.GetExtension(filePath));
-
+               
                 ms.Write(Encoding.UTF8.GetBytes("\r\n"), 0, Encoding.UTF8.GetByteCount("\r\n"));
 
                 string header = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\";\r\nContent-Type: {3}\r\n\r\n",
@@ -386,7 +393,7 @@ namespace PodioAPI
                    mimeType);
                 ms.Write(Encoding.UTF8.GetBytes(header), 0, Encoding.UTF8.GetByteCount(header));
                 ms.Write(data, 0, data.Length);
-
+            
                 string footer = "\r\n--" + boundary + "--\r\n";
 
                 ms.Write(Encoding.UTF8.GetBytes(footer), 0, Encoding.UTF8.GetByteCount(footer));
@@ -417,7 +424,8 @@ namespace PodioAPI
         {
             var authRequest = new Dictionary<string, string>(){
                    {"app_id", appId.ToString()},
-                   {"app_token", appToken}
+                   {"app_token", appToken},
+                   {"grant_type", "app"}
                 };
             return Authenticate("app", authRequest);
         }
@@ -430,7 +438,8 @@ namespace PodioAPI
         {
             var authRequest = new Dictionary<string, string>(){
                    {"username", username},
-                   {"password", password}
+                   {"password", password},
+                   {"grant_type", "password"}
                 };
             return Authenticate("password", authRequest);
         }
@@ -443,7 +452,8 @@ namespace PodioAPI
         {
             var authRequest = new Dictionary<string, string>(){
                    {"code", authorizationCode},
-                   {"redirect_uri", redirectUri}
+                   {"redirect_uri", redirectUri},
+                   {"grant_type", "authorization_code"}
                 };
             return Authenticate("authorization_code", authRequest);
         }
@@ -455,44 +465,22 @@ namespace PodioAPI
         public PodioOAuth RefreshAccessToken()
         {
             var authRequest = new Dictionary<string, string>(){
-                   {"refresh_token", OAuth.RefreshToken}
+                   {"refresh_token", OAuth.RefreshToken},
+                   {"grant_type", "refresh_token"}
                 };
             return Authenticate("refresh_token", authRequest);
         }
 
         private PodioOAuth Authenticate(string grantType, Dictionary<string, string> attributes)
         {
-            Dictionary<string, string> data = new Dictionary<string, string>();
-            switch (grantType)
-            {
-                case "password":
-                    data["grant_type"] = "password";
-                    data["username"] = attributes["username"];
-                    data["password"] = attributes["password"];
-                    break;
-                case "refresh_token":
-                    data["grant_type"] = "refresh_token";
-                    data["refresh_token"] = attributes["refresh_token"];
-                    break;
-                case "authorization_code":
-                    data["grant_type"] = "authorization_code";
-                    data["code"] = attributes["code"];
-                    data["redirect_uri"] = "redirect_uri";
-                    break;
-                case "app":
-                    data["grant_type"] = "app";
-                    data["app_id"] = attributes["app_id"];
-                    data["app_token"] = attributes["app_token"];
-                    break;
-            }
-            data["client_id"] = ClientId;
-            data["client_secret"] = ClientSecret;
+            attributes["client_id"] = ClientId;
+            attributes["client_secret"] = ClientSecret;
 
             Dictionary<string, object> options = new Dictionary<string, object>(){
                 {"oauth_request",true}
             };
 
-            PodioOAuth podioOAuth = (PodioOAuth)Post<PodioOAuth>("/oauth/token", data, options);
+            PodioOAuth podioOAuth = Post<PodioOAuth>("/oauth/token", attributes, options);
             OAuth = podioOAuth;
             AuthStore.Set(podioOAuth);
             return podioOAuth;
@@ -531,11 +519,20 @@ namespace PodioAPI
 
         /// <summary>
         /// Provies all API methods in Item Area
-        /// <para>Podio API documentation: https://developers.podio.com/doc/items </para>
+        /// <para>Podio API Reference: https://developers.podio.com/doc/items </para>
         /// </summary>
         public ItemService ItemService
         {
             get { return new ItemService(this); }
+        }
+
+        /// <summary>
+        /// Provies all API methods in Files Area
+        /// <para>Podio API Reference: https://developers.podio.com/doc/files </para>
+        /// </summary>
+        public FileService FileService
+        {
+            get { return new FileService(this); }
         }
         #endregion
     }

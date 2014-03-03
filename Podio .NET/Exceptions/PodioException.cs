@@ -2,7 +2,7 @@
 using System;
 
 namespace PodioAPI.Exceptions
-{
+{   
     public class PodioException : Exception
     {
         /// <summary>
