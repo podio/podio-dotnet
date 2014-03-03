@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Utils
 {
@@ -30,7 +31,7 @@ namespace PodioAPI.Utils
             var propertyMap = new Dictionary<string, PropertyInfo>();
             foreach (var property in someObject.GetType().GetProperties())
             {
-                var name = ((JsonProperty[])property.GetCustomAttributes(typeof(JsonProperty), false)).First().PropertyName;
+                var name = ((JsonPropertyAttribute[])property.GetCustomAttributes(typeof(JsonPropertyAttribute), false)).First().PropertyName;
                 propertyMap[name] = property;
             }
             //((DataMemberAttribute[])someObject.GetType().GetProperties().First().GetCustomAttributes(typeof(DataMemberAttribute), false)).First().Name
