@@ -1,10 +1,12 @@
-﻿using System.Web;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace PodioAPI.Utils
 {
-    /// <summary>
-    /// Store PodioOAuth info in session
-    /// </summary>
     class SessionStore: IAuthStore
     {
         public PodioOAuth Get()

@@ -13,21 +13,21 @@ namespace PodioAPI.Models.Response
         public int? Id { get; set; }
 
         [JsonProperty(PropertyName = "title")]
-        public string Title { get; set; }
+        public string Title { get; private set; }
 
         [JsonProperty(PropertyName = "link")]
-        public string Link { get; set; }
+        public string Link { get; private set; }
 
         [JsonProperty(PropertyName = "data")]
-        public Dictionary<string, object> Data { get; set; }
+        public Dictionary<string, object> Data { get; private set; }
 
         [JsonProperty(PropertyName = "created_on")]
-        public DateTime? CreatedOn { get; set; }
+        public DateTime? CreatedOn { get; private set; }
 
         [JsonProperty(PropertyName = "created_by")]
-        public ByLine CreatedBy { get; set; }
+        public ByLine CreatedBy { get; private set; }
 
         [JsonProperty(PropertyName = "created_via")]
-        public Via CreatedVia { get; set; }
+        public Via CreatedVia { get; private set; }
     }
 }

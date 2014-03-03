@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace PodioAPI.Models.Response
 {
@@ -37,5 +38,8 @@ namespace PodioAPI.Models.Response
 
         [JsonProperty("embed_width")]
         public int? EmbedWidth { get; set; }
+
+        [JsonProperty("files")]
+        public List<FileAttachment> Files { get; set; }
     }
 }

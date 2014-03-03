@@ -13,7 +13,7 @@
         /// </summary>
         /// <param name="podioOAuth"></param>
         void Set(PodioOAuth podioOAuth);
-       
+
         /// <summary>
         /// Remove PodioOAuth from store
         /// </summary>

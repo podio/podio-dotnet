@@ -24,7 +24,7 @@ namespace PodioAPI.Models.Response
     public class AppValues
     {
         [JsonProperty(PropertyName = "fields")]
-        public List<ApplicationField> Fields { get; set; }
+        public List<ItemField> Fields { get; set; }
 
         [JsonProperty(PropertyName = "created_bys")]
         public List<ByLine> CreatedBys { get; set; }

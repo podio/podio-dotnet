@@ -11,8 +11,9 @@ namespace PodioAPI.Utils
         private static IDictionary<string, string> _mappings = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase) {
 
         #region Big freaking list of mime types
-        // combination of values from Windows Registry and 
+        // combination of values from Windows 7 Registry and 
         // from C:\Windows\System32\inetsrv\config\applicationHost.config
+        // some added, including .7z and .dat
         {".323", "text/h323"},
         {".3g2", "video/3gpp2"},
         {".3gp", "video/3gpp"},

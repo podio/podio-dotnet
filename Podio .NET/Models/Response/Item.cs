@@ -64,7 +64,7 @@ namespace PodioAPI.Models.Response
         public Dictionary<string, object> Participants { get; set; }
 
         [JsonProperty("tags")]
-        public string[] Tags { get; set; }
+        public List<string> Tags { get; set; }
 
         [JsonProperty("refs")]
         public List<Dictionary<string, object>> Refs { get; set; }
@@ -106,6 +106,9 @@ namespace PodioAPI.Models.Response
         [JsonProperty("files")]
         public List<FileAttachment> Files { get; set; }
 
+        [JsonProperty("file_ids")]
+        public List<int> FileIds { get; set; }
+
         [JsonProperty("tasks")]
         public List<Task> Tasks { get; set; }
 
@@ -118,5 +121,46 @@ namespace PodioAPI.Models.Response
 
         [JsonProperty("task_count")]
         public int TaskCount { get; set; }
+
+        public Item()
+        {
+            this.Fields = new List<ItemField>();
+            this.FileIds = new List<int>();
+            this.Tags = new List<string>();
+        }
+
+        public T Field<T>(string externalId)
+            where T : ItemField, new()
+        {
+            var genericField = this.Fields.Find(field => field.ExternalId == externalId);
+            return fieldInstance<T>(genericField, externalId);
+        }
+
+        public T Field<T>(int fieldId)
+            where T : ItemField, new()
+        {
+            var genericField = this.Fields.Find(field => field.FieldId == fieldId);
+            return fieldInstance<T>(genericField, null, fieldId);
+        }
+
+        protected T fieldInstance<T>(ItemField genericField, string externalId = null, int? fieldId = null)
+                    where T : ItemField, new()
+        {
+            T specificField = new T();
+            if (genericField != null)
+            {
+                foreach (var property in genericField.GetType().GetProperties())
+                {
+                    specificField.GetType().GetProperty(property.Name).SetValue(specificField, property.GetValue(genericField, null), null);
+                }
+            }
+            else
+            {
+                specificField.ExternalId = externalId;
+                specificField.FieldId = fieldId;
+                this.Fields.Add(specificField);
+            }
+            return specificField;
+        }
     }
 }

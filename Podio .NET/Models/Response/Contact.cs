@@ -9,7 +9,7 @@ namespace PodioAPI.Models.Response
         public int ProfileId { get; set; }
 
         [JsonProperty("user_id")]
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -66,7 +66,7 @@ namespace PodioAPI.Models.Response
         public String[] Url { get; set; }
 
         [JsonProperty("skill")]
-        public string Skill { get; set; }
+        public String[] Skill { get; set; }
 
         [JsonProperty("linkedin")]
         public string LinkedIn { get; set; }

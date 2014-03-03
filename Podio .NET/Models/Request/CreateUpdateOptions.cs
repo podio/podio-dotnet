@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace PodioAPI.Models.Request
 {
@@ -12,9 +16,7 @@ namespace PodioAPI.Models.Request
         /// True if hooks should be executed for the change, false otherwise. Default value: true
         /// </summary>
         public bool Hook { get; set; }
-        /// <summary>
-        /// TODO: Fire the hook ?
-        /// </summary>
+     
         public List<string> Fields { get; set; }
 
         public CreateUpdateOptions(bool silent = false, bool hook = true, List<string> fields = null)
