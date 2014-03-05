@@ -23,8 +23,8 @@ namespace PodioAPI.Services
             var url = "/file/v2/";
             var attributes = new
             {
-              filePath = filePath,
-              fileName = fileName
+                filePath = filePath,
+                fileName = fileName
             };
             Dictionary<string, object> options = new Dictionary<string, object>() { { "upload", true } };
             return _podio.Post<FileAttachment>(url, attributes, options);
@@ -104,7 +104,7 @@ namespace PodioAPI.Services
         /// <param name="fileId"></param>
         public void DeleteFile(int fileId)
         {
-            var url = string.Format("/file/{file_id}", fileId);
+            var url = string.Format("/file/{0}", fileId);
             _podio.Delete<dynamic>(url);
         }
 
