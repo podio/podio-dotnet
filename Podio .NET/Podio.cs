@@ -182,7 +182,6 @@ namespace PodioAPI
                 using (var response = request.GetResponse())
                 {
                     podioResponse.Status = (int)((HttpWebResponse)response).StatusCode;
-                    var r = new FileResponse();
                     foreach (var key in response.Headers.AllKeys)
                     {
                         responseHeaders.Add(key, response.Headers.Get(key));
@@ -190,18 +189,14 @@ namespace PodioAPI
 
                     if (options.ContainsKey("file_download"))
                     {
-                        podioResponse.Body = response.GetResponseStream();
-                        if (options.ContainsKey("file_download"))
+                        using (var memoryStream = new MemoryStream())
                         {
-                            using (var memoryStream = new MemoryStream())
-                            {
-                                var fileResponse = new FileResponse();
-                                podioResponse.Body.CopyTo(memoryStream);
-                                fileResponse.FileContents = memoryStream.ToArray();
-                                fileResponse.ContentType = response.ContentType;
-                                fileResponse.ContentLength = response.ContentLength;
-                                return fileResponse.ChangeType<T>();
-                            }
+                            var fileResponse = new FileResponse();
+                            response.GetResponseStream().CopyTo(memoryStream);
+                            fileResponse.FileContents = memoryStream.ToArray();
+                            fileResponse.ContentType = response.ContentType;
+                            fileResponse.ContentLength = response.ContentLength;
+                            return fileResponse.ChangeType<T>();
                         }
                     }
                     else
