@@ -4,6 +4,7 @@ using PodioAPI.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using System.IO;
 
 namespace PodioAPI.Services
 {
@@ -165,8 +166,8 @@ namespace PodioAPI.Services
                 {"mark_as_viewed", markAsViewdValue}
             };
             var url = string.Format("/item/{0}", itemId);
-            return _podio.Get<Item>(url, attributes);     
-      
+            return _podio.Get<Item>(url, attributes);
+
         }
 
         /// <summary>
@@ -186,7 +187,7 @@ namespace PodioAPI.Services
             var url = string.Format("/item/{0}/basic", itemId);
             return _podio.Get<Item>(url, attributes);
         }
-       
+
         /// <summary> Returns the full item by its app_item_id, which is a unique ID for items per app.
         /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-by-app-item-id-66506688 </para>
         /// </summary> 
@@ -209,7 +210,7 @@ namespace PodioAPI.Services
             return (PodioCollection<Item>)_podio.Get<PodioCollection<Item>>(url);
         }
 
-       
+
         /// <summary>
         /// Filters the items and returns the matching items.
         /// <para>Podio API Reference: https://developers.podio.com/doc/items/filter-items-4496747 </para>
@@ -226,6 +227,7 @@ namespace PodioAPI.Services
 
         /// <summary>
         /// Filters the items and returns the matching items.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/items/filter-items-4496747 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="limit">The maximum number of items to return, defaults to 30</param>
@@ -289,6 +291,43 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
+        /// Returns the items in the Xlsx format.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-items-as-xlsx-63233 </para>
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="filters">The key with corresponding value to use for filtering the results</param>
+        /// <param name="limit">The maximum number of items to return Default value: 20</param>
+        /// <param name="offset">The offset from the start of the items returned</param>
+        /// <param name="deletedColumns">Wether to include deleted columns. Default value: false</param>
+        /// <param name="remember">If true the given view is remembered for the user, otherwise it is not. Default value: true</param>
+        /// <param name="sortBy">How the items should be sorted</param>
+        /// <param name="sortDesc">Use true to sort descending, use false to sort ascending Default value: true</param>
+        /// <param name="viewId">Applies the given view, if set to 0, the last used view will be used</param>
+        /// <returns></returns>
+        public FileResponse GetItemsAsXlsx(int appId, Dictionary<string, string> filters, int limit = 20, int offset = 0, bool deletedColumns = false, string sortBy = null, bool sortDesc = true, int? viewId = null)
+        {
+            var url = string.Format("/item/app/{0}/xlsx/", appId);
+            var attributes = new Dictionary<string, string>();
+            var parameters = new Dictionary<string, string>()
+            {
+                {"limit", limit.ToString()},
+                {"offset", offset.ToString()},
+                {"deleted_columns", deletedColumns.ToString()},
+                {"sort_desc", sortDesc.ToString()},
+                {"view_id", viewId.HasValue ? viewId.ToString() : null},
+                {"sort_by", sortBy}
+            };
+            var options = new Dictionary<string, bool>()
+            {
+                {"file_download", true}
+            };
+            if (filters.Any())
+                attributes = parameters.Concat(filters).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+
+            return _podio.Get<FileResponse>(url, attributes, options);
+        }
+
+        /// <summary>
         ///  Deletes items from a given app based in bulk and removes them from all views. The data can no longer be retrieved.
         ///  <para>Podio API Reference: https://developers.podio.com/doc/items/bulk-delete-items-19406111 </para>
         /// </summary>
@@ -331,7 +370,7 @@ namespace PodioAPI.Services
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             _podio.Delete<dynamic>(url);
         }
-      
+
         /// <summary>
         /// Removes the reference from the item if any
         /// <para>Podio API Reference: https://developers.podio.com/doc/items/delete-item-reference-7302326 </para>
@@ -342,7 +381,7 @@ namespace PodioAPI.Services
             var url = string.Format("/item/{0}/ref", itemId);
             _podio.Delete<dynamic>(url);
         }
-        
+
         /// <summary>
         /// Creates a batch for exporting the items.
         /// <para>Podio API Reference: https://developers.podio.com/doc/items/export-items-4235696 </para>
@@ -423,7 +462,7 @@ namespace PodioAPI.Services
                 {"limit", limit.ToString()},
                 {"not_item_id", itemIdCSV }
             };
- 
+
             var url = string.Format("/item/field/{0}/top/", fieldId);
             return (List<Item>)_podio.Get<List<Item>>(url, attributes);
         }
@@ -442,13 +481,13 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-       /// Returns the values for a specified field on an item in specified type.
-       /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-field-values-22368 </para>
-       /// </summary>
-       /// <typeparam name="T">Type of field. Response will be deserialized to this type</typeparam>
-       /// <param name="itemId"></param>
-       /// <param name="fieldId"></param>
-       /// <returns></returns>
+        /// Returns the values for a specified field on an item in specified type.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-field-values-22368 </para>
+        /// </summary>
+        /// <typeparam name="T">Type of field. Response will be deserialized to this type</typeparam>
+        /// <param name="itemId"></param>
+        /// <param name="fieldId"></param>
+        /// <returns></returns>
         public T GetItemFieldValues<T>(int itemId, int fieldId) where T : new()
         {
             var url = string.Format("/item/{0}/value/{1}", itemId, fieldId);
@@ -467,7 +506,6 @@ namespace PodioAPI.Services
             var url = string.Format("/item/{0}/reference/{1}/preview", itemId, fieldId);
             return _podio.Get<Item>(url);
         }
-
 
         /// <summary>
         /// Returns the items that have a reference to the given item. The references are grouped by app. Both the apps and the items are sorted by title.
@@ -506,18 +544,7 @@ namespace PodioAPI.Services
             return _podio.Get<Range>(url);
         }
 
-        /// <summary>
-        /// Returns a preview of the item for referencing on the given field.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-preview-for-field-reference-7529318 </para>
-        /// </summary>
-        /// <param name="itemId"></param>
-        /// <param name="fieldId"></param>
-        /// <returns></returns>
-        public Item GetItemPreviewForFieldReference(int itemId,int fieldId)
-        {
-            var url = string.Format("/item/{0}/reference/{1}/preview",itemId,fieldId);
-            return _podio.Get<Item>(url);
-        }
+
 
         /// <summary>
         /// Returns all the values for an item, with the additional data provided by the get item operation.
@@ -537,7 +564,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        public ItemRevision GetItemRevision(int itemId,int revision)
+        public ItemRevision GetItemRevision(int itemId, int revision)
         {
             var url = string.Format("/item/{0}/revision/{1}", itemId, revision);
             return _podio.Get<ItemRevision>(url);
@@ -565,7 +592,7 @@ namespace PodioAPI.Services
         {
             var url = string.Format("/item/{0}/meeting/url", itemId);
             var response = _podio.Get<dynamic>(url);
-            if(response["url"] != null)
+            if (response["url"] != null)
                 return response["url"];
             else
                 return string.Empty;
@@ -577,7 +604,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="status">The new status, either "invited", "accepted", "declined" or "tentative"</param>
-        public void SetParticipation(int itemId , string status)
+        public void SetParticipation(int itemId, string status)
         {
             dynamic attributes = new
             {
@@ -602,7 +629,7 @@ namespace PodioAPI.Services
                 {"limit", limit.ToString()}
             };
             var url = string.Format("/item/{0}/reference/field/{1}", itemId, fieldId);
-            return _podio.Get<List<ItemMicro>>(url,attributes);
+            return _podio.Get<List<ItemMicro>>(url, attributes);
         }
 
         /// <summary>
@@ -612,7 +639,7 @@ namespace PodioAPI.Services
         /// <param name="itemId"></param>
         /// <param name="type">The type of the reference</param>
         /// <param name="id">The id of the reference</param>
-        public void UpdateItemReference(int itemId, string type ,int referenceId)
+        public void UpdateItemReference(int itemId, string type, int referenceId)
         {
             var attributes = new
             {
@@ -620,7 +647,7 @@ namespace PodioAPI.Services
                 id = referenceId
             };
             var url = string.Format("/item/{0}/ref", itemId);
-            _podio.Put<dynamic>(url, attributes);            
+            _podio.Put<dynamic>(url, attributes);
         }
 
         /// <summary>
@@ -651,7 +678,7 @@ namespace PodioAPI.Services
         /// <param name="sort">The ordering of the returned items. Can be either "created_on", "title" or blank for relevance ordering.</param>
         /// <param name="text">The text to search for. The search will be lower case, and with a wildcard in each end.</param>
         /// <returns></returns>
-        public List<Item> FindReferenceableItems(int fieldId,int limit = 13, int[] notItemIds = null, string sort = null, string text  = null)
+        public List<Item> FindReferenceableItems(int fieldId, int limit = 13, int[] notItemIds = null, string sort = null, string text = null)
         {
             var itemIdCSV = Podio.ArrayToCSV(notItemIds);
             var attributes = new Dictionary<string, string>()
@@ -689,6 +716,13 @@ namespace PodioAPI.Services
         {
             var url = string.Format("/item/{0}/revision/{1}/{2}", itemId, revisionFrom, revisionTo);
             return _podio.Get<List<ItemDiff>>(url);
+        }
+
+        public ItemCalculate Calcualate(int itemId, ItemCalculateRequest ItemCalculateRequest, int limit = 30)
+        {
+            ItemCalculateRequest.Limit = ItemCalculateRequest.Limit == 0 ? 30 : ItemCalculateRequest.Limit;
+            var url = string.Format("/item/app/{0}/calculate", itemId);
+            return _podio.Post<ItemCalculate>(url, ItemCalculateRequest);
         }
 
     }

@@ -16,6 +16,10 @@ namespace PodioAPI.Utils
             return (T)objectFromDict(someObject, source);
         }
 
+        public static T ChangeType<T>(this object obj)
+        {
+            return (T)Convert.ChangeType(obj, typeof(T));
+        }
 
         public static IDictionary<string, object> AsDictionary(this object source, BindingFlags bindingAttr = BindingFlags.DeclaredOnly | BindingFlags.Public | BindingFlags.Instance)
         {

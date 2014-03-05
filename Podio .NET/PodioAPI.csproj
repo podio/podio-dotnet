@@ -69,10 +69,12 @@
     <Compile Include="Models\Response\Contact.cs" />
     <Compile Include="Models\Response\Embed.cs" />
     <Compile Include="Models\Response\FileAttachment.cs" />
+    <Compile Include="Models\Response\FileResponse.cs" />
     <Compile Include="Models\Response\Hook.cs" />
     <Compile Include="Models\Response\Image.cs" />
     <Compile Include="Models\Response\Integration.cs" />
     <Compile Include="Models\Response\Item.cs" />
+    <Compile Include="Models\Response\ItemCalculate.cs" />
     <Compile Include="Models\Response\ItemDiff.cs" />
     <Compile Include="Models\Response\ItemField.cs" />
     <Compile Include="Models\Response\ItemFieldMicro.cs" />
