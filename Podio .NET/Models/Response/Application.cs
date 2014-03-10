@@ -30,7 +30,7 @@ namespace PodioAPI.Models.Response
         public int? OwnerId { get; set; }
 
         [JsonProperty("owner")]
-        public Dictionary<string, int> Owner { get; set; }
+        public Dictionary<string, object> Owner { get; set; }
 
         [JsonProperty(PropertyName = "config")]
         public Dictionary<string, object> Config { get; set; }
@@ -60,7 +60,7 @@ namespace PodioAPI.Models.Response
         public Integration Integration { get; set; }
 
         [JsonProperty("fields")]
-        public List<AppField> Fields { get; set; }
+        public List<ApplicationField> Fields { get; set; }
 
 
         // When app is returned as part of large collection (e.g. for stream), some config properties is moved to the main object
@@ -70,5 +70,41 @@ namespace PodioAPI.Models.Response
 
         [JsonProperty("item_name")]
         public string ItemName { get; set; }
+
+        public T Field<T>(string externalId)
+            where T : ApplicationField, new()
+        {
+            var genericField = this.Fields.Find(field => field.ExternalId == externalId);
+            return fieldInstance<T>(genericField);
+        }
+
+        public T Field<T>(int fieldId)
+            where T : ApplicationField, new()
+        {
+            var genericField = this.Fields.Find(field => field.FieldId == fieldId);
+            return fieldInstance<T>(genericField);
+        }
+
+        public T Field<T>()
+           where T : ApplicationField, new()
+        {
+            T specificField = new T();
+            this.Fields.Add(specificField);
+            return specificField;
+        }
+
+        protected T fieldInstance<T>(ApplicationField genericField, string externalId = null, int? fieldId = null)
+                    where T : ApplicationField, new()
+        {
+            T specificField = new T();
+            if (genericField != null)
+            {
+                foreach (var property in genericField.GetType().GetProperties())
+                {
+                    specificField.GetType().GetProperty(property.Name).SetValue(specificField, property.GetValue(genericField, null), null);
+                }
+            }
+            return specificField;
+        }
     }
 }

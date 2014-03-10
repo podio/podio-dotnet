@@ -17,19 +17,23 @@ namespace PodioAPI.Utils.ItemFields
                 if (_embeds == null)
                 {
                     _embeds = new List<Embed>();
-                    foreach (var embedFilePair in this.Values)
+                    if(this.Values != null)
                     {
-                        var embed = this.valueAs<Embed>(embedFilePair, "embed");
-                        if (embedFilePair.ContainsKey("file"))
+                        foreach (var embedFilePair in this.Values)
                         {
-                            var file = this.valueAs<FileAttachment>(embedFilePair, "file");
-                            if (embed.Files == null) {
-                                embed.Files = new List<FileAttachment>();
+                            var embed = this.valueAs<Embed>(embedFilePair, "embed");
+                            if (embedFilePair.ContainsKey("file"))
+                            {
+                                var file = this.valueAs<FileAttachment>(embedFilePair, "file");
+                                if (embed.Files == null)
+                                {
+                                    embed.Files = new List<FileAttachment>();
+                                }
+                                embed.Files.Add(file);
                             }
-                            embed.Files.Add(file);
+                            _embeds.Add(embed);
                         }
-                        _embeds.Add(embed);
-                    }
+                    }      
                 }
                 return _embeds;
             }

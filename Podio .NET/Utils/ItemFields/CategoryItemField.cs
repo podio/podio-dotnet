@@ -10,29 +10,14 @@ namespace PodioAPI.Utils.ItemFields
 {
     public class CategoryItemField : ItemField
     {
-        private List<Answer> _answers;
+        private List<Answer> _options;
 
-        public IEnumerable<Answer> Answers
+        public IEnumerable<Answer> Options
         {
             get
             {
-                return this.valuesAs<Answer>(_answers);
+                return this.valuesAs<Answer>(_options);
             }
-        }
-
-        public class Answer {
-
-            [JsonProperty("status")]
-            public string Status { get; set; }
-
-            [JsonProperty("text")]
-            public string Text { get; set; }
-
-            [JsonProperty("id")]
-            public int? Id { get; set; }
-
-            [JsonProperty("color")]
-            public string Color { get; set; }
         }
 
         public int OptionId {
@@ -56,5 +41,22 @@ namespace PodioAPI.Utils.ItemFields
                 }
             }
         }
+
+        public class Answer
+        {
+
+            [JsonProperty("status")]
+            public string Status { get; set; }
+
+            [JsonProperty("text")]
+            public string Text { get; set; }
+
+            [JsonProperty("id")]
+            public int? Id { get; set; }
+
+            [JsonProperty("color")]
+            public string Color { get; set; }
+        }
+
     }
 }

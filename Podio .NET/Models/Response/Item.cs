@@ -126,7 +126,6 @@ namespace PodioAPI.Models.Response
         {
             this.Fields = new List<ItemField>();
             this.FileIds = new List<int>();
-            this.Tags = new List<string>();
         }
 
         public T Field<T>(string externalId)

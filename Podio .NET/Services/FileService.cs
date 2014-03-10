@@ -12,19 +12,31 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
+        /// Returns the file with the given id
+        /// <para>Podio API Reference: https://developers.podio.com/doc/files/get-file-22451 </para>
+        /// </summary>
+        /// <param name="fileId"></param>
+        /// <returns></returns>
+        public FileAttachment GetFile(int fileId)
+        {
+            var url = string.Format("/file/{0}", fileId);
+            return _podio.Get<FileAttachment>(url);
+        }
+
+        /// <summary>
         /// Uploads a new file
         /// <para>Podio API Reference: https://developers.podio.com/doc/files/upload-file-1004361 </para>
         /// </summary>
         /// <param name="filePath">Full physical path to the file</param>
-        /// <param name="fileName">File Name</param>
+        /// <param name="fileName">File Name with extension</param>
         /// <returns></returns>
         public FileAttachment UploadFile(string filePath, string fileName)
         {
             var url = "/file/v2/";
             var attributes = new
             {
-                filePath = filePath,
-                fileName = fileName
+              filePath = filePath,
+              fileName = fileName
             };
             Dictionary<string, object> options = new Dictionary<string, object>() { { "upload", true } };
             return _podio.Post<FileAttachment>(url, attributes, options);
@@ -45,6 +57,17 @@ namespace PodioAPI.Services
                 description = description
             };
             _podio.Put<dynamic>(url, attributes);
+        }
+
+        /// <summary>
+        /// Deletes the file with the given id
+        /// <para>Podio API Reference: https://developers.podio.com/doc/files/delete-file-22453 </para>
+        /// </summary>
+        /// <param name="fileId"></param>
+        public void DeleteFile(int fileId)
+        {
+            var url = string.Format("/file/{0}", fileId);
+            _podio.Delete<dynamic>(url);
         }
 
         /// <summary>
@@ -98,26 +121,99 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Deletes the file with the given id
-        /// <para>Podio API Reference: https://developers.podio.com/doc/files/delete-file-22453 </para>
+        /// Returns a list of all files matching the given filters and sorted by the specified attribute.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/files/get-files-4497983 </para>
         /// </summary>
-        /// <param name="fileId"></param>
-        public void DeleteFile(int fileId)
+        /// <param name="attachedTo">The type of the entity the file is attached to. Can be one of {"item", "status", "task" and "space"}</param>
+        /// <param name="createdBy">The entities that created the file. See auth objects on the view area in Podio API documentation for details.</param>
+        /// <param name="createdOn">The from and to date the file was created between. For valid operations see date filtering under the view area in Podio API documentation.</param>
+        /// <param name="filetype">The type of the file. Can be one of {"image", "application", "video", "text", "audio"}.</param>
+        /// <param name="hostedBy">Which provider actually hosts the files. Currently can be one of {"podio", "google", "boxnet", "dropbox", "evernote", "live", "sharefile", "sugarsync", "yousendit"}.</param>
+        /// <param name="limit">The maximum number of files to return Default value: 20 </param>
+        /// <param name="sortBy">How the files should be sorted. Can be one of {"name", "created_on"} Default value: name</param>
+        /// <param name="sortDesc">true for to sort in descending order, false in ascending Default value: false</param>
+        /// <returns></returns>
+        public List<FileAttachment> GetFiles(string attachedTo = null, string createdBy = null, string createdOn = null, string filetype = null, string hostedBy = null, int limit = 20, string sortBy = null, bool sortDesc = false)
         {
-            var url = string.Format("/file/{0}", fileId);
-            _podio.Delete<dynamic>(url);
+            var url = "/file/";
+            var attributes = new Dictionary<string, string>()
+            {
+                {"attached_to", attachedTo},
+                {"created_by", createdBy},
+                {"created_on", createdOn},
+                {"filetype", filetype},
+                {"hosted_by", hostedBy},
+                {"limit", limit.ToString()},
+                {"sort_by", sortBy},
+                {"sort_desc", sortDesc.ToString()}
+            };
+            return _podio.Get<List<FileAttachment>>(url, attributes);
         }
 
         /// <summary>
-        /// Returns the file with the given id
-        /// <para>Podio API Reference: https://developers.podio.com/doc/files/get-file-22451 </para>
+        /// Returns all the files related to the items in the application. This includes files both on the item itself and in comments on the item.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/files/get-files-on-app-22472 </para>
         /// </summary>
-        /// <param name="fileId"></param>
+        /// <param name="appId">App Id</param>
+        /// <param name="attachedTo">The type of the entity the file is attached to. Can be one of {"item", "status", "task" and "space"}</param>
+        /// <param name="createdBy">The entities that created the file. See auth objects on the view area in Podio API documentation for details.</param>
+        /// <param name="createdOn">The from and to date the file was created between. For valid operations see date filtering under the view area in Podio API documentation.</param>
+        /// <param name="filetype">The type of the file. Can be one of {"image", "application", "video", "text", "audio"}.</param>
+        /// <param name="hostedBy">Which provider actually hosts the files. Currently can be one of {"podio", "google", "boxnet", "dropbox", "evernote", "live", "sharefile", "sugarsync", "yousendit"}.</param>
+        /// <param name="limit">The maximum number of files to return Default value: 20 </param>
+        /// <param name="offset">The offset to use when returning files to be used for pagination. Default value: 0</param>
+        /// <param name="sortBy">How the files should be sorted. Can be one of {"name", "created_on"} Default value: name</param>
+        /// <param name="sortDesc">true for to sort in descending order, false in ascending Default value: false</param>
         /// <returns></returns>
-        public FileAttachment GetFile(int fileId)
+        public List<FileAttachment> GetFilesOnApp(int appId, string attachedTo = null, string createdBy = null, string createdOn = null, string filetype = null, string hostedBy = null, int limit = 20, int offset = 0, string sortBy = null, bool sortDesc = false)
         {
-            var url = string.Format("/file/{0}", fileId);
-            return _podio.Get<FileAttachment>(url);
+            var url = string.Format("/file/app/{0}/", appId);
+            var attributes = new Dictionary<string, string>()
+            {
+                {"attached_to", attachedTo},
+                {"created_by", createdBy},
+                {"created_on", createdOn},
+                {"filetype", filetype},
+                {"hosted_by", hostedBy},
+                {"limit", limit.ToString()},
+                {"offset", offset.ToString()},
+                {"sort_by", sortBy},
+                {"sort_desc", sortDesc.ToString()}
+            };
+            return _podio.Get<List<FileAttachment>>(url, attributes);
+        }
+
+        /// <summary>
+        /// Returns all the files on the space order by the file name.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/files/get-files-on-space-22471 </para>
+        /// </summary>
+        /// <param name="spaceId"></param>
+        /// <param name="attachedTo">The type of the entity the file is attached to. Can be one of {"item", "status", "task" and "space"}</param>
+        /// <param name="createdBy">The entities that created the file. See auth objects on the view area in Podio API documentation for details.</param>
+        /// <param name="createdOn">The from and to date the file was created between. For valid operations see date filtering under the view area in Podio API documentation.</param>
+        /// <param name="filetype">The type of the file. Can be one of {"image", "application", "video", "text", "audio"}.</param>
+        /// <param name="hostedBy">Which provider actually hosts the files. Currently can be one of {"podio", "google", "boxnet", "dropbox", "evernote", "live", "sharefile", "sugarsync", "yousendit"}.</param>
+        /// <param name="limit">The maximum number of files to return Default value: 20 </param>
+        /// <param name="offset">The offset to use when returning files to be used for pagination. Default value: 0</param>
+        /// <param name="sortBy">How the files should be sorted. Can be one of {"name", "created_on"} Default value: name</param>
+        /// <param name="sortDesc">true for to sort in descending order, false in ascending Default value: false</param>
+        /// <returns></returns>
+        public List<FileAttachment> GetFilesOnSpace(int spaceId, string attachedTo = null, string createdBy = null, string createdOn = null, string filetype = null, string hostedBy = null, int limit = 20, int offset = 0, string sortBy = null, bool sortDesc = false)
+        {
+            var url = string.Format("/file/space/{0}/", spaceId);
+            var attributes = new Dictionary<string, string>()
+            {
+                {"attached_to", attachedTo},
+                {"created_by", createdBy},
+                {"created_on", createdOn},
+                {"filetype", filetype},
+                {"hosted_by", hostedBy},
+                {"limit", limit.ToString()},
+                {"offset", offset.ToString()},
+                {"sort_by", sortBy},
+                {"sort_desc", sortDesc.ToString()}
+            };
+            return _podio.Get<List<FileAttachment>>(url, attributes);
         }
     }
 }

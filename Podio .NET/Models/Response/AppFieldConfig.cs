@@ -6,7 +6,7 @@ namespace PodioAPI.Models.Response
     public class FieldConfig
     {
         [JsonProperty("default_value")]
-        public object DefaultValue { get; set; }
+        public string DefaultValue { get; set; }
 
         [JsonProperty("description")]
         public string Description { get; set; }
@@ -18,7 +18,7 @@ namespace PodioAPI.Models.Response
         public bool Required { get; set; }
 
         [JsonProperty("mapping")]
-        public object Mapping { get; set; }
+        public string Mapping { get; set; }
 
         [JsonProperty("label")]
         public string Label { get; set; }

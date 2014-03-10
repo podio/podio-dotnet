@@ -30,11 +30,11 @@ namespace PodioAPI.Models.Response
         [JsonProperty("status")]
         public string Status { get; set; }
 
-        public bool HasValue(string key = null)
-        {
+       
+        public bool HasValue(string key = null) {
             return this.Values != null
                 && this.Values.Count > 0
-                && (key == null ||
+                && (key == null || 
                 (this.Values.First() != null &&
                 this.Values.First().ContainsKey(key)));
         }
@@ -59,10 +59,10 @@ namespace PodioAPI.Models.Response
             }
         }
 
-        protected T valueAs<T>(Dictionary<string, object> value, string key)
+        protected T valueAs<T>(Dictionary<string,object> value, string key)
             where T : class, new()
         {
-            return ((Dictionary<string, object>)value[key]).As<T>();
+            return ((Dictionary<string,object>)value[key]).As<T>();
         }
 
         protected List<T> valuesAs<T>(List<T> list)
@@ -71,23 +71,23 @@ namespace PodioAPI.Models.Response
             if (list == null)
             {
                 list = new List<T>();
-                foreach (var itemAttributes in this.Values)
+                if (this.Values != null)
                 {
-                    var obj = this.valueAs<T>(itemAttributes, "value");
-                    list.Add(obj);
+                    foreach (var itemAttributes in this.Values)
+                    {
+                        var obj = this.valueAs<T>(itemAttributes, "value");
+                        list.Add(obj);
+                    }
                 }
             }
-            return list;
+            return list;        
         }
 
-        protected void ensureValuesInitialized(bool includeFirstChildDict = false)
-        {
-            if (this.Values == null)
-            {
+        protected void ensureValuesInitialized(bool includeFirstChildDict = false) {
+            if (this.Values == null) {
                 this.Values = new List<Dictionary<string, object>>();
             }
-            if (includeFirstChildDict && this.Values.Count == 0)
-            {
+            if (includeFirstChildDict && this.Values.Count == 0) {
                 this.Values.Add(new Dictionary<string, object>());
             }
         }
