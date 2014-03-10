@@ -1,0 +1,19 @@
+﻿.auth_text {
+    padding: 10px 8px!important;
+    width: 406px;
+}
+.form-wrapper {
+    width:480px;
+}
+.datepic {
+    float: left !important;
+    margin: 0 10px 0 7px;
+}
+.date-label
+{
+    float: left;
+    margin-top: 4px;
+}
+.date-buttom {
+   margin-top: 2px;
+}

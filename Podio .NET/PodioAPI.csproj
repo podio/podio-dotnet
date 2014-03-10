@@ -58,8 +58,13 @@
     <Compile Include="Models\Response\AppField.cs" />
     <Compile Include="Models\Response\AppFieldConfig.cs" />
     <Compile Include="Models\Response\Application.cs" />
+    <Compile Include="Models\Response\ApplicationConfig.cs" />
+    <Compile Include="Models\Response\ApplicationDependency.cs" />
+    <Compile Include="Models\Response\ApplicationField.cs" />
+    <Compile Include="Models\Response\ApplicationRevision.cs" />
     <Compile Include="Models\Response\AppMarketShare.cs" />
     <Compile Include="Models\Response\AppValues.cs" />
+    <Compile Include="Models\Response\AutoTask.cs" />
     <Compile Include="Models\Response\Batch.cs" />
     <Compile Include="Models\Response\BulkDeletionStatus.cs" />
     <Compile Include="Models\Response\ByLine.cs" />
@@ -102,6 +107,7 @@
     <Compile Include="Models\Response\Via.cs" />
     <Compile Include="Podio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\EmbedService.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\ItemService.cs" />
     <Compile Include="Utils\Authentication\IAuthStore.cs" />
@@ -117,6 +123,7 @@
     <Compile Include="Utils\ItemFields\ImageItemField.cs" />
     <Compile Include="Utils\ItemFields\LocationItemField.cs" />
     <Compile Include="Utils\ItemFields\MoneyItemField.cs" />
+    <Compile Include="Utils\ItemFields\NumericField.cs" />
     <Compile Include="Utils\ItemFields\ProgressItemField.cs" />
     <Compile Include="Utils\ItemFields\QuestionItemField.cs" />
     <Compile Include="Utils\ItemFields\StateItemField.cs" />
@@ -125,6 +132,7 @@
     <Compile Include="Utils\ObjectExtensions.cs" />
     <Compile Include="Utils\PodioCollection.cs" />
     <Compile Include="Utils\Serialization\JSONSerializer.cs" />
+    <Compile Include="Utils\Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

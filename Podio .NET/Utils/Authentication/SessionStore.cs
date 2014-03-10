@@ -11,7 +11,7 @@ namespace PodioAPI.Utils
     {
         public PodioOAuth Get()
         {
-            if (HttpContext.Current.Session["PodioOAuth"] != null)
+            if (HttpContext.Current.Session != null && HttpContext.Current.Session["PodioOAuth"] != null)
                 return HttpContext.Current.Session["PodioOAuth"] as PodioOAuth;
             else
                 return new PodioOAuth();
