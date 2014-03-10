@@ -12,7 +12,11 @@ namespace PodioAPI.Utils.ItemFields
         {
             get
             {
-                return new List<string>(this.Values.Select(s => (string)s["value"]));
+                if (this.Values != null && this.Values.Any())
+                    return new List<string>(this.Values.Select(s => (string)s["value"]));
+                else
+                    return new List<String>();
+
             }
 
             set

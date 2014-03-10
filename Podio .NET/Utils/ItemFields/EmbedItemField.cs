@@ -22,7 +22,7 @@ namespace PodioAPI.Utils.ItemFields
                         foreach (var embedFilePair in this.Values)
                         {
                             var embed = this.valueAs<Embed>(embedFilePair, "embed");
-                            if (embedFilePair.ContainsKey("file"))
+                            if (embedFilePair.ContainsKey("file") && embedFilePair["file"] != null)
                             {
                                 var file = this.valueAs<FileAttachment>(embedFilePair, "file");
                                 if (embed.Files == null)
