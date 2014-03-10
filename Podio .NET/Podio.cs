@@ -187,7 +187,7 @@ namespace PodioAPI
                         responseHeaders.Add(key, response.Headers.Get(key));
                     }
 
-                    if (options.ContainsKey("file_download"))
+                    if (options != null && options.ContainsKey("file_download"))
                     {
                         using (var memoryStream = new MemoryStream())
                         {
@@ -361,14 +361,7 @@ namespace PodioAPI
             return encodedString;
         }
 
-        internal static string ArrayToCSV(int[] array)
-        {
-            var csv = "";
-            if (array != null && array.Length > 0)
-                csv = string.Join(",", array);
 
-            return csv;
-        }
 
         /// <summary>
         /// Add a file to request stream
@@ -547,6 +540,15 @@ namespace PodioAPI
         public FileService FileService
         {
             get { return new FileService(this); }
+        }
+
+        /// <summary>
+        ///  Provies all API methods in Embed Area
+        ///  <para>https://developers.podio.com/doc/embeds</para>
+        /// </summary>
+        public EmbedService EmbedService
+        {
+            get { return new EmbedService(this); }
         }
         #endregion
     }
