@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace PodioAPI.Utils
 {
     internal class JSONSerializer
-    {
+    {       
         public static string Serilaize(object entity)
         {
             return JsonConvert.SerializeObject(entity);
