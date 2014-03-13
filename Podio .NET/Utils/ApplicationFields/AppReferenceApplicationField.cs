@@ -1,8 +1,5 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using PodioAPI.Models.Response;
+﻿using PodioAPI.Models.Response;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace PodioAPI.Utils.ApplicationFields
 {

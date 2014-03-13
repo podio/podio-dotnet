@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using PodioAPI.Utils.ApplicationFields;
 using System.Collections.Generic;
-using System.Collections;
 
 namespace PodioAPI.Models.Response
 {

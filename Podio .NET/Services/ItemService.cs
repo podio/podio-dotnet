@@ -4,7 +4,6 @@ using PodioAPI.Utils;
 using System.Collections.Generic;
 using System.Linq;
 using System;
-using System.IO;
 
 namespace PodioAPI.Services
 {

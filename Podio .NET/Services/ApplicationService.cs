@@ -1,10 +1,5 @@
-﻿using PodioAPI.Models.Request;
-using PodioAPI.Models.Response;
-using PodioAPI.Utils;
-using System;
+﻿using PodioAPI.Models.Response;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace PodioAPI.Services
 {
