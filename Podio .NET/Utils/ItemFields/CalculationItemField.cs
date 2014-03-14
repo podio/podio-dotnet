@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using PodioAPI.Models.Response;
+using PodioAPI.Models;
 
 namespace PodioAPI.Utils.ItemFields
 {

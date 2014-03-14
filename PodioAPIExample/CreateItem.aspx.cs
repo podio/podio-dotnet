@@ -1,6 +1,6 @@
 ﻿using PodioAPI;
 using PodioAPI.Exceptions;
-using PodioAPI.Models.Response;
+using PodioAPI.Models;
 using PodioAPI.Utils.ItemFields;
 using System;
 using System.Collections.Generic;

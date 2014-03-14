@@ -1,4 +1,4 @@
-﻿using PodioAPI.Models.Response;
+﻿using PodioAPI.Models;
 using System.Collections.Generic;
 
 namespace PodioAPI.Utils.ApplicationFields

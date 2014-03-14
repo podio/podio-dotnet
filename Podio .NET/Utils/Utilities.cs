@@ -1,5 +1,4 @@
-﻿
-namespace PodioAPI.Utils
+﻿namespace PodioAPI.Utils
 {
     internal class Utilities
     {

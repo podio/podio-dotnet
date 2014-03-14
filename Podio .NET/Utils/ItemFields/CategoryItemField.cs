@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using PodioAPI.Models.Response;
+using PodioAPI.Models;
 using System.Collections.Generic;
 using System.Linq;
 

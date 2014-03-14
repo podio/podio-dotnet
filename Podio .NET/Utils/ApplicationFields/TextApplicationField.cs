@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using PodioAPI.Models.Response;
+using PodioAPI.Models;
 
 namespace PodioAPI.Utils.ApplicationFields
 {

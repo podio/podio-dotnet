@@ -1,4 +1,4 @@
-﻿using PodioAPI.Models.Response;
+﻿using PodioAPI.Models;
 
 namespace PodioAPI.Services
 {

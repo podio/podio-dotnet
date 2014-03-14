@@ -7,7 +7,7 @@ using System.Text;
 using System.Web;
 using PodioAPI.Exceptions;
 using PodioAPI.Models.Request;
-using PodioAPI.Models.Response;
+using PodioAPI.Models;
 using PodioAPI.Services;
 using PodioAPI.Utils;
 
