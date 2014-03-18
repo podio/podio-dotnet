@@ -199,5 +199,274 @@ namespace PodioAPI.Services
             };
             return _podio.Get<List<Application>>(url, attributes);
         }
+
+        /// <summary>
+        /// Returns the app on the given space with the given URL label.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/get-app-on-space-by-url-label-477105 </para>
+        /// </summary>
+        /// <param name="spaceId"></param>
+        /// <param name="UrlLabel"></param>
+        /// <param name="type">The type of the view of the app requested. Can be either "full", "short", "mini" or "micro". Default value: full</param>
+        /// <returns></returns>
+        public Application GetAppOnSpaceByURLLabel(int spaceId, string UrlLabel, string type = "full")
+        {
+            string url = string.Format("/app/space/{0}/{1}", spaceId, UrlLabel);
+            var attributes = new Dictionary<string, string>(){
+                {"type",type}
+            };
+            return _podio.Get<Application>(url, attributes);
+        }
+
+        /// <summary>
+        /// Returns app based on the provided org_label, space_label and app_label.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/get-app-by-org-label-space-label-and-app-label-91708386 </para>
+        /// </summary>
+        /// <param name="orgLabel"></param>
+        /// <param name="spaceLabel"></param>
+        /// <param name="appLabel"></param>
+        /// <returns></returns>
+        public Application GetAppByOrgLabelSpaceLabelAndAppLabel(string orgLabel, string spaceLabel, string appLabel)
+        {
+            string url = string.Format("/app/org/{0}/space/{1}/{2}", orgLabel, spaceLabel, appLabel);
+            return _podio.Get<Application>(url);
+        }
+
+        /// <summary>
+        /// Updates the order of the apps on the space. It should post all the apps from the space in the order required.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/update-app-order-22463  </para>
+        /// </summary>
+        /// <param name="spaceId"></param>
+        /// <param name="appIds"></param>
+        public void UpdateAppOrder(int spaceId, List<int> appIds)
+        {
+            appIds = new List<int>();
+            string url = string.Format("/app/space/{0}/order", spaceId);
+            _podio.Put<dynamic>(url, appIds);
+        }
+
+        /// <summary>
+        /// Updates the app with a new description.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/update-app-description-33569973 </para>
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="description"></param>
+        public void UpdateAppDescription(int appId, string description)
+        {
+            string url = string.Format("/app/{0}/description", appId);
+            dynamic attributes = new
+            {
+                description = description
+            };
+            _podio.Put<dynamic>(url, attributes);
+        }
+
+        /// <summary>
+        /// Updates the usage instructions for the app.
+        /// <para>Podio API Reference:https://developers.podio.com/doc/applications/update-app-usage-instructions-33570086 </para>
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="usage"></param>
+        public void UpdateAppUsageInstructions(int appId, string usage)
+        {
+            string url = string.Format("/app/{0}/usage", appId);
+            dynamic attributes = new
+            {
+                usage = usage
+            };
+            _podio.Put<dynamic>(url, attributes);
+        }
+
+        /// <summary>
+        /// Installs the app with the given id on the space.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/install-app-22506 </para>
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="spaceId"></param>
+        /// <param name="features">The features that should be installed with the app. Options are: filters, tasks, widgets, integration, forms, items. If the value is not given all but the "items" feature will be selected.</param>
+        /// <returns></returns>
+        public int InstallApp(int appId, int spaceId, string[] features = null)
+        {
+            features = features == null ? new string[] { "items" } : features;
+            string url = string.Format("/app/{0}/install", appId);
+            dynamic attributes = new
+            {
+                space_id = spaceId,
+                features = features
+            };
+            var response = _podio.Post<dynamic>(url, attributes);
+            return (int)response["app_id"];
+        }
+
+        /// <summary>
+        /// Returns the list of possible calculations that can be done on related apps.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/get-calculations-for-app-773005 </para>
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
+        public List<AppCalculation> GetCalculationsForApp(int appId)
+        {
+            string url = string.Format("/app/{0}/calculation/", appId);
+            return _podio.Get<List<AppCalculation>>(url);
+        }
+
+        /// <summary>
+        /// Creates a new app on a space.
+        /// <para>Podio API Reference:https://developers.podio.com/doc/applications/add-new-app-22351 </para>
+        /// </summary>
+        /// <param name="application"></param>
+        /// <returns>The id of the newly created app</returns>
+        public int AddNewApp(Application application)
+        {
+            /*
+                Example Usage: Adding a new application with a text field and category field.
+             
+                var application = new Application();
+                application.SpaceId = SPACE_ID;
+                application.Config = new ApplicationConfiguration
+                {
+                    Name = "Application Name",
+                    Icon = "230.png",
+                    ItemName = "Single item",
+                    Description = "My Description"
+                };
+                var textField = application.Field<TextApplicationField>();
+                textField.Config.Label = "Sample Text Field";
+                textField.Config.Label = "Sample Text Field Description";
+                textField.Size = "small";
+             
+                var categoryField = application.Field<CategoryApplicationField>();
+                categoryField.Config.Label = "Sample Category Field";
+                categoryField.Options = new List<CategoryItemField.Answer>()
+                {
+                    new CategoryItemField.Answer{ Text = "Option One "},
+                    new CategoryItemField.Answer{ Text = "Option Two "}
+                };
+                categoryField.Multiple = true;
+                categoryField.Display = "list";
+                int newAppID = podio.ApplicationService.AddNewApp(application);
+             */
+
+            string url = "/app/";
+            var requestDate = new ApplicationCreateUpdateRequest()
+            {
+                SpaceId = application.SpaceId,
+                Config = application.Config,
+                Fields = application.Fields
+            };
+            var response = _podio.Post<dynamic>(url, requestDate);
+            return (int)response["app_id"];
+        }
+
+        /// <summary>
+        /// Adds a new field to an app.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/get-app-field-22353 </para>
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="field"></param>
+        public int AddNewAppField(int appId, ApplicationField field)
+        {
+            /*
+               Example Usage: Adding a new text field.
+             
+                var applicationField = new ApplicationField();
+                applicationField.Type = "text";
+                applicationField.Config.Label = "New text field";
+                applicationField.Config.Settings = new Dictionary<string, object>
+                {
+                    {"size", "large"}
+                };
+                podio.ApplicationService.AddNewAppField(APP_ID, applicationField);
+            */
+            string url = string.Format("/app/{0}/field/", appId);
+            var response = _podio.Post<dynamic>(url, field);
+            return (int)response["field_id"];
+        }
+
+        /// <summary>
+        /// Updates an app.
+        /// <para>The update can contain an new configuration for the app, addition of new fields as well as updates to the configuration of existing fields. Fields not included will not be deleted. 
+        /// To delete a field use the "delete field" operation</para>
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/update-app-22352 </para>
+        /// </summary>
+        /// <param name="application"></param>
+        public void UpdateApp(Application application)
+        {
+            /*
+               Example Usage: Updating an App by adding a new Category Field and Updating a Text Field
+             
+               var application = new Application();
+               application.AppId = APP_ID;
+               application.Config = new ApplicationConfiguration
+               {
+                   Name = "Application Name",
+                   Icon = "230.png",
+                   ItemName = "Single item",
+                   Description = "My Description"
+               };
+              
+               //For Updating Existing field (provide 'FieldId')
+               var textField = application.Field<TextApplicationField>();
+               textField.FieldId = 123456;
+               textField.Config.Label = "Sample Text Field Updated";
+               textField.Config.Label = "Sample Text Field Description Updated";
+               textField.Size = "small";
+               
+               //For adding new field
+               var categoryField = application.Field<CategoryApplicationField>();
+               categoryField.Config.Label = "New Sample Category Field";
+               categoryField.Options = new List<CategoryItemField.Answer>()
+               {
+                   new CategoryItemField.Answer{ Text = "Option One "},
+                   new CategoryItemField.Answer{ Text = "Option Two "}
+               };
+               categoryField.Multiple = true;
+               categoryField.Display = "list";
+               int newAppID = podio.ApplicationService.UpdateApp(application);
+            */
+
+            string url = string.Format("/app/{0}", application.AppId);
+            var requestData = new ApplicationCreateUpdateRequest()
+            {
+                Config = application.Config,
+                Fields = application.Fields
+            };
+            _podio.Put<dynamic>(url, requestData);
+        }
+
+        /// <summary>
+        /// Updates the configuration of an app field. The type of the field cannot be updated, only the configuration.
+        /// <para>Supply the application object with AppId, and the field to be updated</para>
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/update-an-app-field-22356 </para>
+        /// </summary>
+        /// <param name="application"></param>
+        public void UpdateAnAppField(Application application)
+        {
+            /*
+                Example Usage: Updating the configuration of a text field.
+             
+                var application = new Application();
+                application.AppId = APP_ID;
+                var textField = application.Field<TextApplicationField>();
+                textField.FieldId = 57037270;
+                textField.Config.Label = "Updated label";
+                textField.Config.Description = "Updated description";
+                textField.Size = "large";
+            */
+            var fieldToUpdate = application.Fields.FirstOrDefault();
+            UpdateAnAppField(application.AppId, fieldToUpdate.FieldId.Value, fieldToUpdate.InternalConfig);
+        }
+
+        /// <summary>
+        /// Updates the configuration of an app field. The type of the field cannot be updated, only the configuration.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/update-an-app-field-22356 </para>
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="fieldId"></param>
+        /// <param name="config"></param>
+        public void UpdateAnAppField(int appId, int fieldId, FieldConfig config)
+        {
+            var url = string.Format("/app/{0}/field/{1}", appId, fieldId);
+            _podio.Put<dynamic>(url, config);
+        }
     }
 }
