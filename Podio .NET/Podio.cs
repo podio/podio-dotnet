@@ -424,7 +424,7 @@ namespace PodioAPI
         #endregion
 
         #region Authentication
-        /// <summary> Authenticate with username and password 
+        /// <summary>Authenticate as an App (with AppId and AppSecret).
         /// <para>Podio API Reference: https://developers.podio.com/authentication/username_password </para>
         /// </summary> 
         public PodioOAuth AuthenicateWithApp(int appId, string appToken)
@@ -437,7 +437,7 @@ namespace PodioAPI
             return Authenticate("app", authRequest);
         }
 
-        /// <summary> Authenticate as an App (with AppId and AppSecret).
+        /// <summary> Authenticate with username and password 
         /// <para>suitable in situations where you only need data from a single app and do not wish authenticate as a specific user</para>
         /// <para>Podio API Reference: https://developers.podio.com/authentication/username_password </para>
         /// </summary> 
@@ -543,8 +543,8 @@ namespace PodioAPI
         }
 
         /// <summary>
-        ///  Provies all API methods in Embed Area
-        ///  <para>https://developers.podio.com/doc/embeds</para>
+        /// Provies all API methods in Embed Area
+        /// <para>https://developers.podio.com/doc/embeds</para>
         /// </summary>
         public EmbedService EmbedService
         {
@@ -552,14 +552,13 @@ namespace PodioAPI
         }
 
         /// <summary>
-        ///  Provies all API methods in Embed Area
-        ///  <para>https://developers.podio.com/doc/applications</para>
+        /// Provies all API methods in Embed Area
+        /// <para>https://developers.podio.com/doc/applications</para>
         /// </summary>
         public ApplicationService ApplicationService
         {
             get { return new ApplicationService(this); }
         }
-
         #endregion
     }
     public enum RequestMethod

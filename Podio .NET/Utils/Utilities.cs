@@ -1,23 +1,22 @@
-﻿namespace PodioAPI.Utils
+﻿
+namespace PodioAPI.Utils
 {
     internal class Utilities
     {
-        internal static string ArrayToCSV(int[] array)
+        internal static string ArrayToCSV(int[] array, string splitter = ",")
         {
-            var csv = "";
             if (array != null && array.Length > 0)
-                csv = string.Join(",", array);
+                return string.Join(splitter, array);
 
-            return csv;
+            return string.Empty;
         }
 
-        internal static string ArrayToCSV(string[] array)
+        internal static string ArrayToCSV(string[] array, string splitter = ",")
         {
-            var csv = "";
             if (array != null && array.Length > 0)
-                csv = string.Join(",", array);
+                return string.Join(splitter, array);
 
-            return csv;
+            return string.Empty;
         }
     }
 }

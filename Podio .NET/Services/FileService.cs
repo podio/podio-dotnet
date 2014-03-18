@@ -35,8 +35,8 @@ namespace PodioAPI.Services
             var url = "/file/v2/";
             var attributes = new
             {
-              filePath = filePath,
-              fileName = fileName
+                filePath = filePath,
+                fileName = fileName
             };
             Dictionary<string, object> options = new Dictionary<string, object>() { { "upload", true } };
             return _podio.Post<FileAttachment>(url, attributes, options);
