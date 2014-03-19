@@ -468,5 +468,29 @@ namespace PodioAPI.Services
             var url = string.Format("/app/{0}/field/{1}", appId, fieldId);
             _podio.Put<dynamic>(url, config);
         }
+
+        /// <summary>
+        /// Returns the apps that the given app depends on.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/get-app-dependencies-39159 </para>
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <returns></returns>
+        public ApplicationDependency GetAppDependencies(int appId)
+        {
+            string url = string.Format("/app/{0}/dependencies/", appId);
+            return _podio.Get<ApplicationDependency>(url);
+        }
+
+        /// <summary>
+        /// Returns all the active apps on the space along with their dependencies. The dependencies are only one level deep.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/applications/get-space-app-dependencies-45779 </para>
+        /// </summary>
+        /// <param name="spaceId"></param>
+        /// <returns></returns>
+        public ApplicationDependency GetSpaceAppDependencies(int spaceId)
+        {
+            string url = string.Format("/space/{0}/dependencies/", spaceId);
+            return _podio.Get<ApplicationDependency>(url);
+        }
     }
 }
