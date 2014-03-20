@@ -45,8 +45,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\PodioException.cs" />
+    <Compile Include="Models\ContactTotal.cs" />
+    <Compile Include="Models\Conversation.cs" />
+    <Compile Include="Models\ConversationMessage.cs" />
+    <Compile Include="Models\ConversationParticipant.cs" />
+    <Compile Include="Models\OrganizationContactTotal.cs" />
+    <Compile Include="Models\OrganizationMicro.cs" />
     <Compile Include="Models\Request\ApplicationCreateUpdateRequest.cs" />
     <Compile Include="Models\Request\BulkDeleteRequest.cs" />
+    <Compile Include="Models\Request\CommentCreateUpdateRequest.cs" />
     <Compile Include="Models\Request\CreateUpdateOptions.cs" />
     <Compile Include="Models\Request\ExportFilter.cs" />
     <Compile Include="Models\Request\FilterBase.cs" />
@@ -102,10 +109,14 @@
     <Compile Include="Models\Reference.cs" />
     <Compile Include="Models\Reminder.cs" />
     <Compile Include="Models\Space.cs" />
+    <Compile Include="Models\SpaceContactTotal.cs" />
+    <Compile Include="Models\SpaceMicro.cs" />
+    <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\Task.cs" />
     <Compile Include="Models\TaskCollection.cs" />
     <Compile Include="Models\TaskLabel.cs" />
+    <Compile Include="Models\TaskReport.cs" />
     <Compile Include="Models\TaskSummary.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserMail.cs" />
@@ -116,6 +127,7 @@
     <Compile Include="Services\EmbedService.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\ItemService.cs" />
+    <Compile Include="Services\StatusService.cs" />
     <Compile Include="Utils\ApplicationFields\AppReferenceApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\CalculationApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\CategoryApplicationField.cs" />

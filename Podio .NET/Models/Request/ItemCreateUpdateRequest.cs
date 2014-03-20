@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using PodioAPI.Models;
 using System.Collections.Generic;
 
 namespace PodioAPI.Models.Request

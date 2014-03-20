@@ -5,28 +5,43 @@ namespace PodioAPI.Models
 {
     public class Recurrence
     {
-        [JsonProperty(PropertyName = "recurrence_id")]
+        [JsonProperty(PropertyName = "recurrence_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? RecurrenceId { get; set; }
 
-        [JsonProperty(PropertyName = "name")]
+        /// <summary>
+        /// The name of the recurrence, "weekly", "monthly" or "yearly"
+        /// </summary>
+        [JsonProperty(PropertyName = "name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
-        [JsonProperty(PropertyName = "config")]
+        [JsonProperty(PropertyName = "config", NullValueHandling = NullValueHandling.Ignore)]
         public RecurrenceConfig Config { get; set; }
 
-        [JsonProperty(PropertyName = "step")]
+        /// <summary>
+        /// The step size, 1 or more
+        /// </summary>
+        [JsonProperty(PropertyName = "step", NullValueHandling = NullValueHandling.Ignore)]
         public int? Step { get; set; }
 
-        [JsonProperty(PropertyName = "until")]
+        /// <summary>
+        /// The latest date the recurrence should take place
+        /// </summary>
+        [JsonProperty(PropertyName = "until", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? Until { get; set; }
     }
 
     public class RecurrenceConfig
     {
-        [JsonProperty(PropertyName = "days")]
+        /// <summary>
+        /// List of weekdays ("monday", "tuesday", etc) (for "weekly")
+        /// </summary>
+        [JsonProperty(PropertyName = "days", NullValueHandling = NullValueHandling.Ignore)]
         public string Days { get; set; }
 
-        [JsonProperty(PropertyName = "repeat_on")]
+        /// <summary>
+        /// When to repeat, "day_of_week" or "day_of_month" (for "monthly")
+        /// </summary>
+        [JsonProperty(PropertyName = "repeat_on", NullValueHandling = NullValueHandling.Ignore)]
         public string RepeatOn { get; set; }
     }
 }

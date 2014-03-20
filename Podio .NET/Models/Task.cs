@@ -13,7 +13,7 @@ namespace PodioAPI.Models
         public string Status { get; set; }
 
         [JsonProperty("group")]
-        public string Group { get; set; }
+        public object Group { get; set; }
 
         [JsonProperty("text")]
         public string Text { get; set; }

@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
+using PodioAPI.Utils;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
@@ -12,19 +14,21 @@ namespace PodioAPI.Models
         [JsonProperty("dependencies")]
         private object DependencyObject { get; set; }
 
-        public Dictionary<int, int[]> Dependencies { get {return LoadDependencies();}}
+        public Dictionary<int, List<int>> Dependencies { get { return LoadDependencies(); } }
 
-        private Dictionary<int, int[]> LoadDependencies()
+        private Dictionary<int, List<int>> LoadDependencies()
         {
-            Dictionary<int, int[]> dependencies = new Dictionary<int, int[]>();
-            if(DependencyObject != null)
+            var dictionaryToLoad = new Dictionary<int, List<int>>();
+            var reflectedValuesDictionay = (Dictionary<string,object>) this.GetPropertyValue("DependencyObject");
+            if (reflectedValuesDictionay.Count > 0)
             {
-                foreach(var property in DependencyObject.GetType().GetProperties())
+                foreach (var item in reflectedValuesDictionay)
                 {
-                    var test = DependencyObject.GetType().GetProperty(property.Name).GetValue(DependencyObject, null);
+                    var dependencyValueJArray = (JArray)item.Value;
+                    dictionaryToLoad.Add(int.Parse(item.Key), dependencyValueJArray.ToObject<List<int>>());
                 }
             }
-            return dependencies;
+            return dictionaryToLoad;
         }
     }
 }

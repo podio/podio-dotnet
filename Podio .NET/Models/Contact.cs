@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Globalization;
 
 namespace PodioAPI.Models
 {
@@ -11,14 +12,37 @@ namespace PodioAPI.Models
         [JsonProperty("user_id")]
         public int? UserId { get; set; }
 
+        [JsonProperty("external_id")]
+        public string ExternalId { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        /// <summary>
+        /// The file id of the avatar
+        /// </summary>
         [JsonProperty("avatar")]
         public int Avatar { get; set; }
 
+        public DateTime? BirthDate {
+            get
+            {
+                if (!string.IsNullOrEmpty(BirthDateString))
+                    return DateTime.ParseExact(BirthDateString, "yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+                return null;
+            }
+            set 
+            { 
+                BirthDateString = value.Value.ToString("yyyy-MM-dd"); 
+            } 
+        }
+
         [JsonProperty("birthdate")]
-        public DateTime BirthDate { get; set; }
+        internal string BirthDateString { get; set; }
 
         [JsonProperty("department")]
         public string Department { get; set; }
@@ -76,9 +100,6 @@ namespace PodioAPI.Models
 
         [JsonProperty("organization")]
         public string Organization { get; set; }
-
-        [JsonProperty("type")]
-        public string Type { get; set; }
 
         [JsonProperty("space_id")]
         public int? SpaceId { get; set; }
