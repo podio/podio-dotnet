@@ -5,46 +5,46 @@ namespace PodioAPI.Models
 {
     public class User
     {
-        [JsonProperty("user_id")]
+        [JsonProperty("user_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? UserId { get; set; }
 
-        [JsonProperty("profile_id")]
+        [JsonProperty("profile_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? ProfileId { get; set; }
 
-        [JsonProperty("name")]
+        [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
-        [JsonProperty("link")]
+        [JsonProperty("link", NullValueHandling = NullValueHandling.Ignore)]
         public string Link { get; set; }
 
-        [JsonProperty("avatar")]
+        [JsonProperty("avatar", NullValueHandling = NullValueHandling.Ignore)]
         public int? Avatar { get; set; }
 
-        [JsonProperty("mail")]
+        [JsonProperty("mail", NullValueHandling = NullValueHandling.Ignore)]
         public string Mail { get; set; }
 
-        [JsonProperty("status")]
+        [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
         public string Status { get; set; }
 
-        [JsonProperty("locale")]
+        [JsonProperty("locale", NullValueHandling = NullValueHandling.Ignore)]
         public string Locale { get; set; }
 
-        [JsonProperty("timezone")]
+        [JsonProperty("timezone", NullValueHandling = NullValueHandling.Ignore)]
         public string Timezone { get; set; }
 
-        [JsonProperty("flags")]
+        [JsonProperty("flags", NullValueHandling = NullValueHandling.Ignore)]
         public String[] Flags { get; set; }
 
-        [JsonProperty("type")]
+        [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
 
-        [JsonProperty("created_on")]
+        [JsonProperty("created_on", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? CreatedOn { get; set; }
 
-        [JsonProperty("profile")]
+        [JsonProperty("profile", NullValueHandling = NullValueHandling.Ignore)]
         public Contact Profile { get; set; }
 
-        [JsonProperty("mails")]
+        [JsonProperty("mails", NullValueHandling = NullValueHandling.Ignore)]
         public UserMail Mails { get; set; }
     }
 }
