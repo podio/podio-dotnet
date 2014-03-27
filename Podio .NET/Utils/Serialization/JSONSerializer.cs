@@ -8,7 +8,10 @@ namespace PodioAPI.Utils
     {       
         public static string Serilaize(object entity)
         {
-            return JsonConvert.SerializeObject(entity);
+            var settings = new JsonSerializerSettings();
+            settings.NullValueHandling = NullValueHandling.Ignore;
+
+            return JsonConvert.SerializeObject(entity, settings);
         }
 
         public static T Deserilaize<T>(string json)
