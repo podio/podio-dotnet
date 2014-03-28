@@ -594,6 +594,24 @@ namespace PodioAPI
         {
             get { return new ContactService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in Hook Area
+        /// <para> https://developers.podio.com/doc/hooks </para>
+        /// </summary>
+        public HookService HookService
+        {
+            get { return new HookService(this); }
+        }
+
+        /// <summary>
+        /// Provies all API methods in Hook Area
+        /// <para> https://developers.podio.com/doc/hooks </para>
+        /// </summary>
+        public CommentService CommentService
+        {
+            get { return new CommentService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
