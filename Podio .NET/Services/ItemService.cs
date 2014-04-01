@@ -56,7 +56,7 @@ namespace PodioAPI.Services
         /// <returns>The id of the new revision / null if no change</returns>
         public int? UpdateItem(Item item, int? revision = null, bool silent = false, bool hook = true)
         {
-            var fieldValues = item.Fields.Select(f => f.Values == null ? null : new { external_id = f.ExternalId, values = f.Values }.AsDictionary()).Where(f => f != null);
+            var fieldValues = item.Fields.Select(f => new { external_id = f.ExternalId, values = f.Values }.AsDictionary()).Where(f => f != null);
             var requestData = new ItemCreateUpdateRequest()
             {
                 ExternalId = item.ExternalId,
@@ -103,10 +103,10 @@ namespace PodioAPI.Services
             string fieldIdentifier = "";
             ItemField fieldToUpdate = null;
             Dictionary<string, object> updatedValue = null;
-            if (item.Fields.Any() && item.Fields.First().Values.Any())
+            if (item.Fields.Any())
             {
                 fieldToUpdate = item.Fields.First();
-                updatedValue = fieldToUpdate.Values.First();
+                updatedValue = fieldToUpdate.Values != null ? fieldToUpdate.Values.First() : null;
                 if (fieldToUpdate.ExternalId != null)
                     fieldIdentifier = fieldToUpdate.ExternalId;
                 else if (fieldToUpdate.FieldId != null)
@@ -144,7 +144,7 @@ namespace PodioAPI.Services
                 var newRevisionId = ItemService.UpdateItemValues(item); 
            */
 
-            var fieldValues = item.Fields.Select(f => f.Values == null ? null : new { external_id = f.ExternalId, values = f.Values }.AsDictionary()).Where(f => f != null);
+            var fieldValues = item.Fields.Select(f => new { external_id = f.ExternalId, values = f.Values }.AsDictionary()).Where(f => f != null);
             var url = string.Format("/item/{0}/value", item.ItemId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             var response = _podio.Put<dynamic>(url, fieldValues);
@@ -208,7 +208,7 @@ namespace PodioAPI.Services
         public PodioCollection<Item> GetItemByExternalId(int appId, string external_id)
         {
             var url = string.Format("/item/app/{0}/external_id/{1}", appId, external_id);
-            return (PodioCollection<Item>)_podio.Get<PodioCollection<Item>>(url);
+            return _podio.Get<PodioCollection<Item>>(url);
         }
 
 
@@ -223,7 +223,7 @@ namespace PodioAPI.Services
         {
             filterOptions.Limit = filterOptions.Limit == 0 ? 30 : filterOptions.Limit;
             var url = string.Format("/item/app/{0}/filter/", appId);
-            return (PodioCollection<Item>)_podio.Post<PodioCollection<Item>>(url, filterOptions);
+            return _podio.Post<PodioCollection<Item>>(url, filterOptions);
         }
 
         /// <summary>
@@ -340,7 +340,7 @@ namespace PodioAPI.Services
         {
             var url = string.Format("/item/app/{0}/delete", appId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
-            return (BulkDeletionStatus)_podio.Post<BulkDeletionStatus>(url, deleteRequest);
+            return _podio.Post<BulkDeletionStatus>(url, deleteRequest);
         }
 
         /// <summary>
@@ -444,7 +444,7 @@ namespace PodioAPI.Services
                 Offset = offset,
                 Remember = remember
             };
-            return (PodioCollection<Item>)_podio.Post<PodioCollection<Item>>(url, filterOptions);
+            return _podio.Post<PodioCollection<Item>>(url, filterOptions);
         }
 
         /// <summary>
@@ -465,7 +465,7 @@ namespace PodioAPI.Services
             };
 
             var url = string.Format("/item/field/{0}/top/", fieldId);
-            return (List<Item>)_podio.Get<List<Item>>(url, attributes);
+            return _podio.Get<List<Item>>(url, attributes);
         }
 
         /// <summary>
@@ -478,7 +478,7 @@ namespace PodioAPI.Services
         public AppValues GetAppValues(int appId)
         {
             var url = string.Format("/item/app/{0}/values", appId);
-            return (AppValues)_podio.Get<AppValues>(url);
+            return _podio.Get<AppValues>(url);
         }
 
         /// <summary>
