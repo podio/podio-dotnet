@@ -22,11 +22,11 @@ namespace PodioAPI.Services
         public TaskSummary GetTaskSummary(int limit = 4)
         {
             string url = "/task/summary";
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"limit", limit.ToString()}
             };
-            return _podio.Get<TaskSummary>(url,attributes);
+            return _podio.Get<TaskSummary>(url,requestData);
         }
 
         /// <summary>
@@ -39,11 +39,11 @@ namespace PodioAPI.Services
         public TaskSummary GetTaskSummaryForOrganization(int orgId,int limit = 4)
         {
             string url = string.Format("/task/org/{0}/summary", orgId);
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"limit", limit.ToString()}
             };
-            return _podio.Get<TaskSummary>(url, attributes);
+            return _podio.Get<TaskSummary>(url, requestData);
         }
 
         /// <summary>
@@ -55,11 +55,11 @@ namespace PodioAPI.Services
         public TaskSummary GetTaskSummaryForPersonal(int limit = 4)
         {
             string url = "/task/personal/summary";
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"limit", limit.ToString()}
             };
-            return _podio.Get<TaskSummary>(url, attributes);
+            return _podio.Get<TaskSummary>(url, requestData);
         }
 
         /// <summary>
@@ -73,11 +73,11 @@ namespace PodioAPI.Services
         public TaskSummary GetTaskSummaryForReference(string refType, int refId, int limit = 4)
         {
             string url = string.Format("/task/{0}/{1}/summary", refType,refId);
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"limit", limit.ToString()}
             };
-            return _podio.Get<TaskSummary>(url, attributes);
+            return _podio.Get<TaskSummary>(url, requestData);
         }
 
         /// <summary>
@@ -90,11 +90,11 @@ namespace PodioAPI.Services
         public TaskSummary GetTaskSummaryForSpace(int spaceId, int limit = 4)
         {
             string url = string.Format("/task/space/{0}/summary", spaceId);
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"limit", limit.ToString()}
             };
-            return _podio.Get<TaskSummary>(url, attributes);
+            return _podio.Get<TaskSummary>(url, requestData);
         }
 
         /// <summary>
@@ -144,11 +144,11 @@ namespace PodioAPI.Services
         public int GetTaskTotalsByTime(string time, int spaceId)
         {
             string url = string.Format("/task/total/{0}", time);
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"space_id", spaceId.ToString()}
             };
-            var response = _podio.Get<dynamic>(url,attributes);
+            var response = _podio.Get<dynamic>(url,requestData);
             return (int)response["count"];
         }
         
@@ -226,7 +226,7 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Updates the task with the given attributes. Any attributes not specified will remain unchanged.
+        /// Updates the task with the given requestData. Any requestData not specified will remain unchanged.
         /// <para>API Reference: https://developers.podio.com/doc/tasks/update-task-10583674 </para>
         /// </summary>
         /// <param name="taskId"></param>
@@ -276,7 +276,7 @@ namespace PodioAPI.Services
         public void RankTask(int taskId, int beforeTaskId, int afterTaskId)
         {
             string url = string.Format("/task/{0}/rank", taskId);
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 after = afterTaskId,
                 before = beforeTaskId
@@ -305,12 +305,12 @@ namespace PodioAPI.Services
         public void UpdateLabel(int labelId, string text, string color)
         {
             string url = string.Format("/task/label/{0}", labelId);
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 text = text,
                 color = color
             };
-            _podio.Put<dynamic>(url, attributes);
+            _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -325,11 +325,11 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/task/{0}/description", taskId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 description = description
             };
-            _podio.Put<dynamic>(url, attributes);
+            _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -344,11 +344,11 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/task/{0}/private", taskId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 @private = isPrivate
             };
-            _podio.Put<dynamic>(url, attributes);
+            _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -363,11 +363,11 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/task/{0}/text", taskId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 text = text
             };
-            _podio.Put<dynamic>(url, attributes);
+            _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -383,13 +383,13 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/task/{0}/due", taskId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 due_on = dueOn,
                 due_date = dueDateTime.Date,
                 due_time = dueDateTime.TimeOfDay                
             };
-            _podio.Put<dynamic>(url, attributes);
+            _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -401,8 +401,8 @@ namespace PodioAPI.Services
         public void UpdateTaskLabels(int taskId, List<int> labelIds)
         {
             string url = string.Format("/task/{0}/label/", taskId);
-            dynamic attributes = labelIds;
-            _podio.Put<dynamic>(url, attributes);
+            dynamic requestData = labelIds;
+            _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -418,12 +418,12 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/task/{0}/ref", taskId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 ref_type = refType,
                 ref_id = refId,                
             };
-            _podio.Put<dynamic>(url, attributes);
+            _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace PodioAPI.Services
         public List<Task> GetTasks(int? appId = null, bool? completed = null, int? completedBy = null, string completedOn = null, int? createdBy = null, string createdOn = null, int? createdVia = null, string dueDate = null, string externalId = null, bool? files = null, string grouping = null, int? label = null, int? limit = null, int offset = 0, int? org = null, bool? reassigned = null, string reference = null, int? responsible = null, string sort_by = "rank", bool sortDesc = false, int? space = null, string view = null)
         {
             string url = "/task/";
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"app",appId.ToStringOrNull()},
                 {"completed",completed.ToStringOrNull()},
@@ -480,7 +480,7 @@ namespace PodioAPI.Services
                 {"space",space.ToStringOrNull()},
                 {"view",view}
             };
-            return _podio.Get<List<Task>>(url, attributes);
+            return _podio.Get<List<Task>>(url, requestData);
         }
 
         /// <summary>
@@ -492,13 +492,13 @@ namespace PodioAPI.Services
         public TaskReport GetTaskTotals(int[] spaceIds = null)
         {
             string url = "/task/total/";
-            var attributes = new Dictionary<string, string>();
+            var requestData = new Dictionary<string, string>();
             if(spaceIds != null)
             {
                 string spaceIdCsv = Utilities.ArrayToCSV(spaceIds, ";");
-                attributes.Add("space", spaceIdCsv);
+                requestData.Add("space", spaceIdCsv);
             }
-            return _podio.Get<TaskReport>(url, attributes);
+            return _podio.Get<TaskReport>(url, requestData);
         }
 
         /// <summary>
@@ -511,12 +511,12 @@ namespace PodioAPI.Services
         public int CreateLabel(string text, string color)
         {
             string url = "/task/label/";
-            var attributes = new
+            var requestData = new
             {
                 text = text,
                 color = color
             };
-            var response = _podio.Post<dynamic>(url,attributes);
+            var response = _podio.Post<dynamic>(url,requestData);
             return (int)response["label_id"];
         }
 
@@ -549,11 +549,11 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/task/{0}/assign", taskId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
-            var attributes = new
+            var requestData = new
             {
                 responsible = responsible
             };
-            _podio.Post<dynamic>(url, attributes);
+            _podio.Post<dynamic>(url, requestData);
         }
     }
 }

@@ -72,13 +72,13 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<string> GetSkills(string text, int limit = 12)
         {
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"limit", limit.ToString()},
                 {"text",text}
             };
             var url = "/contact/skill/";
-            return _podio.Get<List<string>>(url, attributes);
+            return _podio.Get<List<string>>(url, requestData);
         }
 
         /// <summary>
@@ -116,16 +116,16 @@ namespace PodioAPI.Services
         {
             var profileIdCSV = Utilities.ArrayToCSV(profileIds);
             string url = string.Format("/contact/{0}/v2", profileIdCSV);
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"space_id", spaceId.ToStringOrNull()}
             };
             var contacts = new List<Contact>();
 
             if(profileIds.Length > 1)
-                contacts = _podio.Get<List<Contact>>(url, attributes);
+                contacts = _podio.Get<List<Contact>>(url, requestData);
             else
-                contacts.Add(_podio.Get<Contact>(url, attributes));
+                contacts.Add(_podio.Get<Contact>(url, requestData));
 
             return contacts;
         }
@@ -147,7 +147,7 @@ namespace PodioAPI.Services
         public List<Contact> GetAllContacts(Dictionary<string, string> fields = null, string contactType = "user", string externalId = null, int? limit = null, int? offset = null, string required = null, bool excludeSelf = true, string order = "name", string type = "mini")
         {
             var url = "/contact/";
-            var attributes = new Dictionary<string, string>();
+            var requestData = new Dictionary<string, string>();
             var parameters = new Dictionary<string, string>()
             {
                 {"contact_type", contactType.ToStringOrNull()},
@@ -161,11 +161,11 @@ namespace PodioAPI.Services
             };
 
             if (fields != null && fields.Any())
-                attributes = parameters.Concat(fields).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                requestData = parameters.Concat(fields).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             else
-                attributes = parameters;
+                requestData = parameters;
 
-            return _podio.Get<List<Contact>>(url, attributes);
+            return _podio.Get<List<Contact>>(url, requestData);
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace PodioAPI.Services
         public List<Contact> GetOrganizationContacts(int orgId, Dictionary<string, string> fields = null, string contactType = "user", string externalId = null, int? limit = null, int? offset = null, string required = null, bool excludeSelf = true, string order = "name", string type = "mini")
         {
             string url = string.Format("/contact/org/{0}", orgId);
-            var attributes = new Dictionary<string, string>();
+            var requestData = new Dictionary<string, string>();
             var parameters = new Dictionary<string, string>()
             {
                 {"contact_type", contactType.ToStringOrNull()},
@@ -200,11 +200,11 @@ namespace PodioAPI.Services
             };
 
             if (fields != null && fields.Any())
-                attributes = parameters.Concat(fields).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                requestData = parameters.Concat(fields).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             else
-                attributes = parameters;
+                requestData = parameters;
 
-            return _podio.Get<List<Contact>>(url, attributes);
+            return _podio.Get<List<Contact>>(url, requestData);
         }
 
         /// <summary>
@@ -225,7 +225,7 @@ namespace PodioAPI.Services
         public List<Contact> GetSpaceContacts(int spaceId, Dictionary<string, string> fields = null, string contactType = "user", string externalId = null, int? limit = null, int? offset = null, string required = null, bool excludeSelf = true, string order = "name", string type = "mini")
         {
             string url = string.Format("/contact/space/{0}/", spaceId);
-            var attributes = new Dictionary<string, string>();
+            var requestData = new Dictionary<string, string>();
             var parameters = new Dictionary<string, string>()
             {
                 {"contact_type", contactType.ToStringOrNull()},
@@ -239,11 +239,11 @@ namespace PodioAPI.Services
             };
 
             if (fields != null && fields.Any())
-                attributes = parameters.Concat(fields).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                requestData = parameters.Concat(fields).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             else
-                attributes = parameters;
+                requestData = parameters;
 
-            return _podio.Get<List<Contact>>(url, attributes);
+            return _podio.Get<List<Contact>>(url, requestData);
         }
 
         /// <summary>
@@ -259,7 +259,7 @@ namespace PodioAPI.Services
         public List<Contact> GetSpaceContactsOnApp(int appId, Dictionary<string, string> fields = null, int? limit = null, int? offset = null, string order = "name")
         {
             string url = string.Format("/contact/app/{0}/", appId);
-            var attributes = new Dictionary<string, string>();
+            var requestData = new Dictionary<string, string>();
             var parameters = new Dictionary<string, string>()
             {
                 {"limit",limit.ToStringOrNull()},
@@ -268,11 +268,11 @@ namespace PodioAPI.Services
             };
 
             if (fields != null && fields.Any())
-                attributes = parameters.Concat(fields).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                requestData = parameters.Concat(fields).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             else
-                attributes = parameters;
+                requestData = parameters;
 
-            return _podio.Get<List<Contact>>(url, attributes);
+            return _podio.Get<List<Contact>>(url, requestData);
         }
 
         /// <summary>
@@ -314,11 +314,11 @@ namespace PodioAPI.Services
         public void UpdateContactField(int profileId, string key, string value)
         {
             string url = string.Format("/contact/{0}/{1}", profileId,key);
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 value = value
             };
-            _podio.Put<dynamic>(url, attributes);
+            _podio.Put<dynamic>(url, requestData);
         }
     }
 }

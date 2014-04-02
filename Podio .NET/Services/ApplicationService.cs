@@ -24,11 +24,11 @@ namespace PodioAPI.Services
         public Application GetApp(int appId, string type = "full")
         {
             string url = string.Format("/app/{0}", appId);
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"type", type}
             };
-            return _podio.Get<Application>(url, attributes);
+            return _podio.Get<Application>(url, requestData);
         }
 
         /// <summary>
@@ -62,11 +62,11 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<Application> GetAppsBySpace(int spaceId, bool includeInactive = false)
         {
-            var attributes = new Dictionary<string, string>(){
+            var requestData = new Dictionary<string, string>(){
                 {"include_inactive",includeInactive.ToString()}
             };
             string url = string.Format("/app/space/{0}/", spaceId);
-            return _podio.Get<List<Application>>(url, attributes);
+            return _podio.Get<List<Application>>(url, requestData);
         }
 
         /// <summary>
@@ -80,11 +80,11 @@ namespace PodioAPI.Services
         {
             var appIdCSV = Utilities.ArrayToCSV(appIds);
             string url = "/app/features/";
-            var attributes = new Dictionary<string, string>(){
+            var requestData = new Dictionary<string, string>(){
                 {"app_ids",appIdCSV},
                 {"include_space",includeSpace.ToString()}
             };
-            return _podio.Get<List<string>>(url, attributes);
+            return _podio.Get<List<string>>(url, requestData);
         }
 
         /// <summary>
@@ -108,10 +108,10 @@ namespace PodioAPI.Services
         public List<int> GetIconSuggestions(string query)
         {
             string url = "/app/icon/search";
-            var attributes = new Dictionary<string, string>(){
+            var requestData = new Dictionary<string, string>(){
                 {"query",query}
             };
-            return _podio.Get<List<int>>(url, attributes);
+            return _podio.Get<List<int>>(url, requestData);
         }
 
         /// <summary>
@@ -124,11 +124,11 @@ namespace PodioAPI.Services
         public List<Application> GetTopApps(bool excludeDemo = false, int limit = 4)
         {
             string url = "/app/top/";
-            var attributes = new Dictionary<string, string>(){
+            var requestData = new Dictionary<string, string>(){
                 {"exclude_demo",excludeDemo.ToString()},
                 {"limit",limit.ToString()}
             };
-            return _podio.Get<List<Application>>(url, attributes);
+            return _podio.Get<List<Application>>(url, requestData);
         }
 
         /// <summary>
@@ -165,11 +165,11 @@ namespace PodioAPI.Services
         public ApplicationRevision DeleteAppField(int appId, int fieldId, bool deleteValues = false)
         {
             string url = string.Format("/app/{0}/field/{1}", appId, fieldId);
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 delete_values = deleteValues.ToString()
             };
-            return _podio.Delete<ApplicationRevision>(url, attributes);
+            return _podio.Delete<ApplicationRevision>(url, requestData);
         }
 
         /// <summary>
@@ -188,7 +188,7 @@ namespace PodioAPI.Services
         {
             var appIdCSV = Utilities.ArrayToCSV(excludeAppIds);
             string url = "/app/v2/";
-            var attributes = new Dictionary<string, string>(){
+            var requestData = new Dictionary<string, string>(){
                 {"exclude_app_ids",appIdCSV},
                 {"exclude_demo",excludeDemo.ToString()},
                 {"limit",limit.ToString()},
@@ -197,7 +197,7 @@ namespace PodioAPI.Services
                 {"right",right},
                 {"text",text}
             };
-            return _podio.Get<List<Application>>(url, attributes);
+            return _podio.Get<List<Application>>(url, requestData);
         }
 
         /// <summary>
@@ -211,10 +211,10 @@ namespace PodioAPI.Services
         public Application GetAppOnSpaceByURLLabel(int spaceId, string UrlLabel, string type = "full")
         {
             string url = string.Format("/app/space/{0}/{1}", spaceId, UrlLabel);
-            var attributes = new Dictionary<string, string>(){
+            var requestData = new Dictionary<string, string>(){
                 {"type",type}
             };
-            return _podio.Get<Application>(url, attributes);
+            return _podio.Get<Application>(url, requestData);
         }
 
         /// <summary>
@@ -253,11 +253,11 @@ namespace PodioAPI.Services
         public void UpdateAppDescription(int appId, string description)
         {
             string url = string.Format("/app/{0}/description", appId);
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 description = description
             };
-            _podio.Put<dynamic>(url, attributes);
+            _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -269,11 +269,11 @@ namespace PodioAPI.Services
         public void UpdateAppUsageInstructions(int appId, string usage)
         {
             string url = string.Format("/app/{0}/usage", appId);
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 usage = usage
             };
-            _podio.Put<dynamic>(url, attributes);
+            _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -288,12 +288,12 @@ namespace PodioAPI.Services
         {
             features = features == null ? new string[] { "items" } : features;
             string url = string.Format("/app/{0}/install", appId);
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 space_id = spaceId,
                 features = features
             };
-            var response = _podio.Post<dynamic>(url, attributes);
+            var response = _podio.Post<dynamic>(url, requestData);
             return (int)response["app_id"];
         }
 

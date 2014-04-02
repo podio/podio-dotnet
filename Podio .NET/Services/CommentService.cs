@@ -62,7 +62,7 @@ namespace PodioAPI.Services
         /// <param name="alertInvite">True if any mentioned user should be automatically invited to the workspace if the user does not have access to the object and access cannot be granted to the object. Default value: false</param>
         /// <param name="silent">If set to true, the object will not be bumped up in the stream and notifications will not be generated. Default value: false</param>
         /// <returns></returns>
-        public int AddCommentToobject(string type, int id, string text, string externalId = null, List<int> fieldIds = null, string embedUrl = null, int? embedId = null, bool alertInvite = false, bool silent = false)
+        public int AddCommentToObject(string type, int id, string text, string externalId = null, List<int> fieldIds = null, string embedUrl = null, int? embedId = null, bool alertInvite = false, bool silent = false)
         {
             CommentCreateUpdateRequest comment = new CommentCreateUpdateRequest()
             {
@@ -72,7 +72,7 @@ namespace PodioAPI.Services
                 EmbedUrl = embedUrl,
                 EmbedId = embedId
             };
-            return AddCommentToobject(type, id, comment, alertInvite, silent);
+            return AddCommentToObject(type, id, comment, alertInvite, silent);
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace PodioAPI.Services
         /// <param name="alertInvite">True if any mentioned user should be automatically invited to the workspace if the user does not have access to the object and access cannot be granted to the object. Default value: false</param>
         /// <param name="silent">If set to true, the object will not be bumped up in the stream and notifications will not be generated. Default value: false</param>
         /// <returns></returns>
-        public int AddCommentToobject(string type, int id, CommentCreateUpdateRequest comment, bool alertInvite = false, bool silent = false)
+        public int AddCommentToObject(string type, int id, CommentCreateUpdateRequest comment, bool alertInvite = false, bool silent = false)
         {
             string url = string.Format("/comment/{0}/{1}/", type, id);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(alertInvite, silent));
@@ -105,7 +105,7 @@ namespace PodioAPI.Services
         /// <param name="embedId">The id of an embedded link that has been created with the Add an embed operation in the Embed area</param>
         public void UpdateComment(int commentId, string text, string externalId = null, List<int> fieldIds = null, string embedUrl = null, int? embedId = null)
         {
-            CommentCreateUpdateRequest comment = new CommentCreateUpdateRequest()
+            var requestData = new CommentCreateUpdateRequest()
             {
                 Value = text,
                 ExternalId = externalId,
@@ -113,7 +113,7 @@ namespace PodioAPI.Services
                 EmbedUrl = embedUrl,
                 EmbedId = embedId
             };
-            UpdateComment(commentId, comment);
+            UpdateComment(commentId, requestData);
         }
 
         /// <summary>

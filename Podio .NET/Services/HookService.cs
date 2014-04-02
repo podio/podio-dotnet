@@ -23,12 +23,12 @@ namespace PodioAPI.Services
         public int CreateHook(string refType, int refId, string externalURL, string type)
         {
             string url = string.Format("/hook/{0}/{1}/", refType,refId);
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 url = externalURL,
                 type = type
             };
-            var response = _podio.Post<dynamic>(url, attributes);
+            var response = _podio.Post<dynamic>(url, requestData);
             return (int)response["hook_id"];
         }
 
@@ -75,11 +75,11 @@ namespace PodioAPI.Services
         public void ValidateHookVerification(int hookId, string code)
         {
             string url = string.Format("/hook/{0}/verify/validate", hookId);
-            dynamic attributes = new
+            dynamic requestData = new
             {
                 code = code
             };
-            _podio.Post<dynamic>(url, attributes);
+            _podio.Post<dynamic>(url, requestData);
         }
 
     }

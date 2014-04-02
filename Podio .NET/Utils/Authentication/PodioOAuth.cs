@@ -15,8 +15,6 @@ namespace PodioAPI.Utils
         [JsonProperty(PropertyName = "refresh_token")]
         public string RefreshToken { get; private set; }
 
-        public DateTime TimeObtained { get; set; }
-
         [JsonProperty(PropertyName = "expires_in")]
         public string ExpiresIn { get; private set; }
 

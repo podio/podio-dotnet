@@ -33,13 +33,13 @@ namespace PodioAPI.Services
         public FileAttachment UploadFile(string filePath, string fileName)
         {
             var url = "/file/v2/";
-            var attributes = new
+            var requestData = new
             {
-                filePath = filePath,
-                fileName = fileName
+              filePath = filePath,
+              fileName = fileName
             };
             Dictionary<string, object> options = new Dictionary<string, object>() { { "upload", true } };
-            return _podio.Post<FileAttachment>(url, attributes, options);
+            return _podio.Post<FileAttachment>(url, requestData, options);
         }
 
         /// <summary>
@@ -52,11 +52,11 @@ namespace PodioAPI.Services
         public void UpdateFile(int fileId, string description)
         {
             var url = string.Format("/file/{0}", fileId);
-            var attributes = new
+            var requestData = new
             {
                 description = description
             };
-            _podio.Put<dynamic>(url, attributes);
+            _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -80,11 +80,11 @@ namespace PodioAPI.Services
         public void ReplaceFile(int oldFileId, int fileId)
         {
             var url = string.Format("/file/{0}/replace", fileId);
-            var attributes = new
+            var requestData = new
             {
                 old_file_id = oldFileId
             };
-            _podio.Post<dynamic>(url, attributes);
+            _podio.Post<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -99,12 +99,12 @@ namespace PodioAPI.Services
         public void AttachFile(int fileId, string refType, int refId)
         {
             var url = string.Format("/file/{0}/attach", fileId);
-            var attributes = new
+            var requestData = new
             {
                 ref_type = refType,
                 ref_id = refId
             };
-            _podio.Post<dynamic>(url, attributes);
+            _podio.Post<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -136,7 +136,7 @@ namespace PodioAPI.Services
         public List<FileAttachment> GetFiles(string attachedTo = null, string createdBy = null, string createdOn = null, string filetype = null, string hostedBy = null, int limit = 20, string sortBy = null, bool sortDesc = false)
         {
             var url = "/file/";
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"attached_to", attachedTo},
                 {"created_by", createdBy},
@@ -147,7 +147,7 @@ namespace PodioAPI.Services
                 {"sort_by", sortBy},
                 {"sort_desc", sortDesc.ToString()}
             };
-            return _podio.Get<List<FileAttachment>>(url, attributes);
+            return _podio.Get<List<FileAttachment>>(url, requestData);
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace PodioAPI.Services
         public List<FileAttachment> GetFilesOnApp(int appId, string attachedTo = null, string createdBy = null, string createdOn = null, string filetype = null, string hostedBy = null, int limit = 20, int offset = 0, string sortBy = null, bool sortDesc = false)
         {
             var url = string.Format("/file/app/{0}/", appId);
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"attached_to", attachedTo},
                 {"created_by", createdBy},
@@ -180,7 +180,7 @@ namespace PodioAPI.Services
                 {"sort_by", sortBy},
                 {"sort_desc", sortDesc.ToString()}
             };
-            return _podio.Get<List<FileAttachment>>(url, attributes);
+            return _podio.Get<List<FileAttachment>>(url, requestData);
         }
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace PodioAPI.Services
         public List<FileAttachment> GetFilesOnSpace(int spaceId, string attachedTo = null, string createdBy = null, string createdOn = null, string filetype = null, string hostedBy = null, int limit = 20, int offset = 0, string sortBy = null, bool sortDesc = false)
         {
             var url = string.Format("/file/space/{0}/", spaceId);
-            var attributes = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>()
             {
                 {"attached_to", attachedTo},
                 {"created_by", createdBy},
@@ -213,7 +213,7 @@ namespace PodioAPI.Services
                 {"sort_by", sortBy},
                 {"sort_desc", sortDesc.ToString()}
             };
-            return _podio.Get<List<FileAttachment>>(url, attributes);
+            return _podio.Get<List<FileAttachment>>(url, requestData);
         }
     }
 }
