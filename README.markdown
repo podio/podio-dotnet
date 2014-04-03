@@ -12,6 +12,7 @@ This client currently covers all the API methods in the following areas:
 - Tasks
 - Hooks
 - Contacts
+- Comments
 - Status
 
 Installation
