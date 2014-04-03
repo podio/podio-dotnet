@@ -76,6 +76,13 @@ namespace PodioAPI.Models
         [JsonProperty("item_name")]
         public string ItemName { get; set; }
 
+        /// <summary>
+        /// Only for retrival
+        /// <para> for create or update use <see cref="PodioAPI.Models.Application.Field &lt;T&gt;()"/> overload</para>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="externalId"></param>
+        /// <returns></returns>
         public T Field<T>(string externalId)
             where T : ApplicationField, new()
         {
@@ -83,6 +90,13 @@ namespace PodioAPI.Models
             return fieldInstance<T>(genericField);
         }
 
+        /// <summary>
+        /// Only for retrival
+        /// <para> for create or update use <see cref="PodioAPI.Models.Application.Field &lt;T&gt;()"/> overload</para>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="fieldId"></param>
+        /// <returns></returns>
         public T Field<T>(int fieldId)
             where T : ApplicationField, new()
         {
@@ -91,7 +105,7 @@ namespace PodioAPI.Models
         }
 
         /// <summary>
-        /// For application create and update only;
+        /// For application create and update only
         /// <para>Use the other overloads for retrival</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>

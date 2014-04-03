@@ -34,7 +34,7 @@ namespace PodioAPI.Models
         public int Size { get; set; }
 
         [JsonProperty("context")]
-        public Dictionary<string, object> context { get; set; }
+        public Dictionary<string, object> Context { get; set; }
 
         [JsonProperty("created_on")]
         public DateTime CreatedOn { get; set; }
@@ -50,6 +50,5 @@ namespace PodioAPI.Models
 
         [JsonProperty("replaces")]
         public List<FileAttachment> Replaces { get; set; }
-
     }
 }

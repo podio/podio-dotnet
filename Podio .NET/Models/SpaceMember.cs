@@ -26,7 +26,7 @@ namespace PodioAPI.Models
         [JsonProperty("user")]
         public User User { get; set; }
 
-        [JsonProperty("contact")]
+        [JsonProperty("profile")]
         public Contact Contact { get; set; }
 
         [JsonProperty("space")]

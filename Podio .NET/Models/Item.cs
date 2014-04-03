@@ -150,7 +150,9 @@ namespace PodioAPI.Models
             {
                 foreach (var property in genericField.GetType().GetProperties())
                 {
-                    specificField.GetType().GetProperty(property.Name).SetValue(specificField, property.GetValue(genericField, null), null);
+                    var jsonAttribute = ((JsonPropertyAttribute[])property.GetCustomAttributes(typeof(JsonPropertyAttribute), false));
+                    if (jsonAttribute.Length > 0)
+                        specificField.GetType().GetProperty(property.Name).SetValue(specificField, property.GetValue(genericField, null), null);
                 }
             }
             else
