@@ -24,7 +24,7 @@ namespace PodioAPI.Services
         public int CreateContact(int spaceId, Contact contact)
         {
             string url = string.Format("/contact/space/{0}/", spaceId);
-            var response = _podio.Post<dynamic>(url, contact);
+            dynamic response = _podio.Post<dynamic>(url, contact);
             return (int)response["profile_id"];
         }
 
@@ -47,7 +47,7 @@ namespace PodioAPI.Services
         /// <param name="profileIds"></param>
         public void DeleteContacts(int[] profileIds)
         {
-            var profileIdCSV = Utilities.ArrayToCSV(profileIds);
+            string profileIdCSV = Utilities.ArrayToCSV(profileIds);
             string url = string.Format("/contact/{0}", profileIdCSV);
             _podio.Delete<dynamic>(url);
         }
@@ -77,7 +77,7 @@ namespace PodioAPI.Services
                 {"limit", limit.ToString()},
                 {"text",text}
             };
-            var url = "/contact/skill/";
+            string url = "/contact/skill/";
             return _podio.Get<List<string>>(url, requestData);
         }
 
@@ -90,7 +90,7 @@ namespace PodioAPI.Services
         public int GetSpaceContactTotals(int SpaceId)
         {
             string url = string.Format("/contact/space/{0}/totals/space", SpaceId);
-            var response = _podio.Get<dynamic>(url);
+            dynamic response = _podio.Get<dynamic>(url);
             return (int)response["total"];
         }
 
@@ -114,7 +114,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<Contact> GetContactsByProfileId(int[] profileIds, int? spaceId = null)
         {
-            var profileIdCSV = Utilities.ArrayToCSV(profileIds);
+            string profileIdCSV = Utilities.ArrayToCSV(profileIds);
             string url = string.Format("/contact/{0}/v2", profileIdCSV);
             var requestData = new Dictionary<string, string>()
             {
@@ -146,7 +146,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<Contact> GetAllContacts(Dictionary<string, string> fields = null, string contactType = "user", string externalId = null, int? limit = null, int? offset = null, string required = null, bool excludeSelf = true, string order = "name", string type = "mini")
         {
-            var url = "/contact/";
+            string url = "/contact/";
             var requestData = new Dictionary<string, string>();
             var parameters = new Dictionary<string, string>()
             {

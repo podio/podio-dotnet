@@ -19,7 +19,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public Embed AddAnEmbed(string embedUrl, string mode = "immediate")
         {
-            var url = "/embed/";
+            string url = "/embed/";
             dynamic requestData = new
             {
                 url = embedUrl,

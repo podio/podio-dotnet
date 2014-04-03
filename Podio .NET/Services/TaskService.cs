@@ -107,7 +107,7 @@ namespace PodioAPI.Services
         public int GetTaskCount(string refType, int refId)
         {
             string url = string.Format("/task/{0}/{1}/count", refType, refId);
-            var response = _podio.Get<dynamic>(url);
+            dynamic response = _podio.Get<dynamic>(url);
             return (int)response["count"];
         }
 
@@ -148,7 +148,7 @@ namespace PodioAPI.Services
             {
                 {"space_id", spaceId.ToString()}
             };
-            var response = _podio.Get<dynamic>(url,requestData);
+            dynamic response = _podio.Get<dynamic>(url,requestData);
             return (int)response["count"];
         }
         
@@ -187,12 +187,12 @@ namespace PodioAPI.Services
             var createdTasks = new List<Task>();
             if ((task.Responsible is IEnumerable<int> || task.Responsible is IEnumerable<Ref>) && task.Responsible.Count > 1)
             {
-                var response = _podio.Post<List<Task>>(url, task);
+                List<Task> response = _podio.Post<List<Task>>(url, task);
                 createdTasks = response;
             }
             else
             {
-                var response = _podio.Post<Task>(url, task);
+                Task response = _podio.Post<Task>(url, task);
                 createdTasks.Add(response);
             }
             return createdTasks;
@@ -511,12 +511,12 @@ namespace PodioAPI.Services
         public int CreateLabel(string text, string color)
         {
             string url = "/task/label/";
-            var requestData = new
+            dynamic requestData = new
             {
                 text = text,
                 color = color
             };
-            var response = _podio.Post<dynamic>(url,requestData);
+            dynamic response = _podio.Post<dynamic>(url,requestData);
             return (int)response["label_id"];
         }
 
@@ -532,7 +532,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/task/{0}/complete", taskId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
-            var response = _podio.Post<dynamic>(url);
+            dynamic response = _podio.Post<dynamic>(url);
             if(response != null)
                 return (int?)response["recurring_task_id"];
             return null;
@@ -549,7 +549,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/task/{0}/assign", taskId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
-            var requestData = new
+            dynamic requestData = new
             {
                 responsible = responsible
             };

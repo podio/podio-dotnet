@@ -69,7 +69,7 @@ namespace PodioAPI.Services
         public void UpdateStatusMessage(int statusId, string text, List<int> fileIds = null, int? embedId = null, string embedUrl = null)
         {
             string url = string.Format("/status/{0}", statusId);
-            var requestData = new
+            dynamic requestData = new
             {
                 value = text,
                 file_ids = fileIds,

@@ -19,7 +19,7 @@ namespace PodioAPI.Services
         /// <param name="commentId"></param>
         public void DeleteComment(int commentId)
         {
-            var url = string.Format("/comment/{0}", commentId);
+            string url = string.Format("/comment/{0}", commentId);
             _podio.Delete<dynamic>(url);
         }
 
@@ -31,7 +31,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public Comment GetComment(int commentId)
         {
-            var url = string.Format("/comment/{0}",commentId);
+            string url = string.Format("/comment/{0}",commentId);
             return _podio.Get<Comment>(url);
         }
 
@@ -44,7 +44,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<Comment> GetCommentsOnObject(string type, int id)
         {
-            var url = string.Format("/comment/{0}/{1}/", type, id);
+            string url = string.Format("/comment/{0}/{1}/", type, id);
             return _podio.Get<List<Comment>>(url);
         }
 
@@ -89,7 +89,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/comment/{0}/{1}/", type, id);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(alertInvite, silent));
-            var response = _podio.Post<dynamic>(url, comment);
+            dynamic response = _podio.Post<dynamic>(url, comment);
             return (int)response["comment_id"];
         }
 

@@ -28,7 +28,7 @@ namespace PodioAPI.Services
                 url = externalURL,
                 type = type
             };
-            var response = _podio.Post<dynamic>(url, requestData);
+            dynamic response = _podio.Post<dynamic>(url, requestData);
             return (int)response["hook_id"];
         }
 

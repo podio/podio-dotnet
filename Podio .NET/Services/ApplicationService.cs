@@ -78,7 +78,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<string> GetFeatures(int[] appIds, bool includeSpace = false)
         {
-            var appIdCSV = Utilities.ArrayToCSV(appIds);
+            string appIdCSV = Utilities.ArrayToCSV(appIds);
             string url = "/app/features/";
             var requestData = new Dictionary<string, string>(){
                 {"app_ids",appIdCSV},
@@ -186,7 +186,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<Application> GetAllUserApps(int[] excludeAppIds = null, int? referenceableInOrg = null, string right = null, string text = null, bool excludeDemo = false, int limit = 4, string order = "score")
         {
-            var appIdCSV = Utilities.ArrayToCSV(excludeAppIds);
+            string appIdCSV = Utilities.ArrayToCSV(excludeAppIds);
             string url = "/app/v2/";
             var requestData = new Dictionary<string, string>(){
                 {"exclude_app_ids",appIdCSV},
@@ -293,7 +293,7 @@ namespace PodioAPI.Services
                 space_id = spaceId,
                 features = features
             };
-            var response = _podio.Post<dynamic>(url, requestData);
+            dynamic response = _podio.Post<dynamic>(url, requestData);
             return (int)response["app_id"];
         }
 
@@ -353,7 +353,7 @@ namespace PodioAPI.Services
                 Config = application.Config,
                 Fields = application.Fields
             };
-            var response = _podio.Post<dynamic>(url, requestDate);
+            dynamic response = _podio.Post<dynamic>(url, requestDate);
             return (int)response["app_id"];
         }
 
@@ -378,7 +378,7 @@ namespace PodioAPI.Services
                 podio.ApplicationService.AddNewAppField(APP_ID, applicationField);
             */
             string url = string.Format("/app/{0}/field/", appId);
-            var response = _podio.Post<dynamic>(url, field);
+            dynamic response = _podio.Post<dynamic>(url, field);
             return (int)response["field_id"];
         }
 
@@ -452,7 +452,7 @@ namespace PodioAPI.Services
                 textField.Config.Description = "Updated description";
                 textField.Size = "large";
             */
-            var fieldToUpdate = application.Fields.FirstOrDefault();
+            ApplicationField fieldToUpdate = application.Fields.FirstOrDefault();
             UpdateAnAppField(application.AppId, fieldToUpdate.FieldId.Value, fieldToUpdate.InternalConfig);
         }
 
@@ -465,7 +465,7 @@ namespace PodioAPI.Services
         /// <param name="config"></param>
         public void UpdateAnAppField(int appId, int fieldId, FieldConfig config)
         {
-            var url = string.Format("/app/{0}/field/{1}", appId, fieldId);
+            string url = string.Format("/app/{0}/field/{1}", appId, fieldId);
             _podio.Put<dynamic>(url, config);
         }
 
