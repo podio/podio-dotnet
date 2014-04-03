@@ -19,7 +19,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public FileAttachment GetFile(int fileId)
         {
-            var url = string.Format("/file/{0}", fileId);
+            string url = string.Format("/file/{0}", fileId);
             return _podio.Get<FileAttachment>(url);
         }
 
@@ -32,8 +32,8 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public FileAttachment UploadFile(string filePath, string fileName)
         {
-            var url = "/file/v2/";
-            var requestData = new
+            string url = "/file/v2/";
+            dynamic requestData = new
             {
               filePath = filePath,
               fileName = fileName
@@ -51,8 +51,8 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public void UpdateFile(int fileId, string description)
         {
-            var url = string.Format("/file/{0}", fileId);
-            var requestData = new
+            string url = string.Format("/file/{0}", fileId);
+            dynamic requestData = new
             {
                 description = description
             };
@@ -66,7 +66,7 @@ namespace PodioAPI.Services
         /// <param name="fileId"></param>
         public void DeleteFile(int fileId)
         {
-            var url = string.Format("/file/{0}", fileId);
+            string url = string.Format("/file/{0}", fileId);
             _podio.Delete<dynamic>(url);
         }
 
@@ -79,8 +79,8 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public void ReplaceFile(int oldFileId, int fileId)
         {
-            var url = string.Format("/file/{0}/replace", fileId);
-            var requestData = new
+            string url = string.Format("/file/{0}/replace", fileId);
+            dynamic requestData = new
             {
                 old_file_id = oldFileId
             };
@@ -98,8 +98,8 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public void AttachFile(int fileId, string refType, int refId)
         {
-            var url = string.Format("/file/{0}/attach", fileId);
-            var requestData = new
+            string url = string.Format("/file/{0}/attach", fileId);
+            dynamic requestData = new
             {
                 ref_type = refType,
                 ref_id = refId
@@ -115,8 +115,8 @@ namespace PodioAPI.Services
         /// <returns>The id of the newly created file</returns>
         public int CopyFile(int fileId)
         {
-            var url = string.Format("/file/{0}/copy", fileId);
-            var response = _podio.Post<dynamic>(url);
+            string url = string.Format("/file/{0}/copy", fileId);
+            dynamic response = _podio.Post<dynamic>(url);
             return (int)response["file_id"];
         }
 
@@ -135,7 +135,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<FileAttachment> GetFiles(string attachedTo = null, string createdBy = null, string createdOn = null, string filetype = null, string hostedBy = null, int limit = 20, string sortBy = null, bool sortDesc = false)
         {
-            var url = "/file/";
+            string url = "/file/";
             var requestData = new Dictionary<string, string>()
             {
                 {"attached_to", attachedTo},
@@ -167,7 +167,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<FileAttachment> GetFilesOnApp(int appId, string attachedTo = null, string createdBy = null, string createdOn = null, string filetype = null, string hostedBy = null, int limit = 20, int offset = 0, string sortBy = null, bool sortDesc = false)
         {
-            var url = string.Format("/file/app/{0}/", appId);
+            string url = string.Format("/file/app/{0}/", appId);
             var requestData = new Dictionary<string, string>()
             {
                 {"attached_to", attachedTo},
@@ -200,7 +200,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<FileAttachment> GetFilesOnSpace(int spaceId, string attachedTo = null, string createdBy = null, string createdOn = null, string filetype = null, string hostedBy = null, int limit = 20, int offset = 0, string sortBy = null, bool sortDesc = false)
         {
-            var url = string.Format("/file/space/{0}/", spaceId);
+            string url = string.Format("/file/space/{0}/", spaceId);
             var requestData = new Dictionary<string, string>()
             {
                 {"attached_to", attachedTo},
@@ -214,6 +214,25 @@ namespace PodioAPI.Services
                 {"sort_desc", sortDesc.ToString()}
             };
             return _podio.Get<List<FileAttachment>>(url, requestData);
+        }
+
+        /// <summary>
+        /// To directly download the file of a FileAttachment
+        /// <para>For more information see https://developers.podio.com/examples/files </para>
+        /// </summary>
+        /// <param name="fileAttachment"></param>
+        /// <returns></returns>
+        public FileResponse DownloadFile(FileAttachment fileAttachment)
+        {
+            var fileLink = fileAttachment.Link;
+
+            //For URL's other than of root 'api.podio.com' , pass the url as an option
+            var options = new Dictionary<string, dynamic>()
+            {
+                {"file_download", true},
+                {"url", fileLink}
+            };
+            return _podio.Get<FileResponse>(url:null, options: options);
         }
     }
 }

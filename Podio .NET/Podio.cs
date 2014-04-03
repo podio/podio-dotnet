@@ -72,9 +72,15 @@ namespace PodioAPI
         {
             Dictionary<string, string> requestHeaders = new Dictionary<string, string>();
             var data = new List<string>();
-            string httpMethod = "GET";
+            string httpMethod = string.Empty;
             string originalUrl = url;
             url = this.ApiUrl + url;
+
+            //To use url other than api.podio.com, fx file download from files.podio.com
+            if (options != null && options.ContainsKey("url"))
+            {
+                url = options["url"];
+            }
 
             if (string.IsNullOrEmpty(ClientId) || string.IsNullOrEmpty(ClientSecret))
             {
@@ -88,7 +94,7 @@ namespace PodioAPI
                     requestHeaders["Content-type"] = "application/x-www-form-urlencoded";
                     if (requestData != null)
                     {
-                        var query = EncodeAttributes(requestData);
+                        string query = EncodeAttributes(requestData);
                         url = url + "?" + query;
                     }
                     requestHeaders["Content-length"] = "0";
@@ -98,7 +104,7 @@ namespace PodioAPI
                     requestHeaders["Content-type"] = "application/x-www-form-urlencoded";
                     if (requestData != null)
                     {
-                        var query = EncodeAttributes(requestData);
+                        string query = EncodeAttributes(requestData);
                         url = url + "?" + query;
                     }
                     requestHeaders["Content-length"] = "0";
@@ -150,7 +156,7 @@ namespace PodioAPI
             request.Method = httpMethod;
           
             PodioResponse podioResponse = new PodioResponse();
-            Dictionary<string, string> responseHeaders = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
+            var responseHeaders = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             var responseObject = new T();
 
             if (requestHeaders.Any())
@@ -166,7 +172,7 @@ namespace PodioAPI
             }
             if (data.Any())
             {
-                foreach (var item in data)
+                foreach (string item in data)
                 {
                     if (item == "file")
                         AddFileToRequestStream(requestData.filePath, requestData.fileName, request);
@@ -179,10 +185,10 @@ namespace PodioAPI
 
             try
             {
-                using (var response = request.GetResponse())
+                using (WebResponse response = request.GetResponse())
                 {
                     podioResponse.Status = (int)((HttpWebResponse)response).StatusCode;
-                    foreach (var key in response.Headers.AllKeys)
+                    foreach (string key in response.Headers.AllKeys)
                     {
                         responseHeaders.Add(key, response.Headers.Get(key));
                     }
@@ -196,7 +202,7 @@ namespace PodioAPI
                             fileResponse.FileContents = memoryStream.ToArray();
                             fileResponse.ContentType = response.ContentType;
                             fileResponse.ContentLength = response.ContentLength;
-                            return fileResponse.ChangeType<T>();
+                            return (T)fileResponse.ChangeType<T>();
                         }
                     }
                     else if (options != null && options.ContainsKey("return_raw"))
@@ -219,10 +225,10 @@ namespace PodioAPI
             }
             catch (WebException e)
             {
-                using (var response = e.Response)
+                using (WebResponse response = e.Response)
                 {
                     podioResponse.Status = (int)((HttpWebResponse)response).StatusCode;
-                    foreach (var key in response.Headers.AllKeys)
+                    foreach (string key in response.Headers.AllKeys)
                     {
                         responseHeaders.Add(key, response.Headers.Get(key));
                     }
@@ -330,7 +336,7 @@ namespace PodioAPI
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="request">HttpWebRequest object of which request to write</param>
-        internal static void WriteToRequestStream(object obj, HttpWebRequest request)
+        internal void WriteToRequestStream(object obj, HttpWebRequest request)
         {
             if (obj != null)
             {
@@ -377,7 +383,7 @@ namespace PodioAPI
        /// <param name="filePath">Physical path to file</param>
        /// <param name="fileName">File Name</param>
        /// <param name="request">HttpWebRequest object of which request stream file is added to</param>
-        private static void AddFileToRequestStream(string filePath, string fileName, HttpWebRequest request)
+        private void AddFileToRequestStream(string filePath, string fileName, HttpWebRequest request)
         {
             byte[] inputData;
             string contentType = "";
@@ -396,8 +402,8 @@ namespace PodioAPI
                     fileName);
                 ms.Write(Encoding.UTF8.GetBytes(postData), 0, Encoding.UTF8.GetByteCount(postData));
 
-                var data = File.ReadAllBytes(filePath);
-                var mimeType = MimeTypeMapping.GetMimeType(Path.GetExtension(filePath));
+                byte[] data = File.ReadAllBytes(filePath);
+                string mimeType = MimeTypeMapping.GetMimeType(Path.GetExtension(filePath));
                
                 ms.Write(Encoding.UTF8.GetBytes("\r\n"), 0, Encoding.UTF8.GetByteCount("\r\n"));
 
@@ -491,13 +497,14 @@ namespace PodioAPI
             attributes["client_id"] = ClientId;
             attributes["client_secret"] = ClientSecret;
 
-            Dictionary<string, object> options = new Dictionary<string, object>(){
+            var options = new Dictionary<string, object>(){
                 {"oauth_request",true}
             };
 
             PodioOAuth podioOAuth = Post<PodioOAuth>("/oauth/token", attributes, options);
             OAuth = podioOAuth;
             AuthStore.Set(podioOAuth);
+
             return podioOAuth;
         }
 
@@ -533,15 +540,6 @@ namespace PodioAPI
         #region Services
 
         /// <summary>
-        /// Provies all API methods in Embed Area
-        /// <para>https://developers.podio.com/doc/applications</para>
-        /// </summary>
-        public ApplicationService ApplicationService
-        {
-            get { return new ApplicationService(this); }
-        }
-
-        /// <summary>
         /// Provies all API methods in Item Area
         /// <para>Podio API Reference: https://developers.podio.com/doc/items </para>
         /// </summary>
@@ -566,6 +564,15 @@ namespace PodioAPI
         public EmbedService EmbedService
         {
             get { return new EmbedService(this); }
+        }
+
+        /// <summary>
+        /// Provies all API methods in Embed Area
+        /// <para>https://developers.podio.com/doc/applications</para>
+        /// </summary>
+        public ApplicationService ApplicationService
+        {
+            get { return new ApplicationService(this); }
         }
 
         /// <summary>
@@ -612,8 +619,10 @@ namespace PodioAPI
         {
             get { return new CommentService(this); }
         }
+
         #endregion
     }
+
     public enum RequestMethod
     {
         GET, POST, PUT, DELETE
