@@ -17,6 +17,6 @@
         /// <summary>
         /// Remove PodioOAuth from store
         /// </summary>
-        void Distroy();
+        void Clear();
     }
 }

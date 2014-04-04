@@ -11,7 +11,7 @@ namespace PodioAPI.Utils.ItemFields
         {
             get
             {
-                return this.valuesAs<Contact>(_contacts);
+                 return this.valuesAs<Contact>(_contacts);
             }
         }
 
