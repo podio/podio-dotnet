@@ -1,0 +1,137 @@
+﻿@model PodioAspNetSample.ViewModels.LeadListingViewModel
+@{
+    ViewBag.Title = "Leads";
+}
+@{
+    if (ViewBag.message != null)
+    {
+        <div class="alert alert-success fade in">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <p>@ViewBag.message</p>
+        </div>
+    }
+
+    if (ViewBag.error != null)
+    {
+        <div class="alert alert-danger fade in">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <p>@ViewBag.error</p>
+        </div>
+    }
+    else
+    {
+        @section createButton
+        {
+           <div class="col-lg-6">
+               @Html.ActionLink("Add New Lead", "Create", "Leads", null, new { @class = "create_button btn btn-default btn-sm" })
+           </div>
+        }
+        <div class="row">
+            @using (Html.BeginForm("Filter", "Leads", FormMethod.Post, new { @class = "form-horizontal" }))
+            {
+                if (Model != null)
+                {
+                    <div class="col-lg-12">
+                        <div class="well bs-component">
+                            <fieldset>
+                                <legend>Filter</legend>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.NextFollowUpFrom, new { @class = "col-lg-2 control-label" })
+                                    <div class="col-lg-5">
+                                        @Html.TextBoxFor(model => model.NextFollowUpFrom, new { @class = "form-control", placeholder = "From" })
+                                    </div>
+                                    <div class="col-lg-5">
+                                        @Html.TextBoxFor(model => model.NextFollowUpTo, new { @class = "form-control", placeholder = "To" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ExpectedValueFrom, new { @class = "col-lg-2 control-label" })
+                                    <div class="col-lg-5">
+                                        @Html.TextBoxFor(model => model.ExpectedValueFrom, new { @class = "form-control", placeholder = "From" })
+                                    </div>
+                                    <div class="col-lg-5">
+                                        @Html.TextBoxFor(model => model.ExpectedValueTo, new { @class = "form-control", placeholder = "To" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Status, new { @class = "col-lg-2 control-label" })
+                                    <div class="col-lg-10">
+                                        @Html.DropDownListFor(model => model.Status, Model.StatusOptions, "Select Status", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="ddlLeadOwner" class="col-lg-2 control-label">Lead owner</label>
+                                    <div class="col-lg-10">
+                                        @Html.DropDownListFor(model => model.LeadOwner, Model.LeadOwnersOptions, "Select Lead Owner", new { @class = "form-control" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-lg-10 col-lg-offset-2">
+                                        <button type="submit" class="btn btn-success">Submit</button>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                }
+
+            }
+            <div class="col-lg-12">
+                <div class="bs-component">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Company</th>
+                                    <th>Lead Owners</th>
+                                    <th>Expected Value</th>
+                                    <th>Next Follow Up</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if (Model.Leads != null && Model.Leads.Any())
+                                {
+                                    int counter = 1;
+                                    foreach (var item in Model.Leads)
+                                    {
+                                        String leadOwners = item.LeadOwners != null ? String.Join(", ", item.LeadOwners.Select(x => x.Value)) : String.Empty;
+                                        <tr>
+                                            <td>@counter</td>
+                                            <td>@item.Company</td>
+                                            <td>@leadOwners</td>
+                                            <td>@item.ExpectedValue</td>
+                                            <td>
+                                                @if (item.NextFollowUp != null)
+                                                {
+                                                    @item.NextFollowUp.Value.ToString("dd/MM/yyyy")
+                                                }
+                                            </td>
+                                            <td>@Html.ActionLink("Edit", "Edit", "Leads", new { Id = item.PodioItemID }, new { @class = "edit_button" })</td>
+                                            <td>@Html.ActionLink("Delete", "Delete", "Leads", new { Id = item.PodioItemID }, new { @class = "delete_button", onclick = "return confirm('Item delete operation is NOT RECOVERABLE. Do you want to continue?')" })</td>
+                                        </tr>
+                                        counter++;
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+
+@section scripts
+{
+    <script src="/Scripts/bootstrap/bootstrap-datepicker.js"></script>
+    <script>
+        var checkin = jQuery('#NextFollowUpFrom,#NextFollowUpTo').datepicker({
+            format: 'dd/mm/yyyy'
+        });
+        jQuery.validator.methods["date"] = function (value, element) { return true; }
+    </script>
+}

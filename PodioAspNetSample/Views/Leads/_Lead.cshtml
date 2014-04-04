@@ -1,0 +1,86 @@
+﻿@model PodioAspNetSample.ViewModels.LeadViewModel
+
+@Html.HiddenFor(model => model.PodioItemID)
+<fieldset>
+    <legend>Legend</legend>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Company, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.Company, new { @class = "form-control", placeholder = "Company" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LeadContacts, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.ListBoxFor(model => model.LeadContacts, Model.LeadContactsOptions, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.LeadOwners, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.ListBoxFor(model => model.LeadOwners, Model.LeadOwnersOptions, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ExpectedValue, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.ExpectedValue, new { @class = "form-control", placeholder = "Expected total value of lead" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.ProbabilityOfSale, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.ProbabilityOfSale, new { @class = "form-control", placeholder = "Probability of projected possible value" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Status, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @foreach (var item in Model.StatusOptions)
+            {
+                <div class="radio">
+                <label>
+                    @Html.RadioButton("Status", item.Value, item.Selected)
+                    @item.Text
+                </label>
+                </div> 
+            }           
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.NextFollowUp, new { @class = "col-lg-2 control-label " })
+        <div class="col-lg-10">
+            @Html.TextBox("NextFollowUp", string.Format("{0:dd/MM/yyyy}", Model.NextFollowUp), new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.StreetAddress, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextAreaFor(model => model.StreetAddress, new { @class = "form-control", placeholder = "Street address" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.City, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.City, new { @class = "form-control", placeholder = "City" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.State, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.State, new { @class = "form-control", placeholder = "State/County/Province" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Zip, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.Zip, new { @class = "form-control", placeholder = "Zip" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Country, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
+            @Html.TextBoxFor(model => model.Country, new { @class = "form-control", placeholder = "Country" })
+        </div>
+    </div>
+</fieldset>
