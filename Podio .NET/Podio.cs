@@ -76,7 +76,7 @@ namespace PodioAPI
             string originalUrl = url;
             url = this.ApiUrl + url;
 
-            //To use url other than api.podio.com, fx file download from files.podio.com
+            //To use url other than api.podio.com, ex file download from files.podio.com
             if (options != null && options.ContainsKey("url"))
             {
                 url = options["url"];
@@ -153,6 +153,7 @@ namespace PodioAPI
                 requestHeaders["Accept"] = "application/json";
 
             var request = (HttpWebRequest)WebRequest.Create(url);
+            ServicePointManager.Expect100Continue = false;
             request.Method = httpMethod;
           
             PodioResponse podioResponse = new PodioResponse();
@@ -533,7 +534,7 @@ namespace PodioAPI
         /// </summary>
         public void ClearAuth()
         {
-            AuthStore.Distroy();
+            AuthStore.Clear();
         }
         #endregion
 
@@ -619,10 +620,8 @@ namespace PodioAPI
         {
             get { return new CommentService(this); }
         }
-
         #endregion
     }
-
     public enum RequestMethod
     {
         GET, POST, PUT, DELETE
