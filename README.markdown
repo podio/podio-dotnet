@@ -127,7 +127,7 @@ using PodioAPI.Models;
 using PodioAPI.Utils.ItemFields;
 using PodioAPI.Exceptions;
 
-podio.AuthenicateWithPassword("YOUR_PODIO_ACCOUNT", "YOUR_PODIO_PASSWORD");
+podio.AuthenicateWithPassword("YOUR_PODIO_USERNAME", "YOUR_PODIO_PASSWORD");
 
 Item myNewItem = new Item();
 
