@@ -620,6 +620,15 @@ namespace PodioAPI
         {
             get { return new CommentService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in Organization Area
+        /// <para> https://developers.podio.com/doc/organizations </para>
+        /// </summary>
+        public OrganizationService OrganizationService
+        {
+            get { return new OrganizationService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
