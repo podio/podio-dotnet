@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
+using PodioAPI.Models;
 
 namespace PodioAPI.Utils
 {
@@ -69,16 +70,32 @@ namespace PodioAPI.Utils
                         // Convert date strings to date times
                         value = DateTime.Parse((string)value);
                     }
+                    else if (propertyMap[item.Key].PropertyType == typeof(DateTime) && value != null)
+                    {
+                        // Convert date strings to date times
+                        value = DateTime.Parse((string)value);
+                    }
                     else if (value is Newtonsoft.Json.Linq.JArray)
                     {
                         var castedValue = (Newtonsoft.Json.Linq.JArray)value;
+                        var propertyType = propertyMap[item.Key].PropertyType;
+
                         switch (propertyMap[item.Key].PropertyType.Name)
                         {
                             case "String[]":
                                 value = castedValue.Select(s => s.ToString()).ToArray();
                                 break;
+                            case "List`1":
+                                if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(List<>))
+                                {
+                                    Type itemType = propertyType.GetGenericArguments()[0];
+                                    if (itemType.Name == "FileAttachment")
+                                        value = castedValue.Select(s => s.ToObject<FileAttachment>()).ToList();
+                                }
+                                break;
                         }
                     }
+
                     propertyMap[item.Key].SetValue(someObject, value, null);
                 }
             }
