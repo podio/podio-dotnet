@@ -49,7 +49,7 @@ namespace PodioAPI.Services
         /// <param name="autoJoin">True if new employees should be joined automatically, false otherwise, defaults to false</param>
         /// <param name="postOnNewApp">True if new apps should be announced with a status update, false otherwise</param>
         /// <param name="postOnNewMember">True if new members should be announced with a status update, false otherwise</param>
-        public void UpdateSpace(int spaceId, string name = "", string urlLabel = null, string privacy = null, bool? autoJoin = null, bool? postOnNewApp = null, bool? postOnNewMember = null)
+        public void UpdateSpace(int spaceId, string name = null, string urlLabel = null, string privacy = null, bool? autoJoin = null, bool? postOnNewApp = null, bool? postOnNewMember = null)
         {
             string url = string.Format("/space/{0}", spaceId);
             dynamic requestData = new
