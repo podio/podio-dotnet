@@ -113,6 +113,40 @@ namespace PodioAPI.Services
             return _podio.Get<Space>(url);
         }
 
-       
+        /// <summary>
+        /// Returns the space and organization with the given full URL.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/spaces/get-space-by-url-22481 </para>
+        /// </summary>
+        /// <param name="orgSlug">The org of the slug to search for</param>
+        /// <param name="spaceSlug">The slug of the url to search for</param>
+        /// <param name="spaceUrl">The full URL of the space. The URL does not have to be truncated to the space root, it can be the full URL of the resource.</param>
+        /// <returns></returns>
+        public Space GetSpaceByUrl(string orgSlug, string spaceSlug, string spaceUrl)
+        {
+            string url = "/space/url";
+            var requestData = new Dictionary<string, string>()
+            {
+                {"org_slug",orgSlug},
+                {"space_slug",spaceSlug},
+                {"url",spaceUrl}
+            };
+            return _podio.Get<Space>(url, requestData);
+        }
+
+        /// <summary>
+        /// Returns the top spaces for the user.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/spaces/get-top-spaces-22477 </para>
+        /// </summary>
+        /// <param name="limit"></param>
+        /// <returns></returns>
+        public List<Space> GetTopSpaces(int limit = 6)
+        {
+            string url = "/space/top/";
+            var requestData = new Dictionary<string, string>()
+            {
+                {"limit",limit.ToString()}
+            };
+            return _podio.Get<List<Space>>(url, requestData);
+        }
     }
 }
