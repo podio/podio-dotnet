@@ -63,5 +63,56 @@ namespace PodioAPI.Services
             };
             _podio.Put<dynamic>(url, requestData);
         }
+
+        /// <summary>
+        /// Returns the available spaces for the given organization. This is spaces that are open and available for the user to join.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/spaces/get-available-spaces-1911961 </para>
+        /// </summary>
+        /// <param name="orgId"></param>
+        /// <returns></returns>
+        public List<SpaceMicro> GetAvailableSpaces(int orgId)
+        {
+            string url = string.Format("/space/org/{0}/available/", orgId);
+            return _podio.Get<List<SpaceMicro>>(url);
+        }
+
+        /// <summary>
+        /// Returns the available seats. A null value means there is an unlimited number of available seats.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/spaces/get-available-spaces-1911961 </para>
+        /// </summary>
+        /// <param name="spaceId"></param>
+        /// <returns></returns>
+        public Seat GetAvailableSeats(int spaceId)
+        {
+            string url = string.Format("/space/{0}/available", spaceId);
+            return _podio.Get<Seat>(url);
+        }
+
+        /// <summary>
+        /// Get the space with the given id.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/spaces/get-space-22389 </para>
+        /// </summary>
+        /// <param name="spaceId"></param>
+        /// <returns></returns>
+        public Space GetSpace(int spaceId)
+        {
+            string url = string.Format("/space/{0}", spaceId);
+            return _podio.Get<Space>(url);
+        }
+
+        /// <summary>
+        /// Returns the space in the given org with the given URL label
+        /// <para>Podio API Reference: https://developers.podio.com/doc/spaces/get-space-by-org-and-url-label-476929 </para>
+        /// </summary>
+        /// <param name="orgId"></param>
+        /// <param name="urlLabel"></param>
+        /// <returns></returns>
+        public Space GetSpaceByOrgAndUrlLabel(int orgId, string urlLabel)
+        {
+            string url = string.Format("/space/org/{0}/{1}", orgId, urlLabel);
+            return _podio.Get<Space>(url);
+        }
+
+       
     }
 }
