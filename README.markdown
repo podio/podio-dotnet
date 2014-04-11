@@ -14,6 +14,8 @@ This client currently covers all the API methods in the following areas:
 - Contacts
 - Comments
 - Status
+- Organizations
+- Spaces
 
 Installation
 -------
