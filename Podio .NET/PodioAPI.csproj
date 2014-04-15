@@ -140,6 +140,7 @@
     <Compile Include="Services\HookService.cs" />
     <Compile Include="Services\ItemService.cs" />
     <Compile Include="Services\OrganizationService.cs" />
+    <Compile Include="Services\SpaceMembersService.cs" />
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\TaskService.cs" />

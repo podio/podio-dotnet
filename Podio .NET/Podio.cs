@@ -638,6 +638,15 @@ namespace PodioAPI
         {
             get { return new SpaceService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in SpaceMember Area
+        /// <para> https://developers.podio.com/doc/space-members </para>
+        /// </summary>
+        public SpaceMembersService SpaceMembersService
+        {
+            get { return new SpaceMembersService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
