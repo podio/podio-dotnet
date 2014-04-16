@@ -2,7 +2,7 @@
 using System;
 
 namespace PodioAPI.Exceptions
-{   
+{
     public class PodioException : Exception
     {
         /// <summary>
@@ -45,57 +45,57 @@ namespace PodioAPI.Exceptions
         }
     }
 
-    class PodioForbiddenError : PodioException
+    class PodioForbiddenException : PodioException
     {
-        public PodioForbiddenError(int status, PodioError error)
+        public PodioForbiddenException(int status, PodioError error)
             : base(status, error)
         {
         }
     }
 
-    class PodioNotFoundError : PodioException
+    class PodioNotFoundException : PodioException
     {
-        public PodioNotFoundError(int status, PodioError error)
+        public PodioNotFoundException(int status, PodioError error)
             : base(status, error)
         {
         }
     }
 
-    class PodioConflictError : PodioException
+    class PodioConflictException : PodioException
     {
-        public PodioConflictError(int status, PodioError error)
+        public PodioConflictException(int status, PodioError error)
             : base(status, error)
         {
         }
     }
 
-    class PodioGoneError : PodioException
+    class PodioGoneException : PodioException
     {
-        public PodioGoneError(int status, PodioError error)
+        public PodioGoneException(int status, PodioError error)
             : base(status, error)
         {
         }
     }
 
-    class PodioRateLimitError : PodioException
+    class PodioRateLimitException : PodioException
     {
-        public PodioRateLimitError(int status, PodioError error)
+        public PodioRateLimitException(int status, PodioError error)
             : base(status, error)
         {
         }
     }
 
-    class PodioServerError : PodioException
+    class PodioServerException : PodioException
     {
-        public PodioServerError(int status, PodioError error)
+        public PodioServerException(int status, PodioError error)
             : base(status, error)
         {
         }
     }
 
-    class PodioUnavailableError : PodioException
+    class PodioUnavailableException : PodioException
     {
-        public PodioUnavailableError(int status, PodioError error)
+        public PodioUnavailableException(int status, PodioError error)
             : base(status, error)
         {
         }
