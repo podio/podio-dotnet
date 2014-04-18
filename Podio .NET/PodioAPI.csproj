@@ -56,6 +56,7 @@
     <Compile Include="Models\OrganizationLoginReport.cs" />
     <Compile Include="Models\OrganizationMember.cs" />
     <Compile Include="Models\OrganizationMicro.cs" />
+    <Compile Include="Models\Request\AddSpaceMemberRequest.cs" />
     <Compile Include="Models\Request\ApplicationCreateUpdateRequest.cs" />
     <Compile Include="Models\Request\BulkDeleteRequest.cs" />
     <Compile Include="Models\Request\CommentCreateUpdateRequest.cs" />
@@ -130,6 +131,7 @@
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserMail.cs" />
     <Compile Include="Models\Via.cs" />
+    <Compile Include="Models\Widget.cs" />
     <Compile Include="Podio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApplicationService.cs" />
@@ -144,6 +146,7 @@
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\WidgetService.cs" />
     <Compile Include="Utils\ApplicationFields\AppReferenceApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\CalculationApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\CategoryApplicationField.cs" />

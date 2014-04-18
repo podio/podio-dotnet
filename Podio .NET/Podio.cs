@@ -654,6 +654,15 @@ namespace PodioAPI
         {
             get { return new SpaceMembersService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in  Widgets Area
+        /// <para> https://developers.podio.com/doc/widgets </para>
+        /// </summary>
+        public WidgetService WidgetService
+        {
+            get { return new WidgetService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
