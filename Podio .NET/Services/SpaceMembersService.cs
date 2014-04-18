@@ -137,5 +137,42 @@ namespace PodioAPI.Services
             string url = string.Format("/space/{0}/member_request/", spaceId);
             _podio.Post<dynamic>(url);
         }
+
+        /// <summary>
+        /// Accept a request from another user to be added to the space.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/accept-space-membership-request-6146271 </para>
+        /// </summary>
+        /// <param name="spaceId"></param>
+        /// <param name="spaceMemberRequestId"></param>
+        public void AcceptSpaceMembershipRequest(int spaceId, int spaceMemberRequestId)
+        {
+            string url = string.Format("/space/{0}/member_request/{1}/accept", spaceId, spaceMemberRequestId);
+            _podio.Post<dynamic>(url);
+        }
+
+        /// <summary>
+        /// Adds a list of users (either through user_id or email) to the space. If the user limit is reached, status code 403 will be returned.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/add-member-to-space-1066259 </para>
+        /// </summary>
+        /// <param name="spaceId"></param>
+        /// <param name="addSpaceMemberRequest"></param>
+        public void AddMemberToSpace(int spaceId, AddSpaceMemberRequest addSpaceMemberRequest)
+        {
+            string url = string.Format("/space/{0}/member/", spaceId);
+            _podio.Post<dynamic>(url, addSpaceMemberRequest);
+        }
+
+        /// <summary>
+        /// Ends all the users membership on the space, can also be called for members in state invited.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/end-space-memberships-22399 </para>
+        /// </summary>
+        /// <param name="spaceId"></param>
+        /// <param name="userIds"></param>
+        public void EndSpaceMemberships(int spaceId, int[] userIds)
+        {
+            string userIdsAsCSV = Utilities.ArrayToCSV(userIds);
+            string url = string.Format("/space/{0}/member/{1}", spaceId, userIdsAsCSV);
+            _podio.Delete<dynamic>(url);
+        }
     }
 }
