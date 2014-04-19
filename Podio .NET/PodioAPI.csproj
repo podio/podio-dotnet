@@ -121,6 +121,7 @@
     <Compile Include="Models\SpaceMember.cs" />
     <Compile Include="Models\SpaceMicro.cs" />
     <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\StreamObject.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TaggedObject.cs" />
     <Compile Include="Models\Task.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="Services\SpaceMembersService.cs" />
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Services\StatusService.cs" />
+    <Compile Include="Services\StreamService.cs" />
     <Compile Include="Services\TaskService.cs" />
     <Compile Include="Services\WidgetService.cs" />
     <Compile Include="Utils\ApplicationFields\AppReferenceApplicationField.cs" />

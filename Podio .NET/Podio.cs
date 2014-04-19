@@ -663,6 +663,15 @@ namespace PodioAPI
         {
             get { return new WidgetService(this); }
         }
+
+        /// <summary>
+        /// Provies API methods in Stream Area
+        /// <para> https://developers.podio.com/doc/stream </para>
+        /// </summary>
+        public StreamService StreamService
+        {
+            get { return new StreamService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
