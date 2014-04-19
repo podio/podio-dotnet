@@ -144,9 +144,9 @@ dateField.End = DateTime.Now.AddMonths(2);
 
 //A Location field with external_id 'location'
 var locationField = myNewItem.Field<LocationItemField>("location");
-List<string> location = new List<string> 
+locationField.Locations = new List<string> 
 { 
-   "Copenhagen, Denmark"
+ "Copenhagen, Denmark"
 };
 
 //A Money field with external_id 'money'
