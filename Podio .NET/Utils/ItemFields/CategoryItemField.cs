@@ -7,13 +7,13 @@ namespace PodioAPI.Utils.ItemFields
 {
     public class CategoryItemField : ItemField
     {
-        private List<Answer> _options;
+        private List<Option> _options;
 
-        public IEnumerable<Answer> Options
+        public IEnumerable<Option> Options
         {
             get
             {
-                return this.valuesAs<Answer>(_options);
+                return this.valuesAs<Option>(_options);
             }
         }
 
@@ -39,7 +39,7 @@ namespace PodioAPI.Utils.ItemFields
             }
         }
 
-        public class Answer
+        public class Option
         {
 
             [JsonProperty("status")]

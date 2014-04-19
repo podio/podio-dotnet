@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace PodioAPI.Utils.ItemFields
 {
-    public class NumericField : ItemField
+    public class NumericItemField : ItemField
     {
         public double? Value
         {

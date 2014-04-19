@@ -6,18 +6,18 @@ namespace PodioAPI.Utils.ApplicationFields
 {
     public class CategoryApplicationField : ApplicationField
     {
-        IEnumerable<CategoryItemField.Answer> _options;
+        IEnumerable<CategoryItemField.Option> _options;
 
         /// <summary>
         /// The list of options for the category
         /// </summary>
-        public IEnumerable<CategoryItemField.Answer> Options
+        public IEnumerable<CategoryItemField.Option> Options
         {
             get
             {
                 if (_options == null)
                 {
-                    _options = this.GetSettingsAs<CategoryItemField.Answer>("options");
+                    _options = this.GetSettingsAs<CategoryItemField.Option>("options");
                 }
                 return _options;
             }

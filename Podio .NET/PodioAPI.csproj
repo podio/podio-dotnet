@@ -177,7 +177,7 @@
     <Compile Include="Utils\ItemFields\ImageItemField.cs" />
     <Compile Include="Utils\ItemFields\LocationItemField.cs" />
     <Compile Include="Utils\ItemFields\MoneyItemField.cs" />
-    <Compile Include="Utils\ItemFields\NumericField.cs" />
+    <Compile Include="Utils\ItemFields\NumericItemField.cs" />
     <Compile Include="Utils\ItemFields\ProgressItemField.cs" />
     <Compile Include="Utils\ItemFields\QuestionItemField.cs" />
     <Compile Include="Utils\ItemFields\StateItemField.cs" />
