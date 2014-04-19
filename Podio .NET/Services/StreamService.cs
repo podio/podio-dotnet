@@ -111,5 +111,17 @@ namespace PodioAPI.Services
             return _podio.Get<List<StreamObject>>(url, requestData);
         }
 
+        /// <summary>
+        /// Returns an object of type "item", "status" or "task" as a stream object.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/stream/get-stream-object-80054 </para>
+        /// </summary>
+        /// <param name="refType"></param>
+        /// <param name="refId"></param>
+        /// <returns></returns>
+        public StreamObject GetStreamObject(string refType, int refId)
+        {
+            string url = string.Format("/stream/{0}/{1}", refType, refId);
+            return _podio.Get<StreamObject>(url);
+        }
     }
 }
