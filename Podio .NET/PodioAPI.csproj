@@ -56,6 +56,7 @@
     <Compile Include="Models\OrganizationLoginReport.cs" />
     <Compile Include="Models\OrganizationMember.cs" />
     <Compile Include="Models\OrganizationMicro.cs" />
+    <Compile Include="Models\ReferenceGroup.cs" />
     <Compile Include="Models\Request\AddSpaceMemberRequest.cs" />
     <Compile Include="Models\Request\ApplicationCreateUpdateRequest.cs" />
     <Compile Include="Models\Request\BulkDeleteRequest.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Models\Ref.cs" />
     <Compile Include="Models\Reference.cs" />
     <Compile Include="Models\Reminder.cs" />
+    <Compile Include="Models\Request\SearchReferencesRequest.cs" />
     <Compile Include="Models\Request\TaskCreateUpdateRequest.cs" />
     <Compile Include="Models\Seat.cs" />
     <Compile Include="Models\Space.cs" />
@@ -143,6 +145,7 @@
     <Compile Include="Services\HookService.cs" />
     <Compile Include="Services\ItemService.cs" />
     <Compile Include="Services\OrganizationService.cs" />
+    <Compile Include="Services\ReferenceService.cs" />
     <Compile Include="Services\SpaceMembersService.cs" />
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Services\StatusService.cs" />

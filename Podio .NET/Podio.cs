@@ -672,6 +672,15 @@ namespace PodioAPI
         {
             get { return new StreamService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in  Reference Area
+        /// <para> https://developers.podio.com/doc/reference </para>
+        /// </summary>
+        public ReferenceService ReferenceService
+        {
+            get { return new ReferenceService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
