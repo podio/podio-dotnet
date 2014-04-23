@@ -2,7 +2,7 @@
 
 namespace PodioAPI.Utils
 {
-    class SessionStore: IAuthStore
+    public class SessionStore: IAuthStore
     {
         public PodioOAuth Get()
         {
