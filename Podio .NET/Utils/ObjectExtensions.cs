@@ -79,7 +79,7 @@ namespace PodioAPI.Utils
                     {
                         var castedValue = (Newtonsoft.Json.Linq.JArray)value;
                         var propertyType = propertyMap[item.Key].PropertyType;
-
+                        
                         switch (propertyMap[item.Key].PropertyType.Name)
                         {
                             case "String[]":
@@ -89,9 +89,10 @@ namespace PodioAPI.Utils
                                 if (propertyType.IsGenericType && propertyType.GetGenericTypeDefinition() == typeof(List<>))
                                 {
                                     Type itemType = propertyType.GetGenericArguments()[0];
-                                    if (itemType.Name == "FileAttachment")
-                                        value = castedValue.Select(s => s.ToObject<FileAttachment>()).ToList();
+                                    if(itemType.Name == "FileAttachment")
+                                       value = castedValue.Select(s => s.ToObject<FileAttachment>()).ToList();
                                 }
+
                                 break;
                         }
                     }
