@@ -1,0 +1,404 @@
+---
+layout: default
+active: fields
+---
+# Field reference
+You can access individual fields either by `field_id` or more likely by the human-readable `external_id`. The `Values` property of ItemField object is dynamic. it returns data as `List<Dictionary<string, object>>`. As it is a bit difficult to access values from it, we have created an abstraction to access and set values as strongly typed objects.
+
+Below you'll find examples for getting and setting field values for each of the fields available in Podio.
+
+* [App reference field](#app-reference-field)
+* [Calculation field](#calculation-field)
+* [Category & Question fields](#category-field--question-field)
+* [Contact field](#contact-field)
+* [Date field](#date-field)
+* [Duration field](#duration-field)
+* [Image field](#image-field)
+* [Link/embed field](#linkembed-field)
+* [Location/Google Maps field](#locationgoogle-maps-field)
+* [Money field](#money-field)
+* [Number field](#number-field)
+* [Progress field](#progress-field)
+* [Text field](#text-field)
+
+## App reference field
+
+#### Getting values
+Values are returned as a list of `PodioAPI.Models.Item` object:
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+AppItemField appField = item.Field<AppItemField>("related-items"); // A App reference field with external_id 'related-items'
+IEnumerable<Item> images = appField.Items;
+```
+
+#### Setting values
+For setting values for field type App reference, you need assign the item_id's:
+
+```csharp
+Item myNewItem = new Item();
+//An App reference field with external_id 'app-reference'
+var appReferenceField = myNewItem.Field<AppItemField>("app-reference");
+//Set Item id's to reference
+appReferenceField.ItemIds = new List<int>
+{
+    1234, 4568
+};
+```
+
+
+------------------------------------------------------------------------------
+
+## Calculation field
+
+#### Getting values
+Value is provided as type `float?`.
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+$field_id = 'calculation';
+
+CalculationItemField calculationField = item.Field<CalculationItemField>("calculation"); // A Calculation field with external_id 'calculation'
+float? number = calculationField.Value;
+```
+
+Calculation fields are read-only. It's not possible to modify the value.
+
+
+------------------------------------------------------------------------------
+
+## Category field & Question field
+
+#### Getting values
+Category and Question fields function in the same manner. Values are provided as an list of option.
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+
+CategoryItemField categoryField = item.Field<CategoryItemField>("categories"); // A Category field with external_id 'categories'
+IEnumerable<CategoryItemField.Option> categories = categoryField.Options;
+
+QuestionItemField questionField = item.Field<QuestionItemField>("question"); // A Question field with external_id 'question'
+IEnumerable<CategoryItemField.Option> answers = questionField.Options;
+
+```
+
+#### Setting values
+Set a single value by using the OptionId.
+
+```csharp
+Item myNewItem = new Item();
+var categoryField = myNewItem.Field<CategoryItemField>("categories");
+
+// Set value to a single option
+categoryField.OptionId =  2;  //option_id: 2
+```
+
+Use OptionIds to set multiple values
+```csharp
+Item myNewItem = new Item();
+
+var categoryField = myNewItem.Field<CategoryItemField>("categories");
+categoryField.OptionIds = new List<int> { 4, 5, 6 }; // option_ids: 4, 5 and 6
+```
+
+
+------------------------------------------------------------------------------
+
+## Contact field
+
+#### Getting values
+
+Values are returned as a List of `PodioAPI.Models.Contact` objects:
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+
+ContactItemField contactField = item.Field<ContactItemField>("client"); // A Contact field with external_id 'client'
+IEnumerable<Contact> contacts = contactField.Contacts;
+```
+
+#### Setting values
+Setting value to field type Contact can be done by setting profile_id's
+
+```csharp
+Item myNewItem = new Item();
+
+var contactField = myNewItem.Field<ContactItemField>("contacts");
+contactField.ContactIds = new List<int> { 3254, 89745 };  // Set the profile id's of the contacts
+```
+
+
+------------------------------------------------------------------------------
+
+## Date field
+
+#### Getting values
+Date field values have two components: The start date and the end date. You can also access date and time sections individually. This is often preferred as the time component will be null for events without time.
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+
+// A Date field with external_id 'deadline-date'
+DateItemField dateField = item.Field<DateItemField>("deadline-date");
+DateTime? date = dateField.Start; //Nullable DateTime
+DateTime? endDate = dateField.End; //Nullable DateTime
+
+string startTime =  dateField.StartTime; // Time as string else null
+string endTime =  dateField.EndTime; // Time as string else null
+```
+
+#### Setting values
+To set you can assign value to `Start` and `End` properties.
+
+```csharp
+Item myNewItem = new Item();
+
+//A Date field with external_id 'deadline-date'
+var dateField = myNewItem.Field<DateItemField>("deadline-date");
+dateField.Start = DateTime.Now;
+dateField.End = DateTime.Now.AddMonths(2);
+```
+
+
+------------------------------------------------------------------------------
+
+## Duration field
+
+#### Getting values
+Progress fields return TimeSpan representing the duration in seconds.
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+
+// A Duration field with external_id 'duration'
+DurationItemField durationField = item.Field<DurationItemField>("duration");
+TimeSpan? timeSpan = durationField.Value;
+```
+
+#### Setting values
+Simply assign Value property of type TimeSpan to set the value
+
+```csharp
+Item myNewItem = new Item();
+
+// A Duration field with external_id 'duration'
+DurationItemField durationField = item.Field<DurationItemField>("duration");
+durationField.Value = new TimeSpan(1, 30, 0);
+```
+
+
+------------------------------------------------------------------------------
+
+## Image field
+
+#### Getting values
+
+Values are returned as a List of `PodioAPI.Models.FileAttachment` objects:
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+
+// A Image field with external_id 'image'
+ImageItemField imageField = item.Field<ImageItemField>("image");
+IEnumerable<FileAttachment> images = imageField.Images;
+
+foreach (var file in images)
+{
+    int fileId = file.FileId;
+    string fileUrl = file.Link;
+
+    // You can download and save to a file
+    FileResponse fileResponse = podio.FileService.DownloadFile(file);
+    string filePath = Server.MapPath("/Images/" + file.Name);
+
+    System.IO.File.WriteAllBytes(filePath, fileResponse.FileContents);
+   
+}
+```
+
+#### Setting values
+Setting value can be done by setting a list of file_id's to `FileIds` property. You have to upload a file to get a file_id to use.
+
+```csharp
+// Upload file
+var filePath = Server.MapPath("\\files\\report.pdf");
+var uploadedFile = podio.FileService.UploadFile(filePath, "report.pdf");
+
+// Set FileIds
+Item myNewItem = new Item();
+ImageItemField imageField = myNewItem.Field<ImageItemField>("image");
+imageField.FileIds = new List<int>{uploadedFile.FileId};
+```
+
+
+------------------------------------------------------------------------------
+
+## Link/Embed field
+
+#### Getting values
+
+Values are returned as a List of `PodioAPI.Models.Embed` objects:
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+
+EmbedItemField embedField = item.Field<EmbedItemField>("link"); // A Link field with external_id 'link'
+IEnumerable<Embed> embeds = embedField.Embeds;
+
+//Get url of the first link
+string url = embeds.First().OriginalUrl;
+```
+
+#### Setting values
+Setting value to EmbedItemField can be done by calling AddEmbed method and passing in the embed_id. You will need to create the embed first.
+
+```csharp
+Item myNewItem = new Item();
+
+var embed = podio.EmbedService.AddAnEmbed("https://www.google.com/"); // Creating an embed
+
+// Embed/Link field with with external_id 'link'
+var embedField = myNewItem.Field<EmbedItemField>("link");
+embedField.AddEmbed(embed.EmbedId);
+```
+
+
+------------------------------------------------------------------------------
+
+## Location/Google Maps field
+
+#### Getting values
+Location fields return an list of strings (addresses)
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+
+// A Location field with external_id 'location'
+LocationItemField locationField = item.Field<LocationItemField>("location");
+IEnumerable<string> locations = locationField.Locations;
+```
+
+#### Setting values
+Set values using an array of locations
+
+```csharp
+Item myNewItem = new Item();
+
+//A Location field with external_id 'location'
+ var locationField = myNewItem.Field<LocationItemField>("location");
+locationField.Locations = new List<string> 
+{ 
+  "650 Townsend St., San Francisco, CA 94103",
+  "Vesterbrogade 34, 1620 Copenhagen, Denmark"
+};
+```
+
+
+------------------------------------------------------------------------------
+
+## Money field
+
+#### Getting values
+Money field values have two components: The amount and the currency. You can access these through properties.
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+
+// A Money field with external_id 'price'
+MoneyItemField moneyField = item.Field<MoneyItemField>("price");
+decimal? number = moneyField.Value;
+string currency = moneyField.Currency; // E.g. "USD"
+```
+
+#### Setting values
+You can simply assign values to `Currency` and `Value` properties to set the value.
+
+```csharp
+Item myNewItem = new Item();
+
+//A Money field with external_id 'money'
+var moneyField = myNewItem.Field<MoneyItemField>("money");
+moneyField.Currency = "EUR";
+moneyField.Value = 250.50;
+```
+
+
+------------------------------------------------------------------------------
+
+## Number field
+
+#### Getting values
+The value of a number is of type `double?`.
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+
+// A Number field with external_id 'number'
+NumericItemField numberField = item.Field<NumericItemField>("number");
+double? number = numberField.Value;
+```
+
+#### Setting values
+Simply assign Value property to set the value.
+
+```csharp
+Item myNewItem = new Item();
+
+NumericItemField numberField = myNewItem.Field<NumericItemField>("number");
+numberField.Value = 567.89;
+```
+
+
+------------------------------------------------------------------------------
+
+## Progress field
+
+#### Getting values
+Progress fields return a integer between 0 and 100.
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+
+// A Progress field with external_id 'progress'
+ProgressItemField progressField = item.Field<ProgressItemField>("progress");
+int? progress = progressField.Value;
+```
+
+#### Setting values
+Simply assign a new integer to set the value
+
+```csharp
+Item myNewItem = new Item();
+
+// A Progress field with external_id 'progress'
+ProgressItemField progressField = myNewItem.Field<ProgressItemField>("progress");
+progressField.Value = 70;
+```
+
+
+------------------------------------------------------------------------------
+
+## Text field
+
+#### Getting values
+Text fields return a regular string
+
+```csharp
+var item = podio.ItemService.GetItemBasic(123);
+
+// Text field with external_id 'title'.
+TextItemField titleField = item.Field<TextItemField>("title");
+string text = titleField.Value;
+```
+
+#### Setting values
+Simply assign the new string to set the value
+
+```csharp
+Item myNewItem = new Item();
+
+//A Text field with external_id 'title'
+var textfield = myNewItem.Field<TextItemField>("title");
+textfield.Value = "This is a text field";
+```
