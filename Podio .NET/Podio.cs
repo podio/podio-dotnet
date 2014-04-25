@@ -681,6 +681,14 @@ namespace PodioAPI
         {
             get { return new ReferenceService(this); }
         }
+
+        ///Provies all API methods in Grants area
+        ///<para> https://developers.nextpodio.dk/doc/grants </para>
+        ///</summary>
+        public GrantService GrantService
+        {
+            get { return new GrantService(this); }
+        }
         #endregion
     }
     public enum RequestMethod

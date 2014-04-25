@@ -52,6 +52,8 @@
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\ConversationMessage.cs" />
     <Compile Include="Models\ConversationParticipant.cs" />
+    <Compile Include="Models\CreatedGrant.cs" />
+    <Compile Include="Models\Grant.cs" />
     <Compile Include="Models\OrganizationContactTotal.cs" />
     <Compile Include="Models\OrganizationLoginReport.cs" />
     <Compile Include="Models\OrganizationMember.cs" />
@@ -142,6 +144,7 @@
     <Compile Include="Services\ContactService.cs" />
     <Compile Include="Services\EmbedService.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\GrantService.cs" />
     <Compile Include="Services\HookService.cs" />
     <Compile Include="Services\ItemService.cs" />
     <Compile Include="Services\OrganizationService.cs" />
