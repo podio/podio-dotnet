@@ -18,7 +18,7 @@ This will install the client library and the required dependency.
 ## Hello world
 To get started right away, use app authentication to work on a single Podio app. To find your app id and token to go your app, click the wrench in the top right corner of the sidebar and click the <b>Developer</b> option.
 
-```csharp
+{% highlight csharp startinline %} 
 using PodioAPI;
 
 var podio = new Podio(clientId, clientSecret);
@@ -26,4 +26,4 @@ podio.AuthenicateWithApp(appId, appSecret);
 
 var items = podio.ItemService.FilterItems(appId);
 Response.Write("My app has " + items.Total + " items");
-```
+{% endhighlight %}
