@@ -28,8 +28,10 @@ Values are returned as a list of `PodioAPI.Models.Item` object:
 
 {% highlight csharp startinline %}
 var item = podio.ItemService.GetItemBasic(123);
-AppItemField appField = item.Field<AppItemField>("related-items"); // A App reference field with external_id 'related-items'
-IEnumerable<Item> images = appField.Items;
+
+// A App reference field with external_id 'related-items'
+AppItemField appField = item.Field<AppItemField>("related-items");
+IEnumerable<Item> relatedItems = appField.Items;
 {% endhighlight %}
 
 #### Setting values
@@ -37,6 +39,7 @@ For setting values for field type App reference, you need assign the item_id's:
 
 {% highlight csharp startinline %}
 Item myNewItem = new Item();
+
 //An App reference field with external_id 'app-reference'
 var appReferenceField = myNewItem.Field<AppItemField>("app-reference");
 //Set Item id's to reference
@@ -56,9 +59,9 @@ Value is provided as type `float?`.
 
 {% highlight csharp startinline %}
 var item = podio.ItemService.GetItemBasic(123);
-$field_id = 'calculation';
 
-CalculationItemField calculationField = item.Field<CalculationItemField>("calculation"); // A Calculation field with external_id 'calculation'
+// A Calculation field with external_id 'calculation'
+CalculationItemField calculationField = item.Field<CalculationItemField>("calculation");
 float? number = calculationField.Value;
 {% endhighlight %}
 
@@ -75,10 +78,12 @@ Category and Question fields function in the same manner. Values are provided as
 {% highlight csharp startinline %}
 var item = podio.ItemService.GetItemBasic(123);
 
-CategoryItemField categoryField = item.Field<CategoryItemField>("categories"); // A Category field with external_id 'categories'
+// A Category field with external_id 'categories'
+CategoryItemField categoryField = item.Field<CategoryItemField>("categories");
 IEnumerable<CategoryItemField.Option> categories = categoryField.Options;
 
-QuestionItemField questionField = item.Field<QuestionItemField>("question"); // A Question field with external_id 'question'
+// A Question field with external_id 'question'
+QuestionItemField questionField = item.Field<QuestionItemField>("question");
 IEnumerable<CategoryItemField.Option> answers = questionField.Options;
 
 {% endhighlight %}
@@ -125,7 +130,9 @@ Setting value to field type Contact can be done by setting profile_id's
 Item myNewItem = new Item();
 
 var contactField = myNewItem.Field<ContactItemField>("contacts");
-contactField.ContactIds = new List<int> { 3254, 89745 };  // Set the profile id's of the contacts
+
+// Set the profile id's of the contacts
+contactField.ContactIds = new List<int> { 3254, 89745 }; 
 {% endhighlight %}
 
 
@@ -243,7 +250,8 @@ Values are returned as a List of `PodioAPI.Models.Embed` objects:
 {% highlight csharp startinline %}
 var item = podio.ItemService.GetItemBasic(123);
 
-EmbedItemField embedField = item.Field<EmbedItemField>("link"); // A Link field with external_id 'link'
+// A Link field with external_id 'link'
+EmbedItemField embedField = item.Field<EmbedItemField>("link");
 IEnumerable<Embed> embeds = embedField.Embeds;
 
 //Get url of the first link
@@ -256,7 +264,8 @@ Setting value to EmbedItemField can be done by calling AddEmbed method and passi
 {% highlight csharp startinline %}
 Item myNewItem = new Item();
 
-var embed = podio.EmbedService.AddAnEmbed("https://www.google.com/"); // Creating an embed
+// Creating an embed
+var embed = podio.EmbedService.AddAnEmbed("https://www.google.com/");
 
 // Embed/Link field with with external_id 'link'
 var embedField = myNewItem.Field<EmbedItemField>("link");
