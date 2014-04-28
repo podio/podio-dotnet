@@ -8,17 +8,17 @@ Files can be uploaded to Podio, but they don't stand on their own, they are alwa
 ## File uploads
 When you want to attach a file to an object (e.g. a comment, status message etc.) you first need to upload the file to Podio and obtain a FileAttachment object. To upload a file use the `UploadFile` method on `FileService` class:
 
-```csharp
+{% highlight csharp startinline %}
 string filePath = Server.MapPath("\\files\\report.pdf");
 FileAttachment file = podio.FileService.UploadFile(filePath, "report.pdf");
 
 Response.Write("File uploaded. The file id is: " + file.FileId);
-```
+{% endhighlight %}
 
 ## File downloads
 To download a file you must first procure a `FileAttachment` object. If you already have a `PodioItem`, `PodioComment` etc. object you probably already have the file object. Otherwise you have to get it manually. After that use the `DownloadFile` method in `FileService` class:
 
-```csharp
+{% highlight csharp startinline %}
 // Get the file object. Only necessary if you don't already have it!
 FileAttachment file = podio.FileService.GetFile(fileId);
 
@@ -28,5 +28,5 @@ FileResponse fileResponse = podio.FileService.DownloadFile(file);
 // Store the file on local disk
 string filePath = Server.MapPath("/Files/" + file.Name);
 System.IO.File.WriteAllBytes(filePath, fileResponse.FileContents);
-```
+{% endhighlight %}
 

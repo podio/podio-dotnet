@@ -8,7 +8,7 @@ An important part of any Podio API integration is managing your authentication t
 ## What is a session manager
 When you initialize the Podio class you can optionally pass in an object of a class that implements IAuthStore interface. This IAuthStore handles storing and retrieving access tokens through a unified interface. For example if `SessionStore` class in an implementation of `IAuthStore` Interface, you would initialize your Podio class as:
 
-```csharp
+{% highlight csharp startinline %}
 var sessionStore = new SessionStore();
 
 var podio = new Podio(clientId, clientSecret, sessionStore);
@@ -23,7 +23,7 @@ else
     // No authentication found in session manager.
     // You must re-authenticate here.
 }
-```
+{% endhighlight %}
 
 If you use an AuthStore your authentication tokens will automatically be stored/updated when ever authentication or refresh of token happends and automatically retrieved when you initialize `Podio` class. By default it takes the SessionStore Implementation (Store access token is session)
 
@@ -42,7 +42,7 @@ The `Set` method should clear `PodioOAuth` object form AuthStore when called.
 ## Example: Store access tokens in browser session cookie
 This is a simple example meant for a web application. It stores the authentication data in a HttpContext.Current.Session variable. This avoid having to re-authenticate each time a page is refreshed.
 
-```csharp
+{% highlight csharp startinline %}
 using System.Web;
 
 namespace PodioAPI.Utils.Authentication
@@ -72,11 +72,11 @@ namespace PodioAPI.Utils.Authentication
         }
     }
 }
-```
+{% endhighlight %}
 The above class is included in the Podio-dotnet library out of box. You just need to instantiate it and pass in when you initialze the Podio class. See below.
 You can do your own implementation of IAuthStore interface if you need to store access token in database or whereever.
 
-```csharp
+{% highlight csharp startinline %}
 using PodioAPI;
 using PodioAPI.Utils.Authentication;
 
@@ -93,4 +93,4 @@ if(!podio.IsAuthenticated())
 
 //Api calls here
 
-```
+{% endhighlight %}

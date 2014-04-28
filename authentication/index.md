@@ -14,10 +14,10 @@ Before you can do anything you must setup the API client using your Podio API ke
 
 Podio-dotnet is a service based API client. Each service in this client library corresponds to an area in podio API and contains the methods exposed by this particular area. You'll be using more of these later, but for now you just need to use the main `Podio` class. Before you can make any API calls you must initialize the `Podio` class with your client ID and secret and authenticate with the Podio API. You only have to call it once before making any API calls and then you can forget about it.
 
-```csharp
+{% highlight csharp startinline %}
 using PodioAPI;
 var podio = new Podio(clientId, clientSecret);
-```
+{% endhighlight %}
 
 Now you're ready to authenticate.
 
@@ -33,7 +33,7 @@ The example below handles three cases:
 * The user has already authenticated and they have a session stored using the [Session manager / AuthStore]({{site.baseurl}}/sessions).
 * The user is being redirected back to our page after authenticating.
 
-```csharp
+{% highlight csharp startinline %}
 using PodioAPI;
 
 // Set up the REDIRECT_URI -- which is just the URL for this page.
@@ -73,25 +73,25 @@ else if(string.IsNullOrEmpty(Request["code"]))
         Response.Write("You have been authenticated. Wee!");
     }
 }
-```
+{% endhighlight %}
 
 ### App authentication
 App authentication doesn't require any direct user authentication and is thus much simpler. This flow is suitable in situations where you only need data from a single app. You can simply pass the app id and app token directly to the AuthenicateWithApp method:
 
-```csharp
+{% highlight csharp startinline %}
 var podio = new Podio(clientId, clientSecret);
 podio.AuthenicateWithApp(appId, appToken);
 // You can now make API calls.
-```
+{% endhighlight %}
 
 ### Password authentication
 Password authentication works the same way as app authentication, but you have full access to any data the user has access to. As it's bad practice to store your Podio password like this you should only use password-based authentication for testing or if you cannot use any of the other options.
 
-```csharp
+{% highlight csharp startinline %}
 var podio = new Podio(clientId, clientSecret);
 podio.AuthenicateWithPassword(userName, password);
 // You can now make API calls.
-```
+{% endhighlight %}
 
 <span class="note">I am using this authenticated instance of Podio class to show code examples throughout this documentation. Dont get confused from where did this podio came from, when you see `podio.SomeService.SomeMethod()` or something like that. </span>
 

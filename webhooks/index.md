@@ -8,26 +8,26 @@ Webhooks provide realtime notifications when changes occur on your apps and spac
 ## Creating webhooks
 The easiest way to create a new webhook is to do it manually in the developer section for the app. There are you can create most webhooks through a point and click interface. Not all webhooks can be created here. The rest you most create programmatically. E.g. if you only want to receive updates about a single field in an app:
 
-```csharp
+{% highlight csharp startinline %}
 int appFieldId = 1234;
 string eventType = "item.update";
 string externalUrl  = "http://example.com/my/hook/url";
 
 int hookId = podio.HookService.CreateHook("app_field", appFieldId, externalUrl, eventType);
-```
+{% endhighlight %}
 
 Immediately after you create a webhook you must verify it. Verifying just means the URL you provided must respond to a special type of webhook event called `hook.verify`. See the full example below for how to verify a webhook.
 
 If you create your webhook ahead of the URL being available you must manually request a webhook verification:
 
-```csharp
+{% highlight csharp startinline %}
 podio.HookService.Verify(hookId);
-```
+{% endhighlight %}
 
 ## Checking webhooks status
 If you are unsure of the status of your hooks you can get a list of all hooks for a reference:
 
-```csharp
+{% highlight csharp startinline %}
 List<Hook> hooks = podio.HookService.GetHooks(refType, refId);
 
 foreach (var hook in hooks)
@@ -36,7 +36,7 @@ foreach (var hook in hooks)
     string hookType = hook.Type;
     string hookUrl = hook.Url;
 }
-```
+{% endhighlight %}
 
 ## Troubleshooting webhooks
 When webhooks fail to show up it's typically for one of the following reasons:
@@ -48,7 +48,7 @@ When webhooks fail to show up it's typically for one of the following reasons:
 ## Full webhooks example
 This is a standalone Generic Handler (.ashx) that will verify all webhook verification requests and show how to handle item events. It uses app authentication. For more events see https://developers.podio.com/doc/hooks
 
-```csharp
+{% highlight csharp startinline %}
 <%@ WebHandler Language="C#" Class="Handler" %>
 
 using System;
@@ -111,4 +111,4 @@ public class Handler : IHttpHandler {
 
 }
 
-```
+{% endhighlight %}
