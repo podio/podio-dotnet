@@ -689,6 +689,15 @@ namespace PodioAPI
         {
             get { return new GrantService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in Search area
+        /// <para> https://developers.podio.com/doc/search </para>
+        /// </summary>
+        public SearchService SearchService
+        {
+            get { return new SearchService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
