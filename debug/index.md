@@ -4,14 +4,13 @@ active: debug
 ---
 # Debugging and error handling
 
-Podio-dotnet will throw exceptions when something goes predictably wrong. For example if you try to update something you don't have permissions to update, if you don't include required attributes, if you hit the rate limit etc. All exceptions inherit from PodioAPI.Exceptions.PodioException and and it has an Error property that represents the strongly typed version of response from the API:
+Podio-dotnet will throw exceptions when something goes predictably wrong. For example if you try to update something you don't have permissions to update, if you don't include required attributes, if you hit the rate limit etc. All exceptions inherit from `PodioAPI.Exceptions.PodioException` and and it has an `Error ` property that represents the strongly typed version of response from the API:
 
 {% highlight csharp startinline %}
 try
 {
-	var podio = new Podio(clientId, clientSecret);
-	podio.AuthenicateWithApp(appId, appToken);
-
+    var podio = new Podio(clientId, clientSecret);
+    podio.AuthenicateWithApp(appId, appToken);
     podio.FileService.UploadFile(filePath,"image.jpg")
 }
 catch (PodioException exception)

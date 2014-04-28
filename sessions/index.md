@@ -6,12 +6,12 @@ active: sessions
 An important part of any Podio API integration is managing your authentication tokens. You can avoid hitting rate limits and make your integration faster by storing authentication tokens and thus avoid having to re-authenticate every time your page runs.
 
 ## What is a session manager
-When you initialize the Podio class you can optionally pass in an object of a class that implements IAuthStore interface. This IAuthStore handles storing and retrieving access tokens through a unified interface. For example if `SessionStore` class in an implementation of `IAuthStore` Interface, you would initialize your Podio class as:
+When you initialize the Podio class you can optionally pass in an object of a class that implements IAuthStore interface. This IAuthStore handles storing and retrieving access tokens through a unified interface. For example if `SessionAuthStore` class in an implementation of `IAuthStore` Interface, you would initialize your Podio class as:
 
 {% highlight csharp startinline %}
-var sessionStore = new SessionStore();
+var sessionAuthStore = new SessionAuthStore();
 
-var podio = new Podio(clientId, clientSecret, sessionStore);
+var podio = new Podio(clientId, clientSecret, sessionAuthStore);
 
 if(podio.IsAuthenticated())
 {

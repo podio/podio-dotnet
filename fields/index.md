@@ -119,7 +119,8 @@ Values are returned as a List of `PodioAPI.Models.Contact` objects:
 {% highlight csharp startinline %}
 var item = podio.ItemService.GetItemBasic(123);
 
-ContactItemField contactField = item.Field<ContactItemField>("client"); // A Contact field with external_id 'client'
+// A Contact field with external_id 'client'
+ContactItemField contactField = item.Field<ContactItemField>("client");
 IEnumerable<Contact> contacts = contactField.Contacts;
 {% endhighlight %}
 
