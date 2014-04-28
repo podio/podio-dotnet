@@ -44,7 +44,7 @@ When webhooks fail to show up it's typically for one of the following reasons:
 
 * Not on a standard port. Webhooks must be served on port 80 for http and 443 for https
 * Incoming requests blocked by firewall/hosting provider. Your IT department or hosting provider may be blocking webhooks
-* Query string parameters will be converted to POST parameters. Because webhooks are POST requests any query string parameters will be converted to a POST parameter. If your URL is `http://example.com/hook?foo=bar` you will not be able to use `Request.QueryString["foo"]` - use `Request["foo"]` instead
+* Query string parameters will be converted to POST parameters. Because webhooks are POST requests any query string parameters will be converted to a POST parameter. If your URL is 'http://example.com/hook?foo=bar' you will not be able to use 'Request.QueryString["foo"]' - use 'Request["foo"]' instead
 
 
 ## Full webhooks example
