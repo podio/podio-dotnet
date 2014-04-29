@@ -3,7 +3,7 @@ About
 
 This is the .NET Client for accessing the Podio API. 
 
-This client currently covers all the API methods in the following areas:
+This client currently covers the API methods in the following areas:
 
 - Items
 - Applications
@@ -16,6 +16,12 @@ This client currently covers all the API methods in the following areas:
 - Status
 - Organizations
 - Spaces
+- Grants
+- Search
+- Space members
+- Stream
+- Widgets
+- Reference
 
 Installation
 -------
@@ -78,22 +84,16 @@ Basic Usage
 After constructing `Podio` object  you can use all of the wrapper functions to do API requests. The functions are organized into services, each service corresponds to an Area in official [API documentation](https://developers.podio.com/doc). You can access the services right from podio class. For example:
 
 ```csharp
-using PodioAPI;
-using PodioAPI.Models;
 
 // Getting an item
 var item = podio.ItemService.GetItem(123456);
 
 //Filtering items with a date field named 'deadline' and text field named 'title' and limit the results by 10
-var filters = new
-{
-    title = "Project 1234",
-    deadline = new
-    {
-       from = new DateTime(2013, 10, 1),
-       to = DateTime.Now
-    }
-};
+  var filters = new Dictionary<string,object>
+  {
+    {"title","Project 1234"},
+    {"deadline",new  { from = new DateTime(2013, 10, 1), to = DateTime.Now }}
+  };
 
 podio.ItemService.FilterItems(AppId, 10, null, filters);
 ```
