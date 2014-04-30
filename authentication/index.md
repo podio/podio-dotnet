@@ -12,7 +12,7 @@ Making API calls is a three step process:
 ## Setting up the API client
 Before you can do anything you must setup the API client using your Podio API key. [Head over to Podio to generate a client_id and client_secret](https://podio.com/settings/api) before continuing.
 
-Podio-dotnet is a service based API client. Each service in this client library corresponds to an area in podio API and contains the methods exposed by this particular area. You'll be using more of these later, but for now you just need to use the main `Podio` class. Before you can make any API calls you must initialize the `Podio` class with your client ID and secret and authenticate with the Podio API. You only have to call it once before making any API calls and then you can forget about it.
+Podio-dotnet is a service based API client. Each service in this client library corresponds to an area in podio API and contains the methods exposed by this particular area. You'll be using more of these later, but for now you just need to use the main `Podio` class. Before you can make any API calls you must initialize the `Podio` class with your client ID and secret and authenticate with the Podio API. You only have to call it once before making any API calls.
 
 {% highlight csharp startinline %}
 using PodioAPI;
@@ -22,7 +22,13 @@ var podio = new Podio(clientId, clientSecret);
 Now you're ready to authenticate.
 
 ## Authentication
-Podio supports multiple forms of authentication depending on what you want to do. Use the server-side flow for web apps where you need Podio users to access your app, app authentication when you just need access to a single app without user interaction and use password authentication for testing or if you're writing a batch job. [Read more about authentication in general at the Podio developer site](https://developers.podio.com/authentication).
+Podio supports multiple forms of authentication depending on what you want to do:
+
+1. Use the server-side flow for web apps where you need Podio users to access your apps.
+2. Use the app authentication when you just need access to a single app without user interaction  
+3. Use password authentication for testing or if you’re writing a batch job. 
+
+[Read more about authentication in general at the Podio developer site](https://developers.podio.com/authentication).
 
 ### Server-side flow
 The server-side flow requires you to redirect your users to a page on podio.com to authenticate. After they authenticate on podio.com they will be redirected back to your site. [Read about the flow on the developer site](https://developers.podio.com/authentication/server_side).
@@ -76,7 +82,7 @@ else if(string.IsNullOrEmpty(Request["code"]))
 {% endhighlight %}
 
 ### App authentication
-App authentication doesn't require any direct user authentication and is thus much simpler. This flow is suitable in situations where you only need data from a single app. You can simply pass the app id and app token directly to the AuthenicateWithApp method:
+App authentication doesn’t require any direct user authentication and therefore it is much simpler. This flow is suitable in situations where you only need data from a single app. You can simply pass the app id and app token directly to the AuthenicateWithApp method:
 
 {% highlight csharp startinline %}
 var podio = new Podio(clientId, clientSecret);
@@ -85,7 +91,7 @@ podio.AuthenicateWithApp(appId, appToken);
 {% endhighlight %}
 
 ### Password authentication
-Password authentication works the same way as app authentication, but you have full access to any data the user has access to. As it's bad practice to store your Podio password like this you should only use password-based authentication for testing or if you cannot use any of the other options.
+Password authentication works the same way as app authentication, but you have full access to any data the user has access to. As it's bad practice to store your Podio password like this, you should only use password-based authentication for testing or if you cannot use any of the other options.
 
 {% highlight csharp startinline %}
 var podio = new Podio(clientId, clientSecret);
