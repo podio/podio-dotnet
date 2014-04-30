@@ -79,13 +79,13 @@ foreach (ItemField field in item.Fields)
 {% endhighlight %}
 
 #### Get field values
-You can access individual fields either by `field_id` or more likely by the human-readable `external_id`. The `Values` property of ItemField object is dynamic it returns data as `List<Dictionary<string, object>>`. As it is a bit difficult to access values from it, we have created an abstraction to access and set values as strongly typed objects.
+You can access individual fields either by `field_id` or more likely by the human-readable `external_id`. The `Values` property of ItemField object is dynamic. We have created an abstraction to access and set values as strongly typed objects.
 
-<span class="note">Here how to get and set values of diffrent type of item fields [Item field examples]({{site.baseurl}}/fields).</span>
+<span class="note">Here’s how to get and set values of different type of item fields [Item field examples]({{site.baseurl}}/fields).</span>
 
 
 ### Create item
-To create a new item from scratch you create a new `Item` without an `item_id`, add the field values and use 'ItemService.AddNewItem' method with created item and app_id as parameter. Here is an example:
+To create a new item from scratch you create a new `Item` without an `item_id`, add the field values and use 'ItemService.AddNewItem' method with the created item and app_id as parameter. Here is an example:
 
 {% highlight csharp startinline %}
 
@@ -104,7 +104,7 @@ int itemId = podio.ItemService.AddNewItem(appId, myNewItem);
 {% endhighlight %}
 
 ### Modifying items
-Updating items are handled exactly the same way as creating items. The only diffrence is you need to set the `ItemId` property of `Item` object. Values will only be updated for fields included. If you need to remove the value from a field, just initialize the field, dont set the value. Here is an example. This will update the value of textfield 'title' and empty the value of date field 'deadline-date' :
+Updating items are handled exactly the same way as creating items. The only difference is you need to set the `ItemId` property of `Item` object. Values will only be updated for fields included. If you need to remove the value from a field, just initialize the field and dont set the value. This will update the value of textfield ‘title’ and empty the value of date field ‘deadline-date’. Here is an example:
 
 {% highlight csharp startinline %}
 Item itemToUpdate = new Item();

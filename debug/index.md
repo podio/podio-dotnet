@@ -4,7 +4,7 @@ active: debug
 ---
 # Debugging and error handling
 
-Podio-dotnet will throw exceptions when something goes predictably wrong. For example if you try to update something you don't have permissions to update, if you don't include required attributes, if you hit the rate limit etc. All exceptions inherit from `PodioAPI.Exceptions.PodioException` and and it has an `Error ` property that represents the strongly typed version of response from the API:
+Podio-dotnet will throw exceptions when something goes predictably wrong. For example if you try to update something you don't have permission to update, if you don't include required attributes, if you hit the rate limit etc. All exceptions inherit from `PodioAPI.Exceptions.PodioException` and and it has an `Error ` property that represents the strongly typed version of response from the API:
 
 {% highlight csharp startinline %}
 try
@@ -22,7 +22,7 @@ catch (PodioException exception)
 }
 {% endhighlight %}
 
-If you get unexpected results but you are not seeing exceptions, you can to see the data that's being sent between your script and the Podio API using HTTP debugging proxy server application [Fiddler](http://www.telerik.com/fiddler). Route the traffic through Fiddler proxy by setting `Proxy` property of Podio class from the constroctor:
+If you get unexpected results, but you are not seeing exceptions, you can see the data that's being sent between your script and the Podio API using HTTP debugging proxy server application [Fiddler](http://www.telerik.com/fiddler). Route the traffic through Fiddler proxy by setting `Proxy` property of Podio class from the constroctor:
 
 
 {% highlight csharp startinline %}

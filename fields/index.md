@@ -73,7 +73,7 @@ Calculation fields are read-only. It's not possible to modify the value.
 ## Category field & Question field
 
 #### Getting values
-Category and Question fields function in the same manner. Values are provided as an list of option.
+Category and Question fields function in the same manner. Values are provided as an list of options.
 
 {% highlight csharp startinline %}
 var item = podio.ItemService.GetItemBasic(123);
@@ -157,7 +157,7 @@ string endTime =  dateField.EndTime; // Time as string else null
 {% endhighlight %}
 
 #### Setting values
-To set you can assign value to `Start` and `End` properties.
+To set values you can assign value to `Start` and `End` properties.
 
 {% highlight csharp startinline %}
 Item myNewItem = new Item();

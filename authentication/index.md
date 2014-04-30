@@ -99,7 +99,7 @@ podio.AuthenicateWithPassword(userName, password);
 // You can now make API calls.
 {% endhighlight %}
 
-<span class="note">I am using this authenticated instance of Podio class to show code examples throughout this documentation. Dont get confused from where did this podio came from, when you see `podio.SomeService.SomeMethod()` or something like that. </span>
+<span class="note">If you get confused when you see something like this: `podio.SomeService.SomeMethod()` , I’m just using this authenticated instance of Podio class to show code examples throughout this documentation</span>
 
 ## Refreshing access tokens
 Under the hood you receive two tokens upon authenticating. An access token is used to make API calls and a refresh token is used to get a new access/refresh token pair once the access token expires.
