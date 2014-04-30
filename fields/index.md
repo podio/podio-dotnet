@@ -3,7 +3,7 @@ layout: default
 active: fields
 ---
 # Field reference
-You can access individual fields either by `field_id` or more likely by the human-readable `external_id`. The `Values` property of ItemField object is dynamic. it returns data as `List<Dictionary<string, object>>`. As it is a bit difficult to access values from it, we have created an abstraction to access and set values as strongly typed objects.
+You can access individual fields either by `field_id` or more likely by the human-readable `external_id`. The `Values` property of ItemField object is dynamic. We have created an abstraction to access and set values as strongly typed objects.
 
 Below you'll find examples for getting and setting field values for each of the fields available in Podio.
 
