@@ -123,5 +123,135 @@ namespace PodioAPI.Services
             string url = string.Format("/stream/{0}/{1}", refType, refId);
             return _podio.Get<StreamObject>(url);
         }
+
+        /// <summary>
+        /// Get global stream - version 3
+        /// <para>Podio API Reference: https://developers.podio.com/doc/stream/get-global-stream-v3-100405451 </para>
+        /// </summary>
+        /// <param name="groupsEventTypes">The types of events to include in the returned activity groups.</param>
+        /// <param name="groupsLimit">Default value: 2</param>
+        /// <param name="limit">Maximum number of groups returned. Default value: 10</param>
+        /// <param name="offset">Index of first returned group. Default value: 0</param>
+        /// <returns></returns>
+        public List<StreamObjectV3> GetGlobalStreamV3(string[] groupsEventTypes = null, int groupsLimit = 2, int limit = 10, int offset = 0)
+        {
+            string url = "/stream/v3/";
+            string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
+            var requestData = new Dictionary<string, string>(){
+                {"groups_event_types",groupEventTypesCSV},
+                {"groups_limit",groupsLimit.ToString()},
+                {"limit",limit.ToString()},
+                {"offset",offset.ToString()}
+            };
+            return _podio.Get<List<StreamObjectV3>>(url, requestData);
+        }
+
+        /// <summary>
+        /// Get stream for an application
+        /// <para>Podio API Reference: https://developers.podio.com/doc/stream/get-application-stream-v3-100406563 </para>
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="groupsEventTypes">The types of events to include in the returned activity groups.</param>
+        /// <param name="groupsLimit">Default value: 2</param>
+        /// <param name="limit">Maximum number of groups returned. Default value: 10</param>
+        /// <param name="offset">Index of first returned group. Default value: 0</param>
+        /// <returns></returns>
+        public List<StreamObjectV3> GetApplicationStreamV3(int appId, string[] groupsEventTypes = null, int groupsLimit = 2, int limit = 10, int offset = 0)
+        {
+            string url = string.Format("/stream/app/{0}/v3", appId);
+            string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
+            var requestData = new Dictionary<string, string>(){
+                {"groups_event_types",groupEventTypesCSV},
+                {"groups_limit",groupsLimit.ToString()},
+                {"limit",limit.ToString()},
+                {"offset",offset.ToString()}
+            };
+            return _podio.Get<List<StreamObjectV3>>(url, requestData);
+        }
+
+        /// <summary>
+        /// Get stream for an organization - version 3
+        /// <para>Podio API Reference: https://developers.podio.com/doc/stream/get-org-stream-v3-100405933 </para>
+        /// </summary>
+        /// <param name="orgId"></param>
+        /// <param name="groupsEventTypes">The types of events to include in the returned activity groups.</param>
+        /// <param name="groupsLimit">Default value: 2</param>
+        /// <param name="limit">Maximum number of groups returned. Default value: 10</param>
+        /// <param name="offset">Index of first returned group. Default value: 0</param>>
+        /// <returns></returns>
+        public List<StreamObjectV3> GetOrgStreamV3(int orgId, string[] groupsEventTypes = null, int groupsLimit = 2, int limit = 10, int offset = 0)
+        {
+            string url = string.Format("/stream/org/{0}/v3/", orgId);
+            string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
+            var requestData = new Dictionary<string, string>(){
+                {"groups_event_types",groupEventTypesCSV},
+                {"groups_limit",groupsLimit.ToString()},
+                {"limit",limit.ToString()},
+                {"offset",offset.ToString()}
+            };
+            return _podio.Get<List<StreamObjectV3>>(url, requestData);
+        }
+
+        /// <summary>
+        /// Get stream for a space - version 3
+        /// <para>Podio API Reference: https://developers.podio.com/doc/stream/get-space-stream-v3-116373969 </para>
+        /// </summary>
+        /// <param name="spaceId"></param>
+        /// <param name="groupsEventTypes">The types of events to include in the returned activity groups.</param>
+        /// <param name="groupsLimit">Default value: 2</param>
+        /// <returns></returns>
+        public List<StreamObjectV3> GetSpaceStreamV3(int spaceId, string[] groupsEventTypes = null, int groupsLimit = 2)
+        {
+            string url = string.Format("/stream/space/{0}/v3/", spaceId);
+            string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
+            var requestData = new Dictionary<string, string>(){
+                {"groups_event_types",groupEventTypesCSV},
+                {"groups_limit",groupsLimit.ToString()}
+            };
+            return _podio.Get<List<StreamObjectV3>>(url, requestData);
+        }
+
+        /// <summary>
+        /// Get stream for an user - version 3
+        /// <para>Podio API Reference: https://developers.podio.com/doc/stream/get-user-stream-v3-100406822 </para>
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="groupsEventTypes">The types of events to include in the returned activity groups.</param>
+        /// <param name="groupsLimit">Default value: 2</param>
+        /// <param name="limit">Maximum number of groups returned. Default value: 10</param>
+        /// <param name="offset">Index of first returned group. Default value: 0</param>>
+        /// <returns></returns>
+        public List<StreamObjectV3> GetUserStreamV3(int userId, string[] groupsEventTypes = null, int groupsLimit = 2, int limit = 10, int offset = 0)
+        {
+            string url = string.Format("/stream/user/{0}/v3", userId);
+            string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
+            var requestData = new Dictionary<string, string>(){
+                {"groups_event_types",groupEventTypesCSV},
+                {"groups_limit",groupsLimit.ToString()},
+                {"limit",limit.ToString()},
+                {"offset",offset.ToString()}
+            };
+            return _podio.Get<List<StreamObjectV3>>(url, requestData);
+        }
+
+        /// <summary>
+        /// Get stream view of an object - version 3.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/stream/get-stream-object-v3-116373396 </para>
+        /// </summary>
+        /// <param name="refType"></param>
+        /// <param name="refId"></param>
+        /// <param name="groupsEventTypes">The types of events to include in the returned activity groups.</param>
+        /// <param name="groupsLimit">Default value: 2</param>
+        /// <returns></returns>
+        public List<StreamObjectV3> GetStreamObjectV3(string refType, int refId, string[] groupsEventTypes = null, int groupsLimit = 2)
+        {
+            string url = string.Format("/stream/{0}/{1}/v3", refType, refId);
+            string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
+            var requestData = new Dictionary<string, string>(){
+                {"groups_event_types",groupEventTypesCSV},
+                {"groups_limit",groupsLimit.ToString()}
+            };
+            return _podio.Get<List<StreamObjectV3>>(url, requestData);
+        }
     }
 }

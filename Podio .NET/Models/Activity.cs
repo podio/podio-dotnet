@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
@@ -16,7 +16,10 @@ namespace PodioAPI.Models
         public string ActivityType { get; set; }
 
         [JsonProperty("data")]
-        public Dictionary<string,object> Data { get; set; }
+        public JObject Data { get; set; }
+
+        [JsonProperty("data_ref")]
+        public Ref DataRef { get; set; }
 
         [JsonProperty("created_on")]
         public DateTime? CreatedOn { get; set; }

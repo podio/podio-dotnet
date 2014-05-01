@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\PodioException.cs" />
+    <Compile Include="Models\ActivityGroup.cs" />
     <Compile Include="Models\ContactTotal.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\ConversationMessage.cs" />
@@ -127,6 +128,7 @@
     <Compile Include="Models\SpaceMicro.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\StreamObject.cs" />
+    <Compile Include="Models\StreamObjectV3.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TaggedObject.cs" />
     <Compile Include="Models\Task.cs" />

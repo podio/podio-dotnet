@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
@@ -12,7 +13,7 @@ namespace PodioAPI.Models
         public string Type { get; set; }
 
         [JsonProperty("data")]
-        public Dictionary<string,object> Data { get; set; }
+        public JObject Data { get; set; }
 
         [JsonProperty("text")]
         public string Text { get; set; }
