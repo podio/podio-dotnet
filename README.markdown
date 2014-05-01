@@ -175,6 +175,8 @@ myNewItem.FileIds = new List<int> { uploadedFile.FileId }; //Attach the uploaded
 podio.ItemService.AddNewItem(5678, myNewItem);
 ```
 
+For more documentation and examples see [Documentation](http://podio.github.io/podio-dotnet/)
+
 Contribution guideline
 -----------------
 
