@@ -59,6 +59,9 @@
     <Compile Include="Models\OrganizationLoginReport.cs" />
     <Compile Include="Models\OrganizationMember.cs" />
     <Compile Include="Models\OrganizationMicro.cs" />
+    <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\Rating.cs" />
+    <Compile Include="Models\RatingType.cs" />
     <Compile Include="Models\ReferenceGroup.cs" />
     <Compile Include="Models\Request\AddSpaceMemberRequest.cs" />
     <Compile Include="Models\Request\ApplicationCreateUpdateRequest.cs" />
@@ -151,6 +154,7 @@
     <Compile Include="Services\HookService.cs" />
     <Compile Include="Services\ItemService.cs" />
     <Compile Include="Services\OrganizationService.cs" />
+    <Compile Include="Services\RatingService.cs" />
     <Compile Include="Services\ReferenceService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\SpaceMembersService.cs" />
