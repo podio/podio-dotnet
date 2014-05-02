@@ -55,5 +55,14 @@ namespace PodioAPI.Models
 
         [JsonProperty("spaces")]
         public List<Space> Spaces { get; set; }
+
+        [JsonProperty("grants_count")]
+        public int? GrantsCount { get; set; }
+
+        [JsonProperty("segment")]
+        public string Segment { get; set; }
+
+        [JsonProperty("segment_size")]
+        public int? SegmentSize { get; set; }
     }
 }

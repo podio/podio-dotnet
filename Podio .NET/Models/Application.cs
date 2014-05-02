@@ -10,6 +10,7 @@ namespace PodioAPI.Models
         {
             this.Fields = new List<ApplicationField>();
         }
+
         [JsonProperty("app_id")]
         public int AppId { get; set; }
 
@@ -35,9 +36,9 @@ namespace PodioAPI.Models
         public int? OwnerId { get; private set; }
 
         [JsonProperty("owner")]
-        public Dictionary<string, object> Owner { get; private set; }
+        public Profile Owner { get; private set; }
 
-        [JsonProperty(PropertyName = "config")]
+        [JsonProperty("config")]
         public ApplicationConfiguration Config { get; set; }
 
         [JsonProperty("subscribed")]
@@ -48,6 +49,9 @@ namespace PodioAPI.Models
 
         [JsonProperty("link")]
         public string Link { get; private set; }
+
+        [JsonProperty("link_add")]
+        public string LinkAdd { get; set; }
 
         [JsonProperty("url_add")]
         public string UrlAdd { get; private set; }
@@ -67,7 +71,8 @@ namespace PodioAPI.Models
         [JsonProperty("fields")]
         public List<ApplicationField> Fields { get; set; }
 
-
+        [JsonProperty("pinned")]
+        public bool Pinned { get; set; }
         // When app is returned as part of large collection (e.g. for stream), some config properties is moved to the main object
 
         [JsonProperty("name")]
@@ -75,6 +80,7 @@ namespace PodioAPI.Models
 
         [JsonProperty("item_name")]
         public string ItemName { get; set; }
+
 
         /// <summary>
         /// Only for retrival
