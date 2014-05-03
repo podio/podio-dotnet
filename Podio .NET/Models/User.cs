@@ -1,5 +1,6 @@
 ﻿using System;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace PodioAPI.Models
 {
@@ -19,9 +20,6 @@ namespace PodioAPI.Models
 
         [JsonProperty("avatar", NullValueHandling = NullValueHandling.Ignore)]
         public int? Avatar { get; set; }
-
-        [JsonProperty("mail", NullValueHandling = NullValueHandling.Ignore)]
-        public string Mail { get; set; }
 
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
         public string Status { get; set; }
@@ -45,6 +43,12 @@ namespace PodioAPI.Models
         public Contact Profile { get; set; }
 
         [JsonProperty("mails", NullValueHandling = NullValueHandling.Ignore)]
-        public UserMail Mails { get; set; }
+        public List<UserMail> Mails { get; set; }
+
+        [JsonProperty("activated_on", NullValueHandling = NullValueHandling.Ignore)]
+        public DateTime? ActivatedON { get; set; }
+
+        [JsonProperty("mail", NullValueHandling = NullValueHandling.Ignore)]
+        public string Mail { get; set; }
     }
 }
