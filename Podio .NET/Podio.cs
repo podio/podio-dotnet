@@ -698,6 +698,24 @@ namespace PodioAPI
         {
             get { return new SearchService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in Rating Area
+        /// <para> https://developers.podio.com/doc/ratings </para>
+        /// </summary>
+        public RatingService RatingService
+        {
+            get { return new RatingService(this); }
+        }
+
+        /// <summary>
+        /// Provies all API methods in Tag Area
+        /// <para> https://developers.podio.com/doc/tags </para>
+        /// </summary>
+        public TagService TagService
+        {
+            get { return new TagService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
