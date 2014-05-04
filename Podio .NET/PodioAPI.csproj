@@ -183,7 +183,7 @@
     <Compile Include="Utils\Authentication\IAuthStore.cs" />
     <Compile Include="Utils\Authentication\NullAuthStore.cs" />
     <Compile Include="Utils\Authentication\PodioOAuth.cs" />
-    <Compile Include="Utils\Authentication\SessionStore.cs" />
+    <Compile Include="Utils\Authentication\SessionAuthStore.cs" />
     <Compile Include="Utils\ItemFields\AppItemField.cs" />
     <Compile Include="Utils\ItemFields\CalculationItemField.cs" />
     <Compile Include="Utils\ItemFields\CategoryItemField.cs" />

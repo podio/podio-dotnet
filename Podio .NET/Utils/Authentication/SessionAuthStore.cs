@@ -1,8 +1,8 @@
 ﻿using System.Web;
 
-namespace PodioAPI.Utils
+namespace PodioAPI.Utils.Authentication
 {
-    public class SessionStore: IAuthStore
+    public class SessionAuthStore: IAuthStore
     {
         public PodioOAuth Get()
         {

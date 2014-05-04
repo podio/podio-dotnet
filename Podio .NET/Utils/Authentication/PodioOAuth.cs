@@ -1,7 +1,7 @@
 ﻿using Newtonsoft.Json;
 using PodioAPI.Models;
 
-namespace PodioAPI.Utils
+namespace PodioAPI.Utils.Authentication
 {
     /// <summary>
     /// Authenication response form API
