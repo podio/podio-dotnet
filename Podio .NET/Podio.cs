@@ -10,18 +10,20 @@ using PodioAPI.Models.Request;
 using PodioAPI.Models;
 using PodioAPI.Services;
 using PodioAPI.Utils;
+using PodioAPI.Utils.Authentication;
 
 namespace PodioAPI
 {
     public class Podio
     {
-        protected string ClientId { get; private set; }
-        protected string ClientSecret { get; private set; }
-        public PodioOAuth OAuth { get; private set; }
-        private IAuthStore AuthStore { get; set; }
+        protected string ClientId { get; set; }
+        protected string ClientSecret { get; set; }
+        public PodioOAuth OAuth { get; set; }
+        public IAuthStore AuthStore { get; set; }
+        private WebProxy Proxy { get; set; }
         public int RateLimit { get; private set; }
         public int RateLimitRemaining { get; private set; }
-        protected string ApiUrl { get; private set; }
+        protected string ApiUrl { get; set; }
 
         /// <summary>
         /// Initialize the podio class with Client ID and Client Secret
@@ -29,19 +31,20 @@ namespace PodioAPI
         /// </summary>
         /// <param name="clientId">Client ID</param>
         /// <param name="clientSecret">Client Secret</param>
-        /// <param name="authStore">If you need to persist the access tokens for a longer period (in your database or whereever), Implement IAuthStore Interface and pass it in. 
-        /// <para>By default it takes the SessionStore Implementation (Store access token is session). 
-        /// You can use the IsAuthenticated method to check if there is a stored access token already present</para></param>
-        public Podio(string clientId, string clientSecret, IAuthStore authStore = null)
+        /// <param name="authStore">If you need to persist the access tokens for a longer period (in your session, database or whereever), Implement PodioAPI.Utils.IAuthStore Interface and pass it in. 
+        /// <para> You can use the IsAuthenticated method to check if there is a stored access token already present</para></param>
+        /// <param name="proxy">To set proxy to HttpWebRequest</param>
+        public Podio(string clientId, string clientSecret, IAuthStore authStore = null, WebProxy proxy = null)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
             ApiUrl = "https://api.podio.com:443";
+            Proxy = proxy;
 
             if (authStore != null)
                 AuthStore = authStore;
             else
-                AuthStore = new SessionStore();
+                AuthStore = new NullAuthStore();
 
             OAuth = AuthStore.Get();
         }
@@ -154,6 +157,7 @@ namespace PodioAPI
 
             var request = (HttpWebRequest)WebRequest.Create(url);
             ServicePointManager.Expect100Continue = false;
+            request.Proxy = this.Proxy;
             request.Method = httpMethod;
 
             PodioResponse podioResponse = new PodioResponse();
@@ -446,9 +450,14 @@ namespace PodioAPI
         #endregion
 
         #region Authentication
-        /// <summary>Authenticate as an App (with AppId and AppSecret).
-        /// <para>Podio API Reference: https://developers.podio.com/authentication/username_password </para>
-        /// </summary> 
+
+        /// <summary>
+        /// Authenticate as an App (with AppId and AppSecret)
+        /// <para>Podio API Reference: https://developers.podio.com/authentication/app_auth </para>
+        /// </summary>
+        /// <param name="appId">AppId</param>
+        /// <param name="appToken">AppToken</param>
+        /// <returns>PodioOAuth object with OAuth data</returns>
         public PodioOAuth AuthenicateWithApp(int appId, string appToken)
         {
             var authRequest = new Dictionary<string, string>(){
@@ -459,10 +468,12 @@ namespace PodioAPI
             return Authenticate("app", authRequest);
         }
 
-        /// <summary> Authenticate with username and password 
-        /// <para>suitable in situations where you only need data from a single app and do not wish authenticate as a specific user</para>
+        /// <summary> Authenticate with username and password
         /// <para>Podio API Reference: https://developers.podio.com/authentication/username_password </para>
         /// </summary> 
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns>PodioOAuth object with OAuth data</returns>
         public PodioOAuth AuthenicateWithPassword(string username, string password)
         {
             var authRequest = new Dictionary<string, string>(){
@@ -474,9 +485,12 @@ namespace PodioAPI
         }
 
         /// <summary> Authenticate with an authorization code
-        /// <para>Suitable in situations where you only need data from a single app and do not wish authenticate as a specific user</para>
         /// <para>Podio API Reference: https://developers.podio.com/authentication/server_side </para>
-        /// </summary> 
+        /// </summary>
+        /// <param name="authorizationCode"></param>
+        /// <param name="redirectUri"></param>
+        /// <returns>PodioOAuth object with OAuth data</returns>
+
         public PodioOAuth AuthenicateWithAuthorizationCode(string authorizationCode, string redirectUri)
         {
             var authRequest = new Dictionary<string, string>(){
@@ -491,6 +505,7 @@ namespace PodioAPI
         /// <para>When the access token expires, you can use this method to refresh your access, and gain another access_token</para>
         /// <para>Podio API Reference: https://developers.podio.com/authentication </para>
         /// </summary> 
+        /// <returns>PodioOAuth object with OAuth data</returns>
         public PodioOAuth RefreshAccessToken()
         {
             var authRequest = new Dictionary<string, string>(){
@@ -510,7 +525,7 @@ namespace PodioAPI
             };
 
             PodioOAuth podioOAuth = Post<PodioOAuth>("/oauth/token", attributes, options);
-            OAuth = podioOAuth;
+            this.OAuth = podioOAuth;
             AuthStore.Set(podioOAuth);
 
             return podioOAuth;
@@ -528,7 +543,7 @@ namespace PodioAPI
         }
 
         /// <summary>
-        /// Check if there is a stored access token already present in AuthStore.
+        /// Check if there is a stored access token already present.
         /// </summary>
         /// <returns></returns>
         public bool IsAuthenticated()
