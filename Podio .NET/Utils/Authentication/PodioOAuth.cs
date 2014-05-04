@@ -9,18 +9,18 @@ namespace PodioAPI.Utils.Authentication
     public class PodioOAuth
     {
         [JsonProperty(PropertyName = "access_token")]
-        public string AccessToken { get; private set; }
+        public string AccessToken { get; set; }
 
         [JsonProperty(PropertyName = "refresh_token")]
-        public string RefreshToken { get; private set; }
+        public string RefreshToken { get; set; }
 
         [JsonProperty(PropertyName = "expires_in")]
-        public string ExpiresIn { get; private set; }
+        public string ExpiresIn { get; set; }
 
         [JsonProperty(PropertyName = "token_type")]
-        public string TokenType { get; private set; }
+        public string TokenType { get; set; }
 
         [JsonProperty(PropertyName = "ref")]
-        public Ref Ref { get; private set; }
+        public Ref Ref { get; set; }
     }
 }
