@@ -16,6 +16,7 @@ namespace PodioAPI.Utils.Authentication
         {
             HttpContext.Current.Session["PodioOAuth"] = podioOAuth;
         }
+
         public void Clear()
         {
             HttpContext.Current.Session["PodioOAuth"] = null;
