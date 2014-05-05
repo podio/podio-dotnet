@@ -1,5 +1,4 @@
-﻿
-namespace PodioAPI.Models
+﻿namespace PodioAPI.Models
 {
     public class FileResponse
     {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
@@ -37,8 +38,6 @@ namespace PodioAPI.Models
         [JsonProperty("created_via")]
         public Via CreatedVia { get; set; }
 
-        
-
         [JsonProperty("initial_revision")]
         public ItemRevision InitialRevision { get; set; }
 
@@ -60,16 +59,16 @@ namespace PodioAPI.Models
         public DateTime? LastEventOn { get; set; }
 
         [JsonProperty("participants")]
-        public Dictionary<string, object> Participants { get; set; }
+        public JObject Participants { get; set; }
 
         [JsonProperty("tags")]
         public List<string> Tags { get; set; }
 
         [JsonProperty("refs")]
-        public List<Dictionary<string, object>> Refs { get; set; }
+        public JArray Refs { get; set; }
 
         [JsonProperty("references")]
-        public Dictionary<string, object> References { get; set; }
+        public JArray References { get; set; }
 
         [JsonProperty("linked_account_id")]
         public int? LinkedAccountId { get; set; }
@@ -78,8 +77,13 @@ namespace PodioAPI.Models
         public bool? Subscribed { get; set; }
 
         [JsonProperty("invite")]
-        public Dictionary<string, object> Invite { get; set; }
+        public JToken Invite { get; set; }
 
+        [JsonProperty("is_liked")]
+        public bool IsLiked { get; set; }
+
+        [JsonProperty("like_count")]
+        public int LikeCount { get; set; }
 
         [JsonProperty("app")]
         public Application App { get; set; }
@@ -104,6 +108,9 @@ namespace PodioAPI.Models
 
         [JsonProperty("files")]
         public List<FileAttachment> Files { get; set; }
+
+        [JsonProperty("grant")]
+        public Grant Grant { get; set; }
 
         [JsonProperty("file_ids")]
         public List<int> FileIds { get; set; }

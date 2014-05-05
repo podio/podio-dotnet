@@ -31,7 +31,7 @@ namespace PodioAPI.Models
         public string MimeType { get; set; }
 
         [JsonProperty("size")]
-        public int Size { get; set; }
+        public int? Size { get; set; }
 
         [JsonProperty("context")]
         public Dictionary<string, object> Context { get; set; }

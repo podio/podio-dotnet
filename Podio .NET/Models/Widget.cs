@@ -35,5 +35,17 @@ namespace PodioAPI.Models
 
         [JsonProperty("allowed_refs")]
         public string[] AllowedRefs { get; set; }
+        
+        [JsonProperty("cols")]
+        public int Cols { get; set; }
+
+        [JsonProperty("rows")]
+        public int Rows { get; set; }
+
+        [JsonProperty("x")]
+        public int X { get; set; }
+
+        [JsonProperty("y")]
+        public int Y { get; set; }
     }
 }

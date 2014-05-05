@@ -28,10 +28,25 @@ namespace PodioAPI.Models
         public DateTime? DueOn  { get; set; }
 
         [JsonProperty("due_date")]
-        public string DueDate { get; set; }
+        public DateTime? DueDate { get; set; }
 
         [JsonProperty("due_time")]
-        public string DueTime { get; set; }
+        public TimeSpan DueTime { get; set; }
+
+        [JsonProperty("is_liked")]
+        public bool IsLiked { get; set; }
+
+        [JsonProperty("like_count")]
+        public int LikeCount { get; set; }
+
+        [JsonProperty("pinned")]
+        public bool Pinned { get; set; }
+
+        [JsonProperty("presence")]
+        public Presence Presence { get; set; }
+
+        [JsonProperty("push")]
+        public Push Push { get; set; }
 
         [JsonProperty("space_id")]
         public int? SpaceId { get; set; }
@@ -83,8 +98,5 @@ namespace PodioAPI.Models
 
         [JsonProperty("comments")]
         public List<Comment> Comments { get; set; }
-
-
-
     }
 }

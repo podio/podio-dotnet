@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 
@@ -18,9 +19,6 @@ namespace PodioAPI.Models
         [JsonProperty(PropertyName = "link")]
         public string Link { get; private set; }
 
-        [JsonProperty(PropertyName = "data")]
-        public Dictionary<string, object> Data { get; private set; }
-
         [JsonProperty(PropertyName = "created_on")]
         public DateTime? CreatedOn { get; private set; }
 
@@ -29,5 +27,11 @@ namespace PodioAPI.Models
 
         [JsonProperty(PropertyName = "created_via")]
         public Via CreatedVia { get; private set; }
+
+        [JsonProperty(PropertyName = "data")]
+        public JObject Data { get; private set; }
+
+        [JsonProperty("accessor_count")]
+        public int AccessorCount { get; set; }
     }
 }

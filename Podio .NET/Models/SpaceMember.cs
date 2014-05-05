@@ -14,10 +14,10 @@ namespace PodioAPI.Models
         [JsonProperty("invited_on")]
         public DateTime? InvitedOn {get;set;}
 
-        [JsonProperty("address")]
+        [JsonProperty("started_on")]
         public DateTime? started_on { get; set; }
 
-        [JsonProperty("address")]
+        [JsonProperty("ended_on")]
         public DateTime? ended_on { get; set; }
 
         [JsonProperty("grants")]

@@ -65,5 +65,13 @@ namespace PodioAPI.Models
         [JsonProperty("org")]
         public Organization Org { get; set; }
 
+        [JsonProperty("is_overdue")]
+        public bool IsOverdue { get;  set; }
+
+        [JsonProperty("owner")]
+        public Ref Owner { get; set; }
+
+        [JsonProperty("push")]
+        public Push Push { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 
 namespace PodioAPI.Models
 {
@@ -36,7 +37,7 @@ namespace PodioAPI.Models
         /// List of weekdays ("monday", "tuesday", etc) (for "weekly")
         /// </summary>
         [JsonProperty(PropertyName = "days", NullValueHandling = NullValueHandling.Ignore)]
-        public string Days { get; set; }
+        public List<string> Days { get; set; }
 
         /// <summary>
         /// When to repeat, "day_of_week" or "day_of_month" (for "monthly")

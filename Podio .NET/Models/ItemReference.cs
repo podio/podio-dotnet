@@ -17,7 +17,7 @@ namespace PodioAPI.Models
         [JsonProperty("app")]
         public Application App { get; set; }
 
-         [JsonProperty("items")]
+        [JsonProperty("items")]
         public List<ItemMicro> Items { get; set; }
     }
 }
