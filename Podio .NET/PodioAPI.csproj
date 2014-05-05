@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="Exceptions\PodioException.cs" />
     <Compile Include="Models\ActivityGroup.cs" />
+    <Compile Include="Models\Answer.cs" />
     <Compile Include="Models\ContactTotal.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\ConversationMessage.cs" />
@@ -59,7 +60,9 @@
     <Compile Include="Models\OrganizationLoginReport.cs" />
     <Compile Include="Models\OrganizationMember.cs" />
     <Compile Include="Models\OrganizationMicro.cs" />
+    <Compile Include="Models\Presence.cs" />
     <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\Push.cs" />
     <Compile Include="Models\Rating.cs" />
     <Compile Include="Models\RatingType.cs" />
     <Compile Include="Models\ReferenceGroup.cs" />
@@ -141,11 +144,13 @@
     <Compile Include="Models\TaskSummary.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UserMail.cs" />
+    <Compile Include="Models\UserStatus.cs" />
     <Compile Include="Models\Via.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Podio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ApplicationService.cs" />
+    <Compile Include="Services\BatchService.cs" />
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\ContactService.cs" />
     <Compile Include="Services\EmbedService.cs" />

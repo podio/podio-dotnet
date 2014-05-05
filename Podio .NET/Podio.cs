@@ -731,6 +731,14 @@ namespace PodioAPI
         {
             get { return new TagService(this); }
         }
+
+        ///Provies all API methods in Batch area
+        ///<para> https://developers.podio.com/doc/batch </para>
+        ///</summary>
+        public BatchService BatchService
+        {
+            get { return new BatchService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
