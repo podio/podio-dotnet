@@ -330,7 +330,7 @@ Item myNewItem = new Item();
 //A Money field with external_id 'money'
 var moneyField = myNewItem.Field<MoneyItemField>("money");
 moneyField.Currency = "EUR";
-moneyField.Value = 250.50;
+moneyField.Value = 250.50M;
 {% endhighlight %}
 
 
