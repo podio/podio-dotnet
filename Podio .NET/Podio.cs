@@ -739,6 +739,15 @@ namespace PodioAPI
         {
             get { return new BatchService(this); }
         }
+
+        ///<summary>
+        ///Provies all API methods in Actions area
+        ///<para> https://developers.podio.com/doc/actions </para>
+        ///</summary>
+        public ActionService ActionService
+        {
+            get { return new ActionService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
