@@ -50,6 +50,7 @@
     <Compile Include="Exceptions\PodioException.cs" />
     <Compile Include="Models\ActivityGroup.cs" />
     <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\CalendarSummary.cs" />
     <Compile Include="Models\ContactTotal.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\ConversationMessage.cs" />
@@ -152,6 +153,7 @@
     <Compile Include="Services\ActionService.cs" />
     <Compile Include="Services\ApplicationService.cs" />
     <Compile Include="Services\BatchService.cs" />
+    <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\ContactService.cs" />
     <Compile Include="Services\EmbedService.cs" />

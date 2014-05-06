@@ -748,6 +748,16 @@ namespace PodioAPI
         {
             get { return new ActionService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in Calendar Area
+        /// <para> https://developers.podio.com/doc/calendar </para>
+        /// </summary>
+        public CalendarService CalendarService
+        {
+            get { return new CalendarService(this); }
+        }
+
         #endregion
     }
     public enum RequestMethod
