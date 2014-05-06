@@ -5,11 +5,11 @@ namespace PodioAPI.Models
 {
     public class CalendarEvent
     {
-        [JsonProperty("ids")]
-        public int? Id { get; set; }
+        [JsonProperty("ref_type")]
+        public string RefType { get; set; }
 
-        [JsonProperty("type")]
-        public string Type { get; set; }
+        [JsonProperty("ref_id")]
+        public string RefId { get; set; }
 
         [JsonProperty("group")]
         public string Group { get; set; }
@@ -34,5 +34,14 @@ namespace PodioAPI.Models
 
         [JsonProperty("end")]
         public DateTime? End { get; set; }
+
+        [JsonProperty("start_utc")]
+        public DateTime? StartUtc { get; set; }
+
+        [JsonProperty("end_utc")]
+        public DateTime? EndUtc { get; set; }
+
+        [JsonProperty("app")]
+        public Application App { get; set; }
     }
 }
