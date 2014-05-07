@@ -758,6 +758,15 @@ namespace PodioAPI
             get { return new CalendarService(this); }
         }
 
+        ///<summary>
+        ///Provies all API methods in Conversations area
+        ///<para> https://developers.podio.com/doc/conversations </para>
+        ///</summary>
+        public ConversationService ConversationService
+        {
+            get { return new ConversationService(this); }
+        }
+
         #endregion
     }
     public enum RequestMethod

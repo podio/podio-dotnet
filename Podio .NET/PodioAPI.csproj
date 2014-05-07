@@ -53,6 +53,7 @@
     <Compile Include="Models\CalendarSummary.cs" />
     <Compile Include="Models\ContactTotal.cs" />
     <Compile Include="Models\Conversation.cs" />
+    <Compile Include="Models\ConversationEvent.cs" />
     <Compile Include="Models\ConversationMessage.cs" />
     <Compile Include="Models\ConversationParticipant.cs" />
     <Compile Include="Models\CreatedGrant.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Models\Request\ApplicationCreateUpdateRequest.cs" />
     <Compile Include="Models\Request\BulkDeleteRequest.cs" />
     <Compile Include="Models\Request\CommentCreateUpdateRequest.cs" />
+    <Compile Include="Models\Request\ConversationCreateRequest.cs" />
     <Compile Include="Models\Request\CreateUpdateOptions.cs" />
     <Compile Include="Models\Request\ExportFilter.cs" />
     <Compile Include="Models\Request\FilterBase.cs" />
@@ -156,6 +158,7 @@
     <Compile Include="Services\CalendarService.cs" />
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\ContactService.cs" />
+    <Compile Include="Services\ConversationService.cs" />
     <Compile Include="Services\EmbedService.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\GrantService.cs" />

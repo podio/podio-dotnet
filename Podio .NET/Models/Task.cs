@@ -25,13 +25,13 @@ namespace PodioAPI.Models
         public bool? Private { get; set; }
 
         [JsonProperty("due_on")]
-        public DateTime? DueOn  { get; set; }
+        public DateTime? DueOn { get; set; }
 
         [JsonProperty("due_date")]
         public DateTime? DueDate { get; set; }
 
         [JsonProperty("due_time")]
-        public TimeSpan DueTime { get; set; }
+        public TimeSpan? DueTime { get; set; }
 
         [JsonProperty("is_liked")]
         public bool IsLiked { get; set; }
