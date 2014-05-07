@@ -186,5 +186,45 @@ namespace PodioAPI.Services
 
             return _podio.Get<CalendarSummary>(url, requestData);
         }
+
+        /// <summary>
+        /// Returns the calendar summary for the given space for the active user.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/calendar/get-calendar-summary-for-space-1609328 </para>
+        /// </summary>
+        /// <param name="spaceId"></param>
+        /// <param name="limit">The maximum number of events to return in each group Default value: 5</param>
+        /// <param name="priority">The minimum priority for the events to return Default value: 1</param>
+        /// <returns></returns>
+        public CalendarSummary GetCalendarSummaryForSpace(int spaceId, int limit = 5, int priority = 1)
+        {
+            string url = string.Format("/calendar/space/{0}/summary", spaceId);
+            var requestData = new Dictionary<string, string>
+            {
+                {"limit", limit.ToString()},
+                {"priority", priority.ToString()}
+            };
+
+            return _podio.Get<CalendarSummary>(url, requestData);
+        }
+
+
+        /// Update the calendar event with the given UID with a new start and end time. All dates and times should be given in the users local timezone.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/calendar/update-calendar-event-78177950 </para>
+        /// </summary>
+        /// <param name="uid"></param>
+        /// <param name="startDateTime"></param>
+        /// <param name="endDateTime"></param>
+        public void UpdateCalendarEvent(int uid, DateTime startDateTime, DateTime endDateTime)
+        {
+            string url = string.Format("/calendar/event/{0}", uid);
+            dynamic requestData = new
+            {
+                start_date = startDateTime.Date,
+                start_time = startDateTime.TimeOfDay,
+                end_date = endDateTime.Date,
+                end_time = endDateTime.TimeOfDay
+            };
+            _podio.Put<dynamic>(url, requestData);
+        }
     }
 }
