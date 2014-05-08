@@ -767,6 +767,14 @@ namespace PodioAPI
             get { return new ConversationService(this); }
         }
 
+        ///<summary>
+        ///Provies all API methods in Notifications area
+        ///<para> https://developers.podio.com/doc/notifications </para>
+        ///</summary>
+        public NotificationService NotificationService
+        {
+            get { return new NotificationService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
