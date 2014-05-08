@@ -58,6 +58,7 @@
     <Compile Include="Models\ConversationParticipant.cs" />
     <Compile Include="Models\CreatedGrant.cs" />
     <Compile Include="Models\Grant.cs" />
+    <Compile Include="Models\Notifications.cs" />
     <Compile Include="Models\OrganizationContactTotal.cs" />
     <Compile Include="Models\OrganizationLoginReport.cs" />
     <Compile Include="Models\OrganizationMember.cs" />
@@ -116,7 +117,6 @@
     <Compile Include="Models\ItemReference.cs" />
     <Compile Include="Models\ItemRevision.cs" />
     <Compile Include="Models\LinkedAccountData.cs" />
-    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Organization.cs" />
     <Compile Include="Models\PodioResponse.cs" />
     <Compile Include="Models\Question.cs" />
@@ -164,6 +164,7 @@
     <Compile Include="Services\GrantService.cs" />
     <Compile Include="Services\HookService.cs" />
     <Compile Include="Services\ItemService.cs" />
+    <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\OrganizationService.cs" />
     <Compile Include="Services\RatingService.cs" />
     <Compile Include="Services\ReferenceService.cs" />
