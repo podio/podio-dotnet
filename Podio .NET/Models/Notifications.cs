@@ -1,8 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+
 namespace PodioAPI.Models
 {
+    
+    public class Notifications
+    {
+        [JsonProperty("notifications")]
+        public List<Notification> Notification { get; set; }
+    }
+
     public class Notification
     {
         [JsonProperty("notification_id")]
@@ -12,13 +21,13 @@ namespace PodioAPI.Models
         public string Type { get; set; }
 
         [JsonProperty("data")]
-        public Dictionary<string,object> Data { get; set; }
+        public JToken Data { get; set; }
 
         [JsonProperty("icon")]
         public string Icon { get; set; }
 
         [JsonProperty("text")]
-        public string  Text { get; set; }
+        public string Text { get; set; }
 
         [JsonProperty("viewed_on")]
         public DateTime ViewedOn { get; set; }
