@@ -775,6 +775,14 @@ namespace PodioAPI
         {
             get { return new NotificationService(this); }
         }
+
+        ///Provies all API methods in Reminder area
+        ///<para> https://developers.podio.com/doc/reminders </para>
+        ///</summary>
+        public ReminderService ReminderService
+        {
+            get { return new ReminderService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
