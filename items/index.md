@@ -21,7 +21,7 @@ var item = podio.ItemService.GetItemBasic(123); // Get item with item_id = 123
 
 {% highlight csharp startinline %}
 // Get item and auxiliary data such as comments
-var item = podio.ItemService.GetItem(); // Get item with item_id=123
+var item = podio.ItemService.GetItem(123); // Get item with item_id=123
 {% endhighlight %}
 
 If you have assigned an external_id to an item you can get the item by providing that external_id. Since external_ids are not unique you need to provide the app_id as well.
