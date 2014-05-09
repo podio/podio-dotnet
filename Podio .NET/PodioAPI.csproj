@@ -168,6 +168,7 @@
     <Compile Include="Services\OrganizationService.cs" />
     <Compile Include="Services\RatingService.cs" />
     <Compile Include="Services\ReferenceService.cs" />
+    <Compile Include="Services\ReminderService.cs" />
     <Compile Include="Services\SearchService.cs" />
     <Compile Include="Services\SpaceMembersService.cs" />
     <Compile Include="Services\SpaceService.cs" />
