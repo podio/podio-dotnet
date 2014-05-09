@@ -38,6 +38,7 @@ namespace PodioAPI.Services
 
         /// <summary>
         /// Snoozes the reminder for 10 minutes.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/reminders/snooze-reminder-3321049 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
@@ -49,7 +50,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Creates or updates the reminder on a object. Possible ref_types are:
+        /// Creates or updates the reminder on a object. Possible ref_types are: task.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/reminders/create-or-update-reminder-3315055 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
