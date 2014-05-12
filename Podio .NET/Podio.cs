@@ -783,6 +783,15 @@ namespace PodioAPI
         {
             get { return new ReminderService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in Recurrence Area
+        /// <para> https://developers.podio.com/doc/recurrence </para>
+        /// </summary>
+        public RecurrenceService RecurrenceService
+        {
+            get { return new RecurrenceService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
