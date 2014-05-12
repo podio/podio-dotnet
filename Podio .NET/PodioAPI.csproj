@@ -58,6 +58,7 @@
     <Compile Include="Models\ConversationParticipant.cs" />
     <Compile Include="Models\CreatedGrant.cs" />
     <Compile Include="Models\Grant.cs" />
+    <Compile Include="Models\ImporterInfo.cs" />
     <Compile Include="Models\Notifications.cs" />
     <Compile Include="Models\OrganizationContactTotal.cs" />
     <Compile Include="Models\OrganizationLoginReport.cs" />
@@ -79,6 +80,8 @@
     <Compile Include="Models\Request\FilterBase.cs" />
     <Compile Include="Models\Request\FilterByView.cs" />
     <Compile Include="Models\Request\FilterOptions.cs" />
+    <Compile Include="Models\Request\ImportMappingContactField.cs" />
+    <Compile Include="Models\Request\ImportMappingField.cs" />
     <Compile Include="Models\Request\ItemCalculateRequest.cs" />
     <Compile Include="Models\Request\ItemCreateUpdateRequest.cs" />
     <Compile Include="Models\Action.cs" />
@@ -129,6 +132,7 @@
     <Compile Include="Models\Reminder.cs" />
     <Compile Include="Models\Request\SearchReferencesRequest.cs" />
     <Compile Include="Models\Request\TaskCreateUpdateRequest.cs" />
+    <Compile Include="Models\RowPreview.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Models\Seat.cs" />
     <Compile Include="Models\Space.cs" />
