@@ -792,6 +792,15 @@ namespace PodioAPI
         {
             get { return new RecurrenceService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in Importer area
+        /// <para> https://developers.podio.com/doc/importer </para>
+        /// </summary>
+        public ImporterService ImporterService
+        {
+            get { return new ImporterService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
