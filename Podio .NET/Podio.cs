@@ -159,6 +159,7 @@ namespace PodioAPI
             ServicePointManager.Expect100Continue = false;
             request.Proxy = this.Proxy;
             request.Method = httpMethod;
+            request.UserAgent = "Podio Dotnet Client";
 
             PodioResponse podioResponse = new PodioResponse();
             var responseHeaders = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
