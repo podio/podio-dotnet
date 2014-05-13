@@ -805,7 +805,7 @@ namespace PodioAPI
 
         /// <summary>
         /// Provies all API methods in Question Area
-        /// <para> https://developers.podio.com/doc/reminders </para>
+        /// <para> https://developers.podio.com/doc/questions </para>
         /// </summary>
         public QuestionService QuestionService
         {
