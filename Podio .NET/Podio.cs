@@ -811,6 +811,15 @@ namespace PodioAPI
         {
             get { return new QuestionService(this); }
         }
+
+        ///<summary>
+        ///Provies all API methods in Subscriptions area
+        ///<para> https://developers.podio.com/doc/subscriptions </para>
+        ///</summary>
+        public SubscriptionService SubscriptionService
+        {
+            get { return new SubscriptionService(this); }
+        }
         #endregion
     }
     public enum RequestMethod

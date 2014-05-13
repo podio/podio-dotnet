@@ -142,6 +142,7 @@
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\StreamObject.cs" />
     <Compile Include="Models\StreamObjectV3.cs" />
+    <Compile Include="Models\Subscription.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\TaggedObject.cs" />
     <Compile Include="Models\Task.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\StreamService.cs" />
+    <Compile Include="Services\SubscriptionService.cs" />
     <Compile Include="Services\TagService.cs" />
     <Compile Include="Services\TaskService.cs" />
     <Compile Include="Services\WidgetService.cs" />
