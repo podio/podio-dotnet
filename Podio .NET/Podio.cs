@@ -802,6 +802,15 @@ namespace PodioAPI
         {
             get { return new ImporterService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in Question Area
+        /// <para> https://developers.podio.com/doc/reminders </para>
+        /// </summary>
+        public QuestionService QuestionService
+        {
+            get { return new QuestionService(this); }
+        }
         #endregion
     }
     public enum RequestMethod

@@ -171,6 +171,7 @@
     <Compile Include="Services\ItemService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\OrganizationService.cs" />
+    <Compile Include="Services\QuestionService.cs" />
     <Compile Include="Services\RatingService.cs" />
     <Compile Include="Services\RecurrenceService.cs" />
     <Compile Include="Services\ReferenceService.cs" />
