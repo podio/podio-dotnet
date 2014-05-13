@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace PodioAPI.Models
@@ -15,7 +16,7 @@ namespace PodioAPI.Models
         public string Description { get; set; }
 
         [JsonProperty("settings", NullValueHandling = NullValueHandling.Ignore)]
-        public Dictionary<string, object> Settings { get; set; }
+        public JObject Settings { get; set; }
 
         [JsonProperty("required", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Required { get; set; }

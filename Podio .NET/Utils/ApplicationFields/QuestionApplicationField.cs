@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
 using PodioAPI.Utils.ItemFields;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace PodioAPI.Utils.ApplicationFields
             set
             {
                 InitializeFieldSettings();
-                this.InternalConfig.Settings["options"] = value;
+                this.InternalConfig.Settings["options"] = value != null ? JToken.FromObject(value) : null;
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using PodioAPI.Models;
+﻿using Newtonsoft.Json.Linq;
+using PodioAPI.Models;
 using System.Collections.Generic;
 
 namespace PodioAPI.Utils.ApplicationFields
@@ -23,7 +24,7 @@ namespace PodioAPI.Utils.ApplicationFields
             set
             {
                 InitializeFieldSettings();
-                this.InternalConfig.Settings["referenceable_types"] = value;
+                this.InternalConfig.Settings["referenceable_types"] = value != null ? JToken.FromObject(value) : null;
             }
         }
     }

@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 
 namespace PodioAPI.Models.Request
@@ -15,7 +16,7 @@ namespace PodioAPI.Models.Request
         public int? Revision { get; set; }
 
         [JsonProperty(PropertyName = "fields", NullValueHandling = NullValueHandling.Ignore)]
-        public IEnumerable<IDictionary<string, object>> Fields { get; set; }
+        public JArray Fields { get; set; }
 
         [JsonProperty(PropertyName = "tags", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Tags { get; set; }

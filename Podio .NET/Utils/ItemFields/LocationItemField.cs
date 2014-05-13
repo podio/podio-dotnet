@@ -1,4 +1,5 @@
-﻿using PodioAPI.Models;
+﻿using Newtonsoft.Json.Linq;
+using PodioAPI.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,6 @@ namespace PodioAPI.Utils.ItemFields
                     return new List<string>(this.Values.Select(s => (string)s["value"]));
                 else
                     return new List<String>();
-
             }
 
             set
@@ -23,10 +23,26 @@ namespace PodioAPI.Utils.ItemFields
                 ensureValuesInitialized();
                 foreach (var location in value)
                 {
-                    var dict = new Dictionary<string, object>();
-                    dict["value"] = location;
-                    this.Values.Add(dict);
+                    var jobject = new JObject();
+                    jobject["value"] = location;
+                    this.Values.Add(jobject);
                 }
+            }
+
+
+        }
+        public string Location
+        {
+          
+
+            set
+            {
+                ensureValuesInitialized();
+               
+                    var jobject = new JObject();
+                    jobject["value"] = value;
+                    this.Values.Add(jobject);
+                
             }
         }
     }

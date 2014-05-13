@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace PodioAPI.Models
 {
@@ -38,47 +39,40 @@ namespace PodioAPI.Models
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
         public string Status { get; internal set; }
 
-        internal object GetSetting(string key)
+
+        internal JToken GetSetting(string key)
         {
             if (this.InternalConfig.Settings != null)
             {
-                if (InternalConfig.Settings.ContainsKey(key))
-                    return InternalConfig.Settings[key];
-                else
-                    return null;
+                return InternalConfig.Settings[key];
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
         internal IEnumerable<T> GetSettingsAs<T>(string key)
         {
             var rawOptions = (JArray)this.GetSetting(key);
             var options = new T[rawOptions.Count];
-            for (int i = 0; i < rawOptions.Count; i++)
-            {
-                options[i] = rawOptions[i].ToObject<T>();
-            }
+
+            if (rawOptions != null && rawOptions.Any())
+                return rawOptions.ToObject<List<T>>();
+
             return options;
         }
 
         internal FieldConfig InitializeFieldSettings()
         {
             FieldConfig config = null;
+
             if (this.InternalConfig == null)
-            {
-                this.InternalConfig = new FieldConfig();
-                config = this.InternalConfig;
-            }
+                this.InternalConfig = config = new FieldConfig();
             else
-            {
                 config = this.InternalConfig;
-            }
+
 
             if (this.InternalConfig.Settings == null)
-                this.InternalConfig.Settings = new Dictionary<string, object>();
+                this.InternalConfig.Settings = new JObject();
 
             return config;
         }

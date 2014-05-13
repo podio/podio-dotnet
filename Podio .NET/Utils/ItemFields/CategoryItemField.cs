@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,9 +33,9 @@ namespace PodioAPI.Utils.ItemFields
                 ensureValuesInitialized();
                 foreach (var optionId in value)
                 {
-                    var dict = new Dictionary<string, object>();
-                    dict["value"] = optionId;
-                    this.Values.Add(dict);
+                    var jobject = new JObject();
+                    jobject["value"] = optionId;
+                    this.Values.Add(jobject);
                 }
             }
         }

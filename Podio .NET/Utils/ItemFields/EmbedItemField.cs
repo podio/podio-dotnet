@@ -1,4 +1,5 @@
-﻿using PodioAPI.Models;
+﻿using Newtonsoft.Json.Linq;
+using PodioAPI.Models;
 using System.Collections.Generic;
 
 namespace PodioAPI.Utils.ItemFields
@@ -19,7 +20,7 @@ namespace PodioAPI.Utils.ItemFields
                         foreach (var embedFilePair in this.Values)
                         {
                             var embed = this.valueAs<Embed>(embedFilePair, "embed");
-                            if (embedFilePair.ContainsKey("file") && embedFilePair["file"] != null)
+                            if (embedFilePair["file"] != null)
                             {
                                 var file = this.valueAs<FileAttachment>(embedFilePair, "file");
                                 if (embed.Files == null)
@@ -39,13 +40,13 @@ namespace PodioAPI.Utils.ItemFields
         public void AddEmbed(int embedId, int? fileId = null)
         {
             ensureValuesInitialized();
-            var dict = new Dictionary<string, object>();
-            dict["embed"] = embedId;
+            var jobject = new JObject();
+            jobject["embed"] = embedId;
             if (fileId != null)
             {
-                dict["file"] = fileId;
+                jobject["file"] = fileId;
             }
-            this.Values.Add(dict);
+            this.Values.Add(jobject);
         }
     }
 }

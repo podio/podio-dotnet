@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
 using System.Linq;
 
@@ -22,7 +23,7 @@ namespace PodioAPI.Utils.ApplicationFields
             set
             {
                 InitializeFieldSettings();
-                this.InternalConfig.Settings["expression"] = value;
+                this.InternalConfig.Settings["expression"] = value != null ? JToken.FromObject(value) : null;
             }
         }
 

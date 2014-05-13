@@ -32,7 +32,7 @@ namespace PodioAPI.Utils.ItemFields
             {
                 if (this.HasValue("value"))
                 {
-                    return Decimal.Parse((string)this.Values.First()["value"]);
+                    return (Decimal)this.Values.First()["value"];
                 }
                 else
                 {

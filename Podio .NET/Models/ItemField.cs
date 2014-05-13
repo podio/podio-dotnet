@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using PodioAPI.Utils;
+using Newtonsoft.Json.Linq;
 
 
 namespace PodioAPI.Models
@@ -21,7 +22,7 @@ namespace PodioAPI.Models
         public string Label { get; set; }
 
         [JsonProperty("values")]
-        public List<Dictionary<string, object>> Values { get; set; }
+        public JArray Values { get; set; }
 
         [JsonProperty("config")]
         public FieldConfig Config { get; set; }
@@ -32,10 +33,10 @@ namespace PodioAPI.Models
        
         public bool HasValue(string key = null) {
             return this.Values != null
-                && this.Values.Count > 0
+                && this.Values.Any()
                 && (key == null || 
                 (this.Values.First() != null &&
-                this.Values.First().ContainsKey(key)));
+                this.Values.First()[key] != null));
         }
 
         public object GetSetting(string key)
@@ -43,25 +44,19 @@ namespace PodioAPI.Models
             if (this.Config.Settings != null)
             {
                 var settings = this.Config.Settings;
-                if (settings.ContainsKey(key))
-                {
-                    return settings[key];
-                }
-                else
-                {
-                    return null;
-                }
+                return settings[key];
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
 
-        protected T valueAs<T>(Dictionary<string,object> value, string key)
+        protected T valueAs<T>(JToken value, string key)
             where T : class, new()
         {
-            return ((Dictionary<string,object>)value[key]).As<T>();
+            if (value != null && value[key] != null)
+                return value[key].ToObject<T>();
+
+            return null;
         }
 
         protected List<T> valuesAs<T>(List<T> list)
@@ -84,10 +79,10 @@ namespace PodioAPI.Models
 
         protected void ensureValuesInitialized(bool includeFirstChildDict = false) {
             if (this.Values == null) {
-                this.Values = new List<Dictionary<string, object>>();
+                this.Values = new JArray();
             }
             if (includeFirstChildDict && this.Values.Count == 0) {
-                this.Values.Add(new Dictionary<string, object>());
+                this.Values.Add(new JObject());
             }
         }
     }
