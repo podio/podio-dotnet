@@ -820,6 +820,15 @@ namespace PodioAPI
         {
             get { return new SubscriptionService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in User Area
+        /// <para> https://developers.podio.com/doc/users </para>
+        /// </summary>
+        public UserService UserService
+        {
+            get { return new UserService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
