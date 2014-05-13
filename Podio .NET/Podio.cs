@@ -459,7 +459,7 @@ namespace PodioAPI
         /// <param name="appId">AppId</param>
         /// <param name="appToken">AppToken</param>
         /// <returns>PodioOAuth object with OAuth data</returns>
-        public PodioOAuth AuthenicateWithApp(int appId, string appToken)
+        public PodioOAuth AuthenticateWithApp(int appId, string appToken)
         {
             var authRequest = new Dictionary<string, string>(){
                    {"app_id", appId.ToString()},
@@ -475,7 +475,7 @@ namespace PodioAPI
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns>PodioOAuth object with OAuth data</returns>
-        public PodioOAuth AuthenicateWithPassword(string username, string password)
+        public PodioOAuth AuthenticateWithPassword(string username, string password)
         {
             var authRequest = new Dictionary<string, string>(){
                    {"username", username},
@@ -492,7 +492,7 @@ namespace PodioAPI
         /// <param name="redirectUri"></param>
         /// <returns>PodioOAuth object with OAuth data</returns>
 
-        public PodioOAuth AuthenicateWithAuthorizationCode(string authorizationCode, string redirectUri)
+        public PodioOAuth AuthenticateWithAuthorizationCode(string authorizationCode, string redirectUri)
         {
             var authRequest = new Dictionary<string, string>(){
                    {"code", authorizationCode},
