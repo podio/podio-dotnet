@@ -171,6 +171,7 @@
     <Compile Include="Services\ConversationService.cs" />
     <Compile Include="Services\EmbedService.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\FormService.cs" />
     <Compile Include="Services\GrantService.cs" />
     <Compile Include="Services\HookService.cs" />
     <Compile Include="Services\ImporterService.cs" />

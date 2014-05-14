@@ -829,6 +829,15 @@ namespace PodioAPI
         {
             get { return new UserService(this); }
         }
+
+        /// <summary>
+        /// Provies API methods in Forms area
+        /// <para> https://developers.podio.com/doc/forms </para>
+        /// </summary>
+        public FormService FormService
+        {
+            get { return new FormService(this); }
+        }
         #endregion
     }
     public enum RequestMethod
