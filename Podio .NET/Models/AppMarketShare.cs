@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
@@ -34,10 +35,10 @@ namespace PodioAPI.Models
         public string Integration { get; set; }
 
         [JsonProperty("categories")]
-        public Dictionary<string,object> Categories { get; set; }
+        public JObject Categories { get; set; }
 
         [JsonProperty("org")]
-        public Dictionary<string,object> Org { get; set; }
+        public JObject Org { get; set; }
 
         [JsonProperty("author_apps")]
         public int? AuthorApps { get; set; }
@@ -52,7 +53,7 @@ namespace PodioAPI.Models
         public int? IconId { get; set; }
 
         [JsonProperty("ratings")]
-        public Dictionary<string,object> Ratings { get; set; }
+        public JObject Ratings { get; set; }
 
         [JsonProperty("user_rating")]
         public String[] UserRating { get; set; }
@@ -61,7 +62,7 @@ namespace PodioAPI.Models
         public string Video { get; set; }
 
         [JsonProperty("rating")]
-        public int? Rating { get; set; }
+        public float? Rating { get; set; }
 
         [JsonProperty("author")]
         public ByLine Author { get; set; }
