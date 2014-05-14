@@ -59,7 +59,7 @@ string authUrl = podio.GetAuthorizeUrl(redirectUri);
 
 // In the callback you get the authorization_code 
 // which you use to get the access token
-podio.AuthenicateWithAuthorizationCode(Request["code"], redirectUri);
+podio.AuthenticateWithAuthorizationCode(Request["code"], redirectUri);
 ```
 
 ### Username and Password Flow
@@ -67,7 +67,7 @@ podio.AuthenicateWithAuthorizationCode(Request["code"], redirectUri);
 If you're writing a batch job or are just playing around with the API, this is the easiest to get started. Do not use this for authenticating users other than yourself, the web server flow is meant for that.
 
 ```csharp
-podio.AuthenicateWithPassword("USERNAME", "PASSWORD");
+podio.AuthenticateWithPassword("USERNAME", "PASSWORD");
 ```
 
 ### App authentication flow
@@ -75,7 +75,7 @@ podio.AuthenicateWithPassword("USERNAME", "PASSWORD");
 The app authentication flow is suitable in situations where you only need data from a single app and do not wish authenticate as a specific user.
 
 ```csharp
-podio.AuthenicateWithApp("APP_ID", "APP_SECRET")
+podio.AuthenticateWithApp("APP_ID", "APP_SECRET")
 ```
 
 Basic Usage
@@ -129,7 +129,7 @@ using PodioAPI.Models;
 using PodioAPI.Utils.ItemFields;
 using PodioAPI.Exceptions;
 
-podio.AuthenicateWithPassword("YOUR_PODIO_USERNAME", "YOUR_PODIO_PASSWORD");
+podio.AuthenticateWithPassword("YOUR_PODIO_USERNAME", "YOUR_PODIO_PASSWORD");
 
 Item myNewItem = new Item();
 
