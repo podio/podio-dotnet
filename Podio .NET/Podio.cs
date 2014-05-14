@@ -838,6 +838,15 @@ namespace PodioAPI
         {
             get { return new FormService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in  AppMarket Area
+        /// <para> https://developers.podio.com/doc/app-store </para>
+        /// </summary>       
+        public AppMarketService AppMarketService
+        {
+            get { return new AppMarketService(this); }
+        }      
         #endregion
     }
     public enum RequestMethod
