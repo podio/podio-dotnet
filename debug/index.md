@@ -10,7 +10,7 @@ Podio-dotnet will throw exceptions when something goes predictably wrong. For ex
 try
 {
     var podio = new Podio(clientId, clientSecret);
-    podio.AuthenicateWithApp(appId, appToken);
+    podio.AuthenticateWithApp(appId, appToken);
     podio.FileService.UploadFile(filePath,"image.jpg")
 }
 catch (PodioException exception)
@@ -31,7 +31,7 @@ try
 	WebProxy fiddlerProxy = new WebProxy("127.0.0.1", 8888);
 
 	var podio = new Podio(clientId, clientSecret, proxy: fiddlerProxy);
-	podio.AuthenicateWithApp(appId, appToken);
+	podio.AuthenticateWithApp(appId, appToken);
 
     var filteredItems = podio.ItemService.FilterItems(appId: 123);
 }

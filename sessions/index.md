@@ -88,7 +88,7 @@ if(!podio.IsAuthenticated())
     // No authentication found in AuthStore.
     // You must re-authenticate here.
 
-    podio.AuthenicateWithApp(appId, appToken);
+    podio.AuthenticateWithApp(appId, appToken);
 }
 
 //Api calls here

@@ -72,7 +72,7 @@ public class Handler : IHttpHandler {
 
         // Setup client and authenticate
         var podio = new Podio(clientId, clientSecret);
-        podio.AuthenicateWithApp(appId, appToken);
+        podio.AuthenticateWithApp(appId, appToken);
 
         // Big switch statement to handle the different events
 
