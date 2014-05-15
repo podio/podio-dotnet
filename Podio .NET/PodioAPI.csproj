@@ -60,6 +60,9 @@
     <Compile Include="Models\ConversationMessage.cs" />
     <Compile Include="Models\ConversationParticipant.cs" />
     <Compile Include="Models\CreatedGrant.cs" />
+    <Compile Include="Models\Effect.cs" />
+    <Compile Include="Models\Flow.cs" />
+    <Compile Include="Models\FlowAttribute.cs" />
     <Compile Include="Models\Form.cs" />
     <Compile Include="Models\FormField.cs" />
     <Compile Include="Models\FormFieldSettings.cs" />
