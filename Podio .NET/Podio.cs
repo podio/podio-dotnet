@@ -822,7 +822,7 @@ namespace PodioAPI
         }
 
         /// <summary>
-        /// Provies all API methods in User Area
+        /// Provies API methods in User Area
         /// <para> https://developers.podio.com/doc/users </para>
         /// </summary>
         public UserService UserService
@@ -857,12 +857,21 @@ namespace PodioAPI
         }
 
         /// <summary>
-        /// Provies all API methods in Integrations area
+        /// Provies API methods in Integrations area
         /// <para> https://developers.podio.com/doc/integrations </para>
         /// </summary>
         public IntegrationService IntegrationService
         {
             get { return new IntegrationService(this); }
+        }
+
+        /// <summary>
+        /// Provies API methods in Flow area
+        /// <para> https://developers.podio.com/doc/flows </para>
+        /// </summary>
+        public FlowService FlowService
+        {
+            get { return new FlowService(this); }
         }
         #endregion
     }
