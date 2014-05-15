@@ -1,27 +1,7 @@
 About
 =====
 
-This is the .NET Client for accessing the Podio API. 
-
-This client currently covers the API methods in the following areas:
-
-- Items
-- Applications
-- Files
-- Embed
-- Tasks
-- Hooks
-- Contacts
-- Comments
-- Status
-- Organizations
-- Spaces
-- Grants
-- Search
-- Space members
-- Stream
-- Widgets
-- Reference
+This is the .NET Client for accessing the Podio API and is currently being expanded to cover the full API.
 
 Installation
 -------
@@ -81,7 +61,7 @@ podio.AuthenticateWithApp("APP_ID", "APP_SECRET")
 Basic Usage
 -----------
 
-After constructing `Podio` object  you can use all of the wrapper functions to do API requests. The functions are organized into services, each service corresponds to an Area in official [API documentation](https://developers.podio.com/doc). You can access the services right from podio class. For example:
+After constructing `Podio` object  you can use all of the wrapper functions to make API requests. The functions are organized into services, each service corresponds to an Area in official [API documentation](https://developers.podio.com/doc). You can access the services right from podio class. For example:
 
 ```csharp
 
