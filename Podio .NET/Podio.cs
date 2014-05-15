@@ -855,6 +855,15 @@ namespace PodioAPI
         {
             get { return new ViewService(this); }
         }
+
+        /// <summary>
+        /// Provies all API methods in Integrations area
+        /// <para> https://developers.podio.com/doc/integrations </para>
+        /// </summary>
+        public IntegrationService IntegrationService
+        {
+            get { return new IntegrationService(this); }
+        }
         #endregion
     }
     public enum RequestMethod

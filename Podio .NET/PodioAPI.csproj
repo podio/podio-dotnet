@@ -67,6 +67,7 @@
     <Compile Include="Models\FormSettingsText.cs" />
     <Compile Include="Models\Grant.cs" />
     <Compile Include="Models\ImporterInfo.cs" />
+    <Compile Include="Models\IntegrationAvailableAppField.cs" />
     <Compile Include="Models\Notifications.cs" />
     <Compile Include="Models\OrganizationContactTotal.cs" />
     <Compile Include="Models\OrganizationLoginReport.cs" />
@@ -181,6 +182,7 @@
     <Compile Include="Services\GrantService.cs" />
     <Compile Include="Services\HookService.cs" />
     <Compile Include="Services\ImporterService.cs" />
+    <Compile Include="Services\IntegrationService.cs" />
     <Compile Include="Services\ItemService.cs" />
     <Compile Include="Services\NotificationService.cs" />
     <Compile Include="Services\OrganizationService.cs" />
