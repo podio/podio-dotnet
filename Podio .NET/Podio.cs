@@ -846,7 +846,15 @@ namespace PodioAPI
         public AppMarketService AppMarketService
         {
             get { return new AppMarketService(this); }
-        }      
+        }
+
+        ///Provies all API methods in Views area
+        ///<para> https://developers.podio.com/doc/filters </para>
+        ///</summary>
+        public ViewService ViewService
+        {
+            get { return new ViewService(this); }
+        }
         #endregion
     }
     public enum RequestMethod

@@ -140,6 +140,7 @@
     <Compile Include="Models\Reminder.cs" />
     <Compile Include="Models\Request\SearchReferencesRequest.cs" />
     <Compile Include="Models\Request\TaskCreateUpdateRequest.cs" />
+    <Compile Include="Models\Request\ViewCreateUpdateRequest.cs" />
     <Compile Include="Models\RowPreview.cs" />
     <Compile Include="Models\SearchResult.cs" />
     <Compile Include="Models\Seat.cs" />
@@ -162,6 +163,7 @@
     <Compile Include="Models\UserMail.cs" />
     <Compile Include="Models\UserStatus.cs" />
     <Compile Include="Models\Via.cs" />
+    <Compile Include="Models\View.cs" />
     <Compile Include="Models\Widget.cs" />
     <Compile Include="Podio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -196,6 +198,7 @@
     <Compile Include="Services\TagService.cs" />
     <Compile Include="Services\TaskService.cs" />
     <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\ViewService.cs" />
     <Compile Include="Services\WidgetService.cs" />
     <Compile Include="Utils\ApplicationFields\AppReferenceApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\CalculationApplicationField.cs" />
