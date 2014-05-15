@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
 
 namespace PodioAPI.Models
 {
@@ -22,10 +22,10 @@ namespace PodioAPI.Models
         public bool? Silent { get; set; }
 
         [JsonProperty(PropertyName = "config")]
-        public Dictionary<string, object> Config { get; set; }
+        public JToken Config { get; set; }
 
         [JsonProperty(PropertyName = "mapping")]
-        public Dictionary<string, object> Mapping { get; set; }
+        public JToken Mapping { get; set; }
 
         [JsonProperty(PropertyName = "updating")]
         public bool? Updating { get; set; }
