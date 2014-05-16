@@ -15,12 +15,12 @@ namespace PodioAPI.Models
         public string AttributeId { get; set; }
 
         [JsonProperty("label")]
-        public string Label { get; set; }
+        public string Label { get; private set; }
 
         [JsonProperty("type")]
         public string Type { get; set; }
 
         [JsonProperty("substitutions")]
-        public Dictionary<string, string> Substitutions { get; set; }
+        public Dictionary<string, string> Substitutions { get; private set; }
     }
 }
