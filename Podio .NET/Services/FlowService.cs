@@ -1,4 +1,5 @@
 ﻿using PodioAPI.Models;
+using PodioAPI.Models.Request;
 using System.Collections.Generic;
 
 namespace PodioAPI.Services
@@ -57,6 +58,70 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/flow/{0}/context/", flowId);
             return _podio.Get<Dictionary<string, FlowAttribute>>(url);
+        }
+
+        /// <summary>
+        /// Creates a new flow on the given reference. Only valid reference is "app".
+        /// <para>Podio API Reference: https://developers.podio.com/doc/flows/add-new-flow-26309928 </para>
+        /// </summary>
+        /// <param name="refType"></param>
+        /// <param name="refId"></param>
+        /// <param name="name">The name of the flow</param>
+        /// <param name="type">The type of the flow, currently only supports "item.create" and "item.update"</param>
+        /// <param name="effects">The list of effects to add</param>
+        /// <param name="config">The configuration for the cause of the flow</param>
+        public int AddNewFlow(string refType, int refId, string name, string type, List<Effect> effects, dynamic config = null)
+        {
+            string url = string.Format("/flow/{0}/{1}/",refType,refId);
+            dynamic requestData = new
+            {
+                name = name,
+                type = type,
+                config = config,
+                effects = effects
+            };
+            dynamic response = _podio.Post<dynamic>(url, requestData);
+            return (int)response["flow_id"];
+        }
+
+        /// <summary>
+        /// Updates the flow. The type cannot be changed.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/flows/update-flow-26310901 </para>
+        /// </summary>
+        /// <param name="flowId"></param>
+        /// <param name="name"> The new name of the flow</param>
+        /// <param name="effects">The list of effects to add</param>
+        /// <param name="config">The configuration for the cause of the flow</param>
+        public void UpdateFlow(int flowId, string name, List<Effect> effects = null, dynamic config = null)
+        {
+            string url = string.Format("/flow/{0}", flowId);
+            dynamic requestData = new
+            {
+                name = name,
+                config = config,
+                effects = effects
+            };
+            _podio.Put<dynamic>(url, requestData);
+        }
+
+        /// <summary>
+        /// Get's the possible attributes to use as variables for a given effect attribute.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/flows/get-possible-attributes-33060379 </para>
+        /// </summary>
+        /// <param name="refType"></param>
+        /// <param name="refId"></param>
+        /// <param name="cause">Details about the cause</param>
+        /// <param name="effect">Details about the effect</param>
+        /// <returns></returns>
+        public List<FlowAttribute> GetPossibleAttributes(string refType, int refId, Cause cause, dynamic effect)
+        {
+            string url = string.Format("/flow/{0}/{1}/attributes/", refType, refId);
+            dynamic requestData = new
+            {
+                cause = cause,
+                effect = effect
+            };
+            return _podio.Post<List<FlowAttribute>>(url, requestData);
         }
     }
 }
