@@ -1,4 +1,5 @@
-﻿using PodioAPI.Models;
+﻿using Newtonsoft.Json.Linq;
+using PodioAPI.Models;
 using System.Collections.Generic;
 
 namespace PodioAPI.Services
@@ -136,6 +137,41 @@ namespace PodioAPI.Services
         {
             string url = "/user/status";
             return _podio.Get<UserStatus>(url);
+        }
+
+        /// <summary>
+        /// Returns the value of the property for the active user with the given name. The property is specific to the auth client used.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/users/get-user-property-29798 </para>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public JObject GetUserProperty(string name)
+        {
+            string url = string.Format("/user/property/{0}", name);
+            return _podio.Get<JObject>(url);
+        }
+
+        /// <summary>
+        /// Sets the value of the property for the active user with the given name. The property is specific to the auth client used.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/users/set-user-property-29799 </para>
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="value"></param>
+        public void SetUserProperty(string name, dynamic value)
+        {
+            string url = string.Format("/user/property/{0}", name);
+            _podio.Put<dynamic>(url, value);
+        }
+
+        /// <summary>
+        /// Sets the values of one or more properties for the active user. The properties are specific to the auth client used.
+        /// <para>Podio API Reference: https://developers.podio.com/doc/users/set-user-properties-9052829 </para>
+        /// </summary>
+        /// <param name="properties">The JSON object value of the property</param>
+        public void SetUserProperties(Dictionary<string, object> properties)
+        {
+            string url = "/user/property/";
+            _podio.Put<dynamic>(url, properties);
         }
     }
 }
