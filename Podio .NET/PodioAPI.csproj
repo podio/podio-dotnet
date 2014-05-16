@@ -54,6 +54,7 @@
     <Compile Include="Models\AppMarketShareInstall.cs" />
     <Compile Include="Models\AppMarketShares.cs" />
     <Compile Include="Models\CalendarSummary.cs" />
+    <Compile Include="Models\Cause.cs" />
     <Compile Include="Models\ContactTotal.cs" />
     <Compile Include="Models\Conversation.cs" />
     <Compile Include="Models\ConversationEvent.cs" />
