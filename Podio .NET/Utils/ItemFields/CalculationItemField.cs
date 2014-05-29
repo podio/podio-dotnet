@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using PodioAPI.Models;
+using System;
 
 namespace PodioAPI.Utils.ItemFields
 {
@@ -20,6 +21,50 @@ namespace PodioAPI.Utils.ItemFields
             }
         }
 
+        public string ValueAsString
+        {
+            get
+            {
+                if (this.HasValue("value"))
+                {
+                    return (string)this.Values.First()["value"];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public DateTime? Start
+        {
+            get
+            {
+                if (this.HasValue("start"))
+                {
+                    return (DateTime)this.Values.First()["start"];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+        public DateTime? StartUTC
+        {
+            get
+            {
+                if (this.HasValue("start_utc"))
+                {
+                    return (DateTime)this.Values.First()["start_utc"];
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
     }
 
 }
