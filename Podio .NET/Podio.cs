@@ -552,13 +552,6 @@ namespace PodioAPI
             return (this.OAuth != null && !string.IsNullOrEmpty(this.OAuth.AccessToken));
         }
 
-        /// <summary>
-        /// Clear access token from AuthStore
-        /// </summary>
-        public void ClearAuth()
-        {
-            AuthStore.Clear();
-        }
         #endregion
 
         #region Services
