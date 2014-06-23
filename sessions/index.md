@@ -36,9 +36,6 @@ The `Get` method should retrieve an existing authentication when called. It shou
 ### The `Set` method
 The `Set` method should store a `PodioOAuth` object when called. It has a parameters, `podioOAuth`, which holds the current `PodioOAuth` object.
 
-### The `Clear` method
-The `Set` method should clear `PodioOAuth` object form AuthStore when called.
-
 ## Example: Store access tokens in browser session cookie
 This is a simple example meant for a web application. It stores the authentication data in a HttpContext.Current.Session variable. This avoid having to re-authenticate each time a page is refreshed.
 
@@ -63,12 +60,6 @@ namespace PodioAPI.Utils.Authentication
         public void Set(PodioOAuth podioOAuth)
         {
             HttpContext.Current.Session["PodioOAuth"] = podioOAuth;
-        }
-
-        //Clear PodioOAuth object from session
-        public void Clear()
-        {
-            HttpContext.Current.Session["PodioOAuth"] = null;
         }
     }
 }
