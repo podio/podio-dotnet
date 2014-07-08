@@ -172,7 +172,7 @@ namespace PodioAPI
                 if (requestHeaders.ContainsKey("Content-type"))
                     request.ContentType = requestHeaders["Content-type"];
                 if (requestHeaders.ContainsKey("Content-length"))
-                    request.ContentType = requestHeaders["Content-length"];
+                    request.ContentLength = int.Parse(requestHeaders["Content-length"]);
                 if (requestHeaders.ContainsKey("Authorization"))
                     request.Headers.Add("Authorization", requestHeaders["Authorization"]);
             }

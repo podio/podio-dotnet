@@ -27,7 +27,7 @@ namespace PodioAPI.Services
         /// <returns>Id of the created item</returns>
         public int AddNewItem(int appId, Item item, bool silent = false, bool hook = true)
         {
-            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, values = f.Values }));
+            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
             var requestData = new ItemCreateUpdateRequest()
             {
                 ExternalId = item.ExternalId,
@@ -57,7 +57,7 @@ namespace PodioAPI.Services
         /// <returns>The id of the new revision / null if no change</returns>
         public int? UpdateItem(Item item, int? revision = null, bool silent = false, bool hook = true)
         {
-            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, values = f.Values }));
+            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
             var requestData = new ItemCreateUpdateRequest()
             {
                 ExternalId = item.ExternalId,
@@ -145,7 +145,7 @@ namespace PodioAPI.Services
                 var newRevisionId = ItemService.UpdateItemValues(item); 
            */
 
-            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, values = f.Values }));
+            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
             string url = string.Format("/item/{0}/value", item.ItemId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic response = _podio.Put<dynamic>(url, fieldValues);
