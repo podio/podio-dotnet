@@ -109,7 +109,7 @@ Updating items are handled exactly the same way as creating items. The only diff
 {% highlight csharp startinline %}
 Item itemToUpdate = new Item();
 
-item.ItemId = 12345; // The item_id of the item you need to update.
+itemToUpdate.ItemId = 12345; // The item_id of the item you need to update.
 
 //A Text field with external_id 'title'
 var textfield = itemToUpdate.Field<TextItemField>("title");
