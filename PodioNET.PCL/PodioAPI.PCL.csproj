@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>10.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{81C9A4AA-F39C-4958-A00D-495E064811D8}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>PodioAPI</RootNamespace>
+    <AssemblyName>PodioAPI.PCL</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile328</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Models\Action.cs" />
+    <Compile Include="Models\Activity.cs" />
+    <Compile Include="Models\ActivityGroup.cs" />
+    <Compile Include="Models\Answer.cs" />
+    <Compile Include="Models\AppCalculation.cs" />
+    <Compile Include="Models\AppField.cs" />
+    <Compile Include="Models\Application.cs" />
+    <Compile Include="Models\ApplicationConfig.cs" />
+    <Compile Include="Models\ApplicationConfiguration.cs" />
+    <Compile Include="Models\ApplicationDependency.cs" />
+    <Compile Include="Models\ApplicationField.cs" />
+    <Compile Include="Models\ApplicationRevision.cs" />
+    <Compile Include="Models\AppMarketCategory.cs" />
+    <Compile Include="Models\AppMarketShare.cs" />
+    <Compile Include="Models\AppMarketShareInstall.cs" />
+    <Compile Include="Models\AppMarketShares.cs" />
+    <Compile Include="Models\AppValues.cs" />
+    <Compile Include="Models\AutoTask.cs" />
+    <Compile Include="Models\Batch.cs" />
+    <Compile Include="Models\BulkDeletionStatus.cs" />
+    <Compile Include="Models\ByLine.cs" />
+    <Compile Include="Models\CalendarEvent.cs" />
+    <Compile Include="Models\CalendarSummary.cs" />
+    <Compile Include="Models\Cause.cs" />
+    <Compile Include="Models\Clone.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Contact.cs" />
+    <Compile Include="Models\ContactTotal.cs" />
+    <Compile Include="Models\Conversation.cs" />
+    <Compile Include="Models\ConversationEvent.cs" />
+    <Compile Include="Models\ConversationMessage.cs" />
+    <Compile Include="Models\ConversationParticipant.cs" />
+    <Compile Include="Models\CreatedGrant.cs" />
+    <Compile Include="Effect.cs" />
+    <Compile Include="Models\Embed.cs" />
+    <Compile Include="Models\FieldConfig.cs" />
+    <Compile Include="Models\FileAttachment.cs" />
+    <Compile Include="Models\FileResponse.cs" />
+    <Compile Include="Models\Flow.cs" />
+    <Compile Include="Models\FlowAttribute.cs" />
+    <Compile Include="Models\Form.cs" />
+    <Compile Include="Models\FormField.cs" />
+    <Compile Include="Models\FormFieldSettings.cs" />
+    <Compile Include="Models\FormSettings.cs" />
+    <Compile Include="Models\FormSettingsText.cs" />
+    <Compile Include="Models\Grant.cs" />
+    <Compile Include="Models\Hook.cs" />
+    <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\ImporterInfo.cs" />
+    <Compile Include="Models\Integration.cs" />
+    <Compile Include="Models\IntegrationAvailableAppField.cs" />
+    <Compile Include="Models\Item.cs" />
+    <Compile Include="Models\ItemCalculate.cs" />
+    <Compile Include="Models\ItemDiff.cs" />
+    <Compile Include="Models\ItemField.cs" />
+    <Compile Include="Models\ItemFieldMicro.cs" />
+    <Compile Include="Models\ItemMicro.cs" />
+    <Compile Include="Models\ItemReference.cs" />
+    <Compile Include="Models\ItemRevision.cs" />
+    <Compile Include="Models\LinkedAccountData.cs" />
+    <Compile Include="Models\Notifications.cs" />
+    <Compile Include="Models\Organization.cs" />
+    <Compile Include="Models\OrganizationContactTotal.cs" />
+    <Compile Include="Models\OrganizationLoginReport.cs" />
+    <Compile Include="Models\OrganizationMember.cs" />
+    <Compile Include="Models\OrganizationMicro.cs" />
+    <Compile Include="Models\PodioResponse.cs" />
+    <Compile Include="Models\Presence.cs" />
+    <Compile Include="Models\Profile.cs" />
+    <Compile Include="Models\Push.cs" />
+    <Compile Include="Models\Question.cs" />
+    <Compile Include="Models\QuestionAnswer.cs" />
+    <Compile Include="Models\QuestionOption.cs" />
+    <Compile Include="Models\Range.cs" />
+    <Compile Include="Models\Rating.cs" />
+    <Compile Include="Models\RatingType.cs" />
+    <Compile Include="Models\Recurrence.cs" />
+    <Compile Include="Models\Ref.cs" />
+    <Compile Include="Models\Reference.cs" />
+    <Compile Include="Models\ReferenceGroup.cs" />
+    <Compile Include="Models\Reminder.cs" />
+    <Compile Include="Models\Request\AddSpaceMemberRequest.cs" />
+    <Compile Include="Models\Request\ApplicationCreateUpdateRequest.cs" />
+    <Compile Include="Models\Request\BulkDeleteRequest.cs" />
+    <Compile Include="Models\Request\CommentCreateUpdateRequest.cs" />
+    <Compile Include="Models\Request\ConversationCreateRequest.cs" />
+    <Compile Include="Models\Request\CreateUpdateOptions.cs" />
+    <Compile Include="Models\Request\ExportFilter.cs" />
+    <Compile Include="Models\Request\FilterBase.cs" />
+    <Compile Include="Models\Request\FilterByView.cs" />
+    <Compile Include="Models\Request\FilterOptions.cs" />
+    <Compile Include="Models\Request\ImportMappingContactField.cs" />
+    <Compile Include="Models\Request\ImportMappingField.cs" />
+    <Compile Include="Models\Request\ItemCalculateRequest.cs" />
+    <Compile Include="Models\Request\ItemCreateUpdateRequest.cs" />
+    <Compile Include="Models\Request\SearchReferencesRequest.cs" />
+    <Compile Include="Models\Request\TaskCreateUpdateRequest.cs" />
+    <Compile Include="Models\Request\ViewCreateUpdateRequest.cs" />
+    <Compile Include="Models\RowPreview.cs" />
+    <Compile Include="Models\SearchResult.cs" />
+    <Compile Include="Models\Seat.cs" />
+    <Compile Include="Models\Space.cs" />
+    <Compile Include="Models\SpaceContactTotal.cs" />
+    <Compile Include="Models\SpaceMember.cs" />
+    <Compile Include="Models\SpaceMicro.cs" />
+    <Compile Include="Models\Status.cs" />
+    <Compile Include="Models\StreamObject.cs" />
+    <Compile Include="Models\StreamObjectV3.cs" />
+    <Compile Include="Models\Subscription.cs" />
+    <Compile Include="Models\Tag.cs" />
+    <Compile Include="Models\TaggedObject.cs" />
+    <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\TaskCollection.cs" />
+    <Compile Include="Models\TaskLabel.cs" />
+    <Compile Include="Models\TaskReport.cs" />
+    <Compile Include="Models\TaskSummary.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserMail.cs" />
+    <Compile Include="Models\UserStatus.cs" />
+    <Compile Include="Models\Via.cs" />
+    <Compile Include="Models\View.cs" />
+    <Compile Include="Models\Widget.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\ApplicationFields\AppReferenceApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\CalculationApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\CategoryApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\ContactApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\DateApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\DurationApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\EmbedApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\FileApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\ImageApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\LocationApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\MoneyApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\NumericApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\ProgressApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\QuestionApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\StateApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\TextApplicationField.cs" />
+    <Compile Include="Utils\ItemFields\AppItemField.cs" />
+    <Compile Include="Utils\ItemFields\CalculationItemField.cs" />
+    <Compile Include="Utils\ItemFields\CategoryItemField.cs" />
+    <Compile Include="Utils\ItemFields\ContactItemField.cs" />
+    <Compile Include="Utils\ItemFields\DateItemField.cs" />
+    <Compile Include="Utils\ItemFields\DurationItemField.cs" />
+    <Compile Include="Utils\ItemFields\EmbedItemField.cs" />
+    <Compile Include="Utils\ItemFields\ImageItemField.cs" />
+    <Compile Include="Utils\ItemFields\LocationItemField.cs" />
+    <Compile Include="Utils\ItemFields\MoneyItemField.cs" />
+    <Compile Include="Utils\ItemFields\NumericItemField.cs" />
+    <Compile Include="Utils\ItemFields\ProgressItemField.cs" />
+    <Compile Include="Utils\ItemFields\QuestionItemField.cs" />
+    <Compile Include="Utils\ItemFields\StateItemField.cs" />
+    <Compile Include="Utils\ItemFields\TextItemField.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.6\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

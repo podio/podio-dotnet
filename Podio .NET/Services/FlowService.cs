@@ -1,4 +1,5 @@
-﻿using PodioAPI.Models;
+﻿using PodioAPI;
+using PodioAPI.Models;
 using PodioAPI.Models.Request;
 using System.Collections.Generic;
 
