@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace PodioAPI.Models
 {
@@ -136,14 +137,14 @@ namespace PodioAPI.Models
         public T Field<T>(string externalId)
             where T : ItemField, new()
         {
-            var genericField = this.Fields.Find(field => field.ExternalId == externalId);
+			var genericField = this.Fields.Where(field => field.ExternalId == externalId).FirstOrDefault();
             return fieldInstance<T>(genericField, externalId);
         }
 
         public T Field<T>(int fieldId)
             where T : ItemField, new()
         {
-            var genericField = this.Fields.Find(field => field.FieldId == fieldId);
+			var genericField = this.Fields.Where(field => field.FieldId == fieldId).FirstOrDefault();
             return fieldInstance<T>(genericField, null, fieldId);
         }
 

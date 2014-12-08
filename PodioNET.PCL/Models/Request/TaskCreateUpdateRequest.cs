@@ -56,7 +56,7 @@ namespace PodioAPI.Models.Request
 
 
         [JsonProperty("responsible", NullValueHandling = NullValueHandling.Ignore)]
-        internal dynamic Responsible { get; set; }
+        public dynamic Responsible { get; set; }
 
         /// <summary>
         /// The list of files to attach to this task

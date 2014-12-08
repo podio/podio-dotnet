@@ -33,3 +33,5 @@ obj
 *.jpeg
 *.png
 !NuGet.exe
+/Podio .NET.sln.GhostDoc.xml
+/packages
