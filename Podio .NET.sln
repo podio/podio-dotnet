@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodioAPI.PCL", "PodioNET.PCL\PodioAPI.PCL.csproj", "{81C9A4AA-F39C-4958-A00D-495E064811D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodioAPI", "Podio .NET\PodioAPI.csproj", "{366D6850-6BCD-4829-AC92-1E9365F781B7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PodioAPI.Core", "Podio .NET\PodioAPI.Core.csproj", "{366D6850-6BCD-4829-AC92-1E9365F781B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D638D177-C05C-46AC-88C1-61CD3FE266C4}"
 	ProjectSection(SolutionItems) = preProject
