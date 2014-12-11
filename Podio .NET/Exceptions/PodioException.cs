@@ -21,7 +21,7 @@ namespace PodioAPI.Exceptions
         }
     }
 
-    class PodioInvalidGrantException : PodioException
+    public class PodioInvalidGrantException : PodioException
     {
         public PodioInvalidGrantException(int status, PodioError error)
             : base(status, error)
@@ -29,7 +29,7 @@ namespace PodioAPI.Exceptions
         }
     }
 
-    class PodioBadRequestException : PodioException
+    public class PodioBadRequestException : PodioException
     {
         public PodioBadRequestException(int status, PodioError error)
             : base(status, error)
@@ -37,7 +37,7 @@ namespace PodioAPI.Exceptions
         }
     }
 
-    class PodioAuthorizationException : PodioException
+    public class PodioAuthorizationException : PodioException
     {
         public PodioAuthorizationException(int status, PodioError error)
             : base(status, error)
@@ -45,7 +45,7 @@ namespace PodioAPI.Exceptions
         }
     }
 
-    class PodioForbiddenException : PodioException
+    public class PodioForbiddenException : PodioException
     {
         public PodioForbiddenException(int status, PodioError error)
             : base(status, error)
@@ -53,7 +53,7 @@ namespace PodioAPI.Exceptions
         }
     }
 
-    class PodioNotFoundException : PodioException
+    public class PodioNotFoundException : PodioException
     {
         public PodioNotFoundException(int status, PodioError error)
             : base(status, error)
@@ -61,7 +61,7 @@ namespace PodioAPI.Exceptions
         }
     }
 
-    class PodioConflictException : PodioException
+    public class PodioConflictException : PodioException
     {
         public PodioConflictException(int status, PodioError error)
             : base(status, error)
@@ -69,7 +69,7 @@ namespace PodioAPI.Exceptions
         }
     }
 
-    class PodioGoneException : PodioException
+    public class PodioGoneException : PodioException
     {
         public PodioGoneException(int status, PodioError error)
             : base(status, error)
@@ -77,7 +77,7 @@ namespace PodioAPI.Exceptions
         }
     }
 
-    class PodioRateLimitException : PodioException
+    public class PodioRateLimitException : PodioException
     {
         public PodioRateLimitException(int status, PodioError error)
             : base(status, error)
@@ -85,7 +85,7 @@ namespace PodioAPI.Exceptions
         }
     }
 
-    class PodioServerException : PodioException
+    public class PodioServerException : PodioException
     {
         public PodioServerException(int status, PodioError error)
             : base(status, error)
@@ -93,7 +93,7 @@ namespace PodioAPI.Exceptions
         }
     }
 
-    class PodioUnavailableException : PodioException
+    public class PodioUnavailableException : PodioException
     {
         public PodioUnavailableException(int status, PodioError error)
             : base(status, error)
