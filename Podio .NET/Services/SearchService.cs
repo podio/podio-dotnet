@@ -41,15 +41,17 @@ namespace PodioAPI.Services
         /// <param name="query"></param>
         /// <param name="limit"></param>
         /// <param name="offset"></param>
+        /// <param name="refType">The type of objects to search for. Can be one of "item", "task", "conversation", "app", "status", "file" and  "profile"</param>
         /// <returns></returns>
-        public List<SearchResult> SearchInApp(int appId, string query, int? limit = null, int offset = 0)
+        public List<SearchResult> SearchInApp(int appId, string query, int? limit = null, int offset = 0, string refType = null)
         {
             string url = string.Format("/search/app/{0}/", appId);
             dynamic requestData = new
             {
                 query = query,
                 limit = limit,
-                offset = offset
+                offset = offset,
+                ref_type = refType
             };
             return _podio.Post<List<SearchResult>>(url, requestData);
         }
@@ -62,15 +64,17 @@ namespace PodioAPI.Services
         /// <param name="query"></param>
         /// <param name="limit"></param>
         /// <param name="offset"></param>
+        /// <param name="refType">The type of objects to search for. Can be one of "item", "task", "conversation", "app", "status", "file" and  "profile"</param>
         /// <returns></returns>
-        public List<SearchResult> SearchInOrganization(int orgId, string query, int? limit = null, int offset = 0)
+        public List<SearchResult> SearchInOrganization(int orgId, string query, int? limit = null, int offset = 0, string refType = null)
         {
             string url = string.Format("/search/org/{0}/", orgId);
             dynamic requestData = new
             {
                 query = query,
                 limit = limit,
-                offset = offset
+                offset = offset,
+                ref_type = refType
             };
             return _podio.Post<List<SearchResult>>(url, requestData);
         }
@@ -83,15 +87,17 @@ namespace PodioAPI.Services
         /// <param name="query"></param>
         /// <param name="limit"></param>
         /// <param name="offset"></param>
+        /// <param name="refType">The type of objects to search for. Can be one of "item", "task", "conversation", "app", "status", "file" and  "profile"</param>
         /// <returns></returns>
-        public List<SearchResult> SearchInSpace(int spaceId, string query, int? limit = null, int offset = 0)
+        public List<SearchResult> SearchInSpace(int spaceId, string query, int? limit = null, int offset = 0, string refType = null)
         {
             string url = string.Format("/search/space/{0}/", spaceId);
             dynamic requestData = new
             {
                 query = query,
                 limit = limit,
-                offset = offset
+                offset = offset,
+                ref_type = refType
             };
             return _podio.Post<List<SearchResult>>(url, requestData);
         }
