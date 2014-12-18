@@ -18,15 +18,17 @@ namespace PodioAPI.Services
         /// <param name="query">The text to search for.</param>
         /// <param name="limit"> The number of results to return; up to 20 results are returned in one call.</param>
         /// <param name="offset">The rank of the first search result to return (default=0).</param>
+        /// <param name="refType">The type of objects to search for. Can be one of "item", "task", "conversation", "app", "status", "file" and  "profile"</param>
         /// <returns></returns>
-        public List<SearchResult> SearchGlobally(string query, int? limit = null, int offset = 0)
+        public List<SearchResult> SearchGlobally(string query, int? limit = null, int offset = 0, string refType = null)
         {
             string url = "/search/";
             dynamic requestData = new
             {
                 query = query,
                 limit = limit,
-                offset = offset
+                offset = offset,
+                ref_type = refType
             };
             return _podio.Post<List<SearchResult>>(url, requestData);
         }
