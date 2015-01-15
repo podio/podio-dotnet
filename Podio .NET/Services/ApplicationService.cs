@@ -389,7 +389,7 @@ namespace PodioAPI.Services
         /// <para>Podio API Reference: https://developers.podio.com/doc/applications/update-app-22352 </para>
         /// </summary>
         /// <param name="application"></param>
-        public void UpdateApp(Application application)
+        public void UpdateApp(Application application, bool silent = false)
         {
             /*
                Example Usage: Updating an App by adding a new Category Field and Updating a Text Field
@@ -425,6 +425,7 @@ namespace PodioAPI.Services
             */
 
             string url = string.Format("/app/{0}", application.AppId);
+            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, false));
             var requestData = new ApplicationCreateUpdateRequest()
             {
                 Config = application.Config,

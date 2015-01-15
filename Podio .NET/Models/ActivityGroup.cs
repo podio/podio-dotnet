@@ -10,7 +10,7 @@ namespace PodioAPI.Models
         public List<Activity> Activities { get; set; }
 
         [JsonProperty("authors")]
-        public ByLine Authors { get; set; }
+        public IEnumerable<ByLine> Authors { get; set; }
 
         [JsonProperty("created_by")]
         public ByLine CreatedBy { get; set; }
