@@ -43,6 +43,22 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
+        /// Upload a new file from URL
+        /// </summary>
+        /// <param name="fileUrl"></param>
+        /// <returns></returns>
+        public FileAttachment UploadFileFromUrl(string fileUrl)
+        {
+            string url = "/file/from_url/";
+            dynamic requestData = new
+            {
+                url = fileUrl
+            };
+
+            return _podio.Post<FileAttachment>(url, requestData);
+        }
+
+        /// <summary>
         /// Used to update the description of the file.
         /// <para>Podio API Reference: https://developers.podio.com/doc/files/update-file-22454 </para>
         /// </summary>
