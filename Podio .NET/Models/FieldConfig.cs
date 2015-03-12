@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 
 namespace PodioAPI.Models
 {
@@ -10,7 +9,7 @@ namespace PodioAPI.Models
         public string DefaultValue { get; private set; }
 
         /// <summary>
-        /// The description of the field, shown to the user when inserting and editing.
+        ///     The description of the field, shown to the user when inserting and editing.
         /// </summary>
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }
@@ -22,13 +21,13 @@ namespace PodioAPI.Models
         public bool? Required { get; set; }
 
         /// <summary>
-        /// The mapping of the field, one of "meeting_time", "meeting_participants", "meeting_agenda" and "meeting_location".
+        ///     The mapping of the field, one of "meeting_time", "meeting_participants", "meeting_agenda" and "meeting_location".
         /// </summary>
         [JsonProperty("mapping", NullValueHandling = NullValueHandling.Ignore)]
         public string Mapping { get; set; }
 
         /// <summary>
-        /// Label of the field, This is required on Application create.
+        ///     Label of the field, This is required on Application create.
         /// </summary>
         [JsonProperty("label", NullValueHandling = NullValueHandling.Ignore)]
         public string Label { get; set; }
@@ -37,7 +36,7 @@ namespace PodioAPI.Models
         public bool? Visible { get; set; }
 
         /// <summary>
-        /// An integer indicating the order of the field compared to other fields
+        ///     An integer indicating the order of the field compared to other fields
         /// </summary>
         [JsonProperty("delta", NullValueHandling = NullValueHandling.Ignore)]
         public int? Delta { get; set; }

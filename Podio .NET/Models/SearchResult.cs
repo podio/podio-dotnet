@@ -34,6 +34,5 @@ namespace PodioAPI.Models
 
         [JsonProperty("created_by")]
         public ByLine CreatedBy { get; set; }
-
     }
 }

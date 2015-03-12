@@ -1,19 +1,20 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Exceptions
 {
     public class PodioException : Exception
     {
         /// <summary>
-        /// Response from the API
+        ///     Response from the API
         /// </summary>
         public PodioError Error { get; internal set; }
 
         /// <summary>
-        /// Status code of the response
+        ///     Status code of the response
         /// </summary>
         public int Status { get; internal set; }
+
         public PodioException(int status, PodioError error)
         {
             this.Error = error;
@@ -102,7 +103,7 @@ namespace PodioAPI.Exceptions
     }
 
     /// <summary>
-    /// Represent the error response from API
+    ///     Represent the error response from API
     /// </summary>
     public class PodioError
     {
@@ -133,5 +134,4 @@ namespace PodioAPI.Exceptions
         [JsonProperty(PropertyName = "method")]
         public string Method { get; set; }
     }
-
 }

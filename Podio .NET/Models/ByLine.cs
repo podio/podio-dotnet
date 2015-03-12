@@ -27,6 +27,5 @@ namespace PodioAPI.Models
 
         [JsonProperty(PropertyName = "avatar")]
         public int? Avatar { get; set; }
-
     }
 }

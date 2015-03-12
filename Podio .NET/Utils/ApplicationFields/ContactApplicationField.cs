@@ -7,8 +7,11 @@ namespace PodioAPI.Utils.ApplicationFields
         private string type;
 
         /// <summary>
-        /// "type": The type of contacts this field allows. 
-        /// <para>One of "space_users" (only members of the workspace), "all_users", "space_contacts" or "space_users_and_contacts" (deprecated)</para>
+        ///     "type": The type of contacts this field allows.
+        ///     <para>
+        ///         One of "space_users" (only members of the workspace), "all_users", "space_contacts" or
+        ///         "space_users_and_contacts" (deprecated)
+        ///     </para>
         /// </summary>
         public string ContactType
         {
@@ -16,7 +19,7 @@ namespace PodioAPI.Utils.ApplicationFields
             {
                 if (type == null)
                 {
-                    type = (string)this.GetSetting("type");
+                    type = (string) this.GetSetting("type");
                 }
                 return type;
             }

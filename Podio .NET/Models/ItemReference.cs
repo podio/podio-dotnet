@@ -1,13 +1,10 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models
 {
     /// <summary>
-    /// Used to returns the items that have a reference to the given item.
+    ///     Used to returns the items that have a reference to the given item.
     /// </summary>
     public class ItemReference
     {

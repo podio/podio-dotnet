@@ -1,19 +1,21 @@
-﻿using PodioAPI.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PodioAPI.Models;
 
 namespace PodioAPI.Services
 {
     public class RatingService
     {
-        private Podio _podio;
+        private readonly Podio _podio;
+
         public RatingService(Podio currentInstance)
         {
             _podio = currentInstance;
         }
 
         /// <summary>
-        /// Add a new rating of the user to the object. The rating can be one of many different types. For more details see the area.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/ratings/add-rating-22377 </para>
+        ///     Add a new rating of the user to the object. The rating can be one of many different types. For more details see the
+        ///     area.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/ratings/add-rating-22377 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
@@ -28,12 +30,12 @@ namespace PodioAPI.Services
                 value = value
             };
             dynamic response = _podio.Post<dynamic>(url, requestData);
-            return (int)response["rating_id"];
+            return (int) response["rating_id"];
         }
 
         /// <summary>
-        /// Get the number of users who liked the given object.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-like-count-32161225 </para>
+        ///     Get the number of users who liked the given object.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-like-count-32161225 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
@@ -42,12 +44,12 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/rating/{0}/{1}/like_count", refType, refId);
             dynamic response = _podio.Get<dynamic>(url);
-            return (int)response["like_count"];
+            return (int) response["like_count"];
         }
 
         /// <summary>
-        /// Returns the rating value for the given rating type, object and user.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-rating-22407 </para>
+        ///     Returns the rating value for the given rating type, object and user.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-rating-22407 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
@@ -58,12 +60,12 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/rating/{0}/{1}/{2}/{3}", refType, refId, ratingType, userId);
             dynamic response = _podio.Get<dynamic>(url);
-            return (int)response["value"];
+            return (int) response["value"];
         }
 
         /// <summary>
-        /// Returns the active users rating value for the given rating type and object.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-rating-own-84128 </para>
+        ///     Returns the active users rating value for the given rating type and object.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-rating-own-84128 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
@@ -73,12 +75,12 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/rating/{0}/{1}/{2}/self", refType, refId, ratingType);
             dynamic response = _podio.Get<dynamic>(url);
-            return (int)response["value"];
+            return (int) response["value"];
         }
 
         /// <summary>
-        /// Get a list of profiles of everyone that liked the given object.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-who-liked-an-object-29007011 </para>
+        ///     Get a list of profiles of everyone that liked the given object.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-who-liked-an-object-29007011 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
@@ -89,14 +91,14 @@ namespace PodioAPI.Services
             string url = string.Format("/rating/{0}/{1}/liked_by/", refType, refId);
             Dictionary<string, string> requestData = new Dictionary<string, string>()
             {
-                {"limit",limit.ToString()}
+                {"limit", limit.ToString()}
             };
             return _podio.Get<List<Contact>>(url, requestData);
         }
 
         /// <summary>
-        /// Removes a previous rating of the given type by the user of the specified object.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/ratings/remove-rating-22342 </para>
+        ///     Removes a previous rating of the given type by the user of the specified object.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/ratings/remove-rating-22342 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
@@ -108,21 +110,21 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns all the ratings for the given object. It will only return the ratings that are enabled for the object.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-all-ratings-22376 </para>
+        ///     Returns all the ratings for the given object. It will only return the ratings that are enabled for the object.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-all-ratings-22376 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <returns></returns>
         public Rating GetAllRatings(string refType, int refId)
         {
-            string url = string.Format("/rating/{0}/{1}",refType,refId);
+            string url = string.Format("/rating/{0}/{1}", refType, refId);
             return _podio.Get<Rating>(url);
         }
 
         /// <summary>
-        /// Get the rating average (for fivestar) and totals for the given rating type on the specified object.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-ratings-22375 </para>
+        ///     Get the rating average (for fivestar) and totals for the given rating type on the specified object.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/ratings/get-ratings-22375 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>

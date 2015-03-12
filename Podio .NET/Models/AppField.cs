@@ -20,6 +20,6 @@ namespace PodioAPI.Models
         public FieldConfig Config { get; set; }
 
         [JsonProperty("status")]
-        public string Status { get; set; } 
+        public string Status { get; set; }
     }
 }

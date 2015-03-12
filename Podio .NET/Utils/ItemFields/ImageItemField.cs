@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
-using System.Collections.Generic;
 
 namespace PodioAPI.Utils.ItemFields
 {
@@ -10,10 +10,7 @@ namespace PodioAPI.Utils.ItemFields
 
         public IEnumerable<FileAttachment> Images
         {
-            get
-            {
-                return this.valuesAs<FileAttachment>(_images);
-            }
+            get { return this.valuesAs<FileAttachment>(_images); }
         }
 
         public IEnumerable<int> FileIds
@@ -29,16 +26,16 @@ namespace PodioAPI.Utils.ItemFields
                 }
             }
         }
-        public int  FileId
+
+        public int FileId
         {
             set
             {
                 ensureValuesInitialized();
-                
-                    var jobject = new JObject();
-                    jobject["value"] = value;
-                    this.Values.Add(jobject);
-                
+
+                var jobject = new JObject();
+                jobject["value"] = value;
+                this.Values.Add(jobject);
             }
         }
     }

@@ -9,14 +9,15 @@ namespace PodioAPI.Utils.ApplicationFields
         private string _size;
 
         /// <summary>
-        /// Size of the input field, either "small" or "large"
+        ///     Size of the input field, either "small" or "large"
         /// </summary>
-        public string Size {
+        public string Size
+        {
             get
             {
-                if(_size == null)
+                if (_size == null)
                 {
-                    _size = (string)this.GetSetting("size");
+                    _size = (string) this.GetSetting("size");
                 }
                 return _size;
             }

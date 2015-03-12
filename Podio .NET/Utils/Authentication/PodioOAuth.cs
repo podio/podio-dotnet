@@ -4,7 +4,7 @@ using PodioAPI.Models;
 namespace PodioAPI.Utils.Authentication
 {
     /// <summary>
-    /// Authenication response form API
+    ///     Authenication response form API
     /// </summary>
     public class PodioOAuth
     {

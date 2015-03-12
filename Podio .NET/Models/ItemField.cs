@@ -1,9 +1,7 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using PodioAPI.Utils;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-
 
 namespace PodioAPI.Models
 {
@@ -30,13 +28,14 @@ namespace PodioAPI.Models
         [JsonProperty("status")]
         public string Status { get; set; }
 
-       
-        public bool HasValue(string key = null) {
+
+        public bool HasValue(string key = null)
+        {
             return this.Values != null
-                && this.Values.Any()
-                && (key == null || 
-                (this.Values.First() != null &&
-                this.Values.First()[key] != null));
+                   && this.Values.Any()
+                   && (key == null ||
+                       (this.Values.First() != null &&
+                        this.Values.First()[key] != null));
         }
 
         public object GetSetting(string key)
@@ -74,14 +73,17 @@ namespace PodioAPI.Models
                     }
                 }
             }
-            return list;        
+            return list;
         }
 
-        protected void ensureValuesInitialized(bool includeFirstChildDict = false) {
-            if (this.Values == null) {
+        protected void ensureValuesInitialized(bool includeFirstChildDict = false)
+        {
+            if (this.Values == null)
+            {
                 this.Values = new JArray();
             }
-            if (includeFirstChildDict && this.Values.Count == 0) {
+            if (includeFirstChildDict && this.Values.Count == 0)
+            {
                 this.Values.Add(new JObject());
             }
         }

@@ -1,19 +1,20 @@
-﻿using PodioAPI.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PodioAPI.Models;
 
 namespace PodioAPI.Services
 {
     public class QuestionService
     {
-        private Podio _podio;
+        private readonly Podio _podio;
+
         public QuestionService(Podio currentInstance)
         {
             _podio = currentInstance;
         }
 
         /// <summary>
-        /// Answers the question for the given object. The object type can be either "status" or "comment".
-        /// <para>Podio API Reference: https://developers.podio.com/doc/questions/answer-question-887232 </para>
+        ///     Answers the question for the given object. The object type can be either "status" or "comment".
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/questions/answer-question-887232 </para>
         /// </summary>
         /// <param name="questionId"></param>
         /// <param name="questionOptionId"></param>
@@ -28,8 +29,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns all the answers for the given question on the given object.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/questions/get-answers-945753  </para>
+        ///     Returns all the answers for the given question on the given object.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/questions/get-answers-945753  </para>
         /// </summary>
         /// <param name="questionId"></param>
         /// <returns></returns>
@@ -40,8 +41,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Creates a new question on the given object. Supported object types are "status" and "comment".
-        /// <para>Podio API Reference: https://developers.podio.com/doc/questions/create-question-887166 </para>
+        ///     Creates a new question on the given object. Supported object types are "status" and "comment".
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/questions/create-question-887166 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
@@ -57,7 +58,7 @@ namespace PodioAPI.Services
                 options = options
             };
             dynamic response = _podio.Post<dynamic>(url, requestData);
-            return (int)response["question_id"];
+            return (int) response["question_id"];
         }
     }
 }

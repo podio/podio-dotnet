@@ -2,10 +2,10 @@
 
 namespace PodioAPI.Models.Request
 {
-    public class FilterOptions: FilterBase
+    public class FilterOptions : FilterBase
     {
         /// <summary>
-        /// True if the view should be remembered, false otherwise
+        ///     True if the view should be remembered, false otherwise
         /// </summary>
         [JsonProperty("remember", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Remember { get; set; }

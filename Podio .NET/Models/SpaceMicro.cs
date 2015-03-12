@@ -21,6 +21,5 @@ namespace PodioAPI.Models
 
         [JsonProperty("type")]
         public string Type { get; set; }
-
     }
 }

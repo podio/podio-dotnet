@@ -12,7 +12,7 @@ namespace PodioAPI.Utils.ItemFields
             {
                 if (this.HasValue("currency"))
                 {
-                    return (string)this.Values.First()["currency"];
+                    return (string) this.Values.First()["currency"];
                 }
                 else
                 {
@@ -32,7 +32,7 @@ namespace PodioAPI.Utils.ItemFields
             {
                 if (this.HasValue("value"))
                 {
-                    return (Decimal)this.Values.First()["value"];
+                    return (Decimal) this.Values.First()["value"];
                 }
                 else
                 {
@@ -45,7 +45,5 @@ namespace PodioAPI.Utils.ItemFields
                 this.Values.First()["value"] = value;
             }
         }
-
     }
-
 }

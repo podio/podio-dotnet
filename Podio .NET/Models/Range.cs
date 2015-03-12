@@ -6,7 +6,8 @@ namespace PodioAPI.Models
     {
         [JsonProperty("max")]
         public float Min { get; set; }
+
         [JsonProperty("min")]
-        public float Max { get; set; }  
+        public float Max { get; set; }
     }
 }

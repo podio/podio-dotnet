@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models
 {
@@ -9,7 +9,7 @@ namespace PodioAPI.Models
         public string Text { get; set; }
 
         /// <summary>
-        /// Only need to set the user_id property on Application create and update.
+        ///     Only need to set the user_id property on Application create and update.
         /// </summary>
         [JsonProperty("responsible")]
         public List<User> Responsible { get; set; }

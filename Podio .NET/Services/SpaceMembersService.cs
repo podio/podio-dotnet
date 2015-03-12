@@ -1,21 +1,22 @@
-﻿using PodioAPI.Models;
+﻿using System.Collections.Generic;
+using PodioAPI.Models;
 using PodioAPI.Models.Request;
 using PodioAPI.Utils;
-using System.Collections.Generic;
 
 namespace PodioAPI.Services
 {
     public class SpaceMembersService
     {
-        private Podio _podio;
+        private readonly Podio _podio;
+
         public SpaceMembersService(Podio currentInstance)
         {
             _podio = currentInstance;
         }
 
         /// <summary>
-        /// Returns the active members of the given space.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/get-active-members-of-space-22395 </para>
+        ///     Returns the active members of the given space.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/get-active-members-of-space-22395 </para>
         /// </summary>
         /// <param name="spaceId"></param>
         /// <returns></returns>
@@ -26,8 +27,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the membership details for the given user on the given space.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/get-space-member-20735097 </para>
+        ///     Returns the membership details for the given user on the given space.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/get-space-member-20735097 </para>
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="userId"></param>
@@ -39,8 +40,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the space members with the specified role.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/get-space-members-by-role-68043 </para>
+        ///     Returns the space members with the specified role.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/get-space-members-by-role-68043 </para>
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="role"></param>
@@ -52,31 +53,35 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the members of the given space.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/get-space-members-v2-19350328 </para>
+        ///     Returns the members of the given space.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/get-space-members-v2-19350328 </para>
         /// </summary>
         /// <param name="spaceId"></param>
-        /// <param name="memberType">The type of members to return. Can be one of: employee, external, admin, regular, light, guest.</param>
+        /// <param name="memberType">
+        ///     The type of members to return. Can be one of: employee, external, admin, regular, light,
+        ///     guest.
+        /// </param>
         /// <param name="query">Any search term to match.</param>
         /// <param name="limit">The maximum number of members to return. Default value: 100</param>
         /// <param name="offset">The offset into the member list. Default value: 0</param>
         /// <returns></returns>
-        public List<SpaceMember> GetSpaceMembers(int spaceId, string memberType = null, string query = null, int limit = 100, int offset = 0)
+        public List<SpaceMember> GetSpaceMembers(int spaceId, string memberType = null, string query = null,
+            int limit = 100, int offset = 0)
         {
             string url = string.Format("/space/{0}/member/v2/", spaceId);
             var requestData = new Dictionary<string, string>()
             {
-                {"limit",limit.ToString()},
-                {"member_type",memberType},
-                {"offset",offset.ToString()},
-                {"query",query}
+                {"limit", limit.ToString()},
+                {"member_type", memberType},
+                {"offset", offset.ToString()},
+                {"query", query}
             };
             return _podio.Get<List<SpaceMember>>(url, requestData);
         }
 
         /// <summary>
-        /// Used to get the details of an active users membership of a space.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/get-space-membership-22397 </para>
+        ///     Used to get the details of an active users membership of a space.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/get-space-membership-22397 </para>
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="userId"></param>
@@ -88,8 +93,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Joins the open space with the given id.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/join-space-1927286 </para>
+        ///     Joins the open space with the given id.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/join-space-1927286 </para>
         /// </summary>
         /// <param name="spaceId"></param>
         public void JoinSpace(int spaceId)
@@ -99,8 +104,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Used to leave the space for the active user.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/leave-space-19410457 </para>
+        ///     Used to leave the space for the active user.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/leave-space-19410457 </para>
         /// </summary>
         /// <param name="spaceId"></param>
         public void LeaveSpace(int spaceId)
@@ -110,8 +115,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Updates the space memberships with another role.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/update-space-memberships-22398 </para>
+        ///     Updates the space memberships with another role.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/update-space-memberships-22398 </para>
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="userIds"></param>
@@ -128,8 +133,9 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Request access to a space you don't have access to. All admins of this space will get notified and can accept or ignore it.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/request-space-membership-6146231 </para>
+        ///     Request access to a space you don't have access to. All admins of this space will get notified and can accept or
+        ///     ignore it.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/request-space-membership-6146231 </para>
         /// </summary>
         /// <param name="spaceId"></param>
         public void RequestSpaceMembership(int spaceId)
@@ -139,8 +145,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Accept a request from another user to be added to the space.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/accept-space-membership-request-6146271 </para>
+        ///     Accept a request from another user to be added to the space.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/accept-space-membership-request-6146271 </para>
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="spaceMemberRequestId"></param>
@@ -151,8 +157,9 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Adds a list of users (either through user_id or email) to the space. If the user limit is reached, status code 403 will be returned.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/add-member-to-space-1066259 </para>
+        ///     Adds a list of users (either through user_id or email) to the space. If the user limit is reached, status code 403
+        ///     will be returned.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/add-member-to-space-1066259 </para>
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="addSpaceMemberRequest"></param>
@@ -163,8 +170,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Ends all the users membership on the space, can also be called for members in state invited.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/space-members/end-space-memberships-22399 </para>
+        ///     Ends all the users membership on the space, can also be called for members in state invited.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/end-space-memberships-22399 </para>
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="userIds"></param>

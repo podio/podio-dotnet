@@ -1,24 +1,24 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models
 {
     public class ApplicationConfiguration
     {
         /// <summary>
-        /// The type of the app, either "standard" or "meeting"
+        ///     The type of the app, either "standard" or "meeting"
         /// </summary>
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
 
         /// <summary>
-        /// Name of the application. This is required on Application create.
+        ///     Name of the application. This is required on Application create.
         /// </summary>
         [JsonProperty("name", NullValueHandling = NullValueHandling.Ignore)]
         public string Name { get; set; }
 
         /// <summary>
-        /// The name of each item in an app. This is required on Application create.
+        ///     The name of each item in an app. This is required on Application create.
         /// </summary>
         [JsonProperty("item_name", NullValueHandling = NullValueHandling.Ignore)]
         public string ItemName { get; set; }
@@ -27,7 +27,7 @@ namespace PodioAPI.Models
         public string Description { get; set; }
 
         /// <summary>
-        /// The usage information of the app.
+        ///     The usage information of the app.
         /// </summary>
         [JsonProperty("usage", NullValueHandling = NullValueHandling.Ignore)]
         public string Usage { get; set; }
@@ -39,7 +39,7 @@ namespace PodioAPI.Models
         public int? IconId { get; set; }
 
         /// <summary>
-        /// The icon for the app. This is required on Application create.
+        ///     The icon for the app. This is required on Application create.
         /// </summary>
         [JsonProperty("icon", NullValueHandling = NullValueHandling.Ignore)]
         public string Icon { get; set; }
@@ -48,7 +48,7 @@ namespace PodioAPI.Models
         public bool? AllowEdit { get; set; }
 
         /// <summary>
-        /// The default view of the app items on the app main page. Possible values: badge, table, stream, calendar or card
+        ///     The default view of the app items on the app main page. Possible values: badge, table, stream, calendar or card
         /// </summary>
         [JsonProperty("default_view", NullValueHandling = NullValueHandling.Ignore)]
         public string DefaultView { get; set; }

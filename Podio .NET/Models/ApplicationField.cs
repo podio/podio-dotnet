@@ -1,7 +1,7 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
@@ -14,13 +14,14 @@ namespace PodioAPI.Models
         [JsonProperty("type", NullValueHandling = NullValueHandling.Ignore)]
         public string Type { get; set; }
 
-        public string Label {
+        public string Label
+        {
             get { return this.InternalConfig.Label; }
-            set 
+            set
             {
                 InitializeFieldSettings();
                 this.InternalConfig.Label = value;
-            } 
+            }
         }
 
         [JsonProperty("external_id", NullValueHandling = NullValueHandling.Ignore)]
@@ -29,11 +30,9 @@ namespace PodioAPI.Models
         [JsonProperty("config", NullValueHandling = NullValueHandling.Ignore)]
         public FieldConfig InternalConfig { get; internal set; }
 
-        public FieldConfig Config {
-            get 
-            {
-                return InitializeFieldSettings();
-            }
+        public FieldConfig Config
+        {
+            get { return InitializeFieldSettings(); }
         }
 
         [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
@@ -52,7 +51,7 @@ namespace PodioAPI.Models
 
         internal IEnumerable<T> GetSettingsAs<T>(string key)
         {
-            var rawOptions = (JArray)this.GetSetting(key);
+            var rawOptions = (JArray) this.GetSetting(key);
             var options = new T[rawOptions.Count];
 
             if (rawOptions != null && rawOptions.Any())

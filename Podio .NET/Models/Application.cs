@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using PodioAPI.Utils.ApplicationFields;
-using System.Collections.Generic;
 
 namespace PodioAPI.Models
 {
@@ -73,6 +73,7 @@ namespace PodioAPI.Models
 
         [JsonProperty("pinned")]
         public bool Pinned { get; set; }
+
         // When app is returned as part of large collection (e.g. for stream), some config properties is moved to the main object
 
         [JsonProperty("name")]
@@ -83,8 +84,8 @@ namespace PodioAPI.Models
 
 
         /// <summary>
-        /// Only for retrival
-        /// <para> for create or update use <see cref="PodioAPI.Models.Application.Field &lt;T&gt;()"/> overload</para>
+        ///     Only for retrival
+        ///     <para> for create or update use <see cref="PodioAPI.Models.Application.Field &lt;T&gt;()" /> overload</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="externalId"></param>
@@ -97,8 +98,8 @@ namespace PodioAPI.Models
         }
 
         /// <summary>
-        /// Only for retrival
-        /// <para> for create or update use <see cref="PodioAPI.Models.Application.Field &lt;T&gt;()"/> overload</para>
+        ///     Only for retrival
+        ///     <para> for create or update use <see cref="PodioAPI.Models.Application.Field &lt;T&gt;()" /> overload</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="fieldId"></param>
@@ -111,13 +112,13 @@ namespace PodioAPI.Models
         }
 
         /// <summary>
-        /// For application create and update only
-        /// <para>Use the other overloads for retrival</para>
+        ///     For application create and update only
+        ///     <para>Use the other overloads for retrival</para>
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
         public T Field<T>()
-           where T : ApplicationField, new()
+            where T : ApplicationField, new()
         {
             T specificField = new T();
             SetFieldType(specificField);
@@ -126,16 +127,19 @@ namespace PodioAPI.Models
         }
 
         protected T fieldInstance<T>(ApplicationField genericField, string externalId = null, int? fieldId = null)
-                    where T : ApplicationField, new()
+            where T : ApplicationField, new()
         {
             T specificField = new T();
             if (genericField != null)
             {
                 foreach (var property in genericField.GetType().GetProperties())
                 {
-                    var jsonAttribute = ((JsonPropertyAttribute[])property.GetCustomAttributes(typeof(JsonPropertyAttribute), false));
-                    if(jsonAttribute.Length > 0)
-                        specificField.GetType().GetProperty(property.Name).SetValue(specificField, property.GetValue(genericField, null), null);               
+                    var jsonAttribute =
+                        ((JsonPropertyAttribute[]) property.GetCustomAttributes(typeof (JsonPropertyAttribute), false));
+                    if (jsonAttribute.Length > 0)
+                        specificField.GetType()
+                            .GetProperty(property.Name)
+                            .SetValue(specificField, property.GetValue(genericField, null), null);
                 }
             }
             return specificField;
@@ -143,67 +147,67 @@ namespace PodioAPI.Models
 
         private void SetFieldType(ApplicationField field)
         {
-            if (field.GetType() == typeof(TextApplicationField))
+            if (field.GetType() == typeof (TextApplicationField))
             {
                 field.Type = "text";
             }
-            if (field.GetType() == typeof(NumericApplicationField))
+            if (field.GetType() == typeof (NumericApplicationField))
             {
                 field.Type = "number";
             }
-            if (field.GetType() == typeof(StateApplicationField))
+            if (field.GetType() == typeof (StateApplicationField))
             {
                 field.Type = "state";
             }
-            if (field.GetType() == typeof(ImageApplicationField))
+            if (field.GetType() == typeof (ImageApplicationField))
             {
                 field.Type = "image";
             }
-            if (field.GetType() == typeof(DateApplicationField))
+            if (field.GetType() == typeof (DateApplicationField))
             {
                 field.Type = "date";
             }
-            if (field.GetType() == typeof(AppReferenceApplicationField))
+            if (field.GetType() == typeof (AppReferenceApplicationField))
             {
                 field.Type = "app";
             }
-            if (field.GetType() == typeof(MoneyApplicationField))
+            if (field.GetType() == typeof (MoneyApplicationField))
             {
                 field.Type = "money";
             }
-            if (field.GetType() == typeof(ProgressApplicationField))
+            if (field.GetType() == typeof (ProgressApplicationField))
             {
                 field.Type = "progress";
             }
-            if (field.GetType() == typeof(LocationApplicationField))
+            if (field.GetType() == typeof (LocationApplicationField))
             {
                 field.Type = "location";
             }
-            if (field.GetType() == typeof(DurationApplicationField))
+            if (field.GetType() == typeof (DurationApplicationField))
             {
                 field.Type = "duration";
             }
-            if (field.GetType() == typeof(ContactApplicationField))
+            if (field.GetType() == typeof (ContactApplicationField))
             {
                 field.Type = "contact";
             }
-            if (field.GetType() == typeof(CalculationApplicationField))
+            if (field.GetType() == typeof (CalculationApplicationField))
             {
                 field.Type = "calculation";
             }
-            if (field.GetType() == typeof(EmbedApplicationField))
+            if (field.GetType() == typeof (EmbedApplicationField))
             {
                 field.Type = "embed";
             }
-            if (field.GetType() == typeof(QuestionApplicationField))
+            if (field.GetType() == typeof (QuestionApplicationField))
             {
                 field.Type = "question";
             }
-            if (field.GetType() == typeof(CategoryApplicationField))
+            if (field.GetType() == typeof (CategoryApplicationField))
             {
                 field.Type = "category";
             }
-            if (field.GetType() == typeof(FileApplicationField))
+            if (field.GetType() == typeof (FileApplicationField))
             {
                 field.Type = "file";
             }

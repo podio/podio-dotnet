@@ -1,8 +1,8 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace PodioAPI.Utils.ItemFields
 {
@@ -12,13 +12,11 @@ namespace PodioAPI.Utils.ItemFields
 
         public IEnumerable<Option> Options
         {
-            get
-            {
-                return this.valuesAs<Option>(_options);
-            }
+            get { return this.valuesAs<Option>(_options); }
         }
 
-        public int OptionId {
+        public int OptionId
+        {
             set
             {
                 ensureValuesInitialized(true);
@@ -42,7 +40,6 @@ namespace PodioAPI.Utils.ItemFields
 
         public class Option
         {
-
             [JsonProperty("status")]
             public string Status { get; set; }
 
@@ -55,6 +52,5 @@ namespace PodioAPI.Utils.ItemFields
             [JsonProperty("color")]
             public string Color { get; set; }
         }
-
     }
 }

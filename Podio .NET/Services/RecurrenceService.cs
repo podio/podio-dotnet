@@ -4,15 +4,16 @@ namespace PodioAPI.Services
 {
     public class RecurrenceService
     {
-        private Podio _podio;
+        private readonly Podio _podio;
+
         public RecurrenceService(Podio currentInstance)
         {
             _podio = currentInstance;
         }
 
         /// <summary>
-        /// Returns the recurrence for the given object
-        /// <para>Podio API Reference: https://developers.podio.com/doc/recurrence/get-recurrence-3415545 </para>
+        ///     Returns the recurrence for the given object
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/recurrence/get-recurrence-3415545 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
@@ -24,8 +25,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Deletes the recurrence.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/recurrence/delete-recurrence-3349970 </para>
+        ///     Deletes the recurrence.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/recurrence/delete-recurrence-3349970 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
@@ -36,8 +37,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Creates or updates recurrence on the object.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/recurrence/create-or-update-recurrence-3349957 </para>
+        ///     Creates or updates recurrence on the object.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/recurrence/create-or-update-recurrence-3349957 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>

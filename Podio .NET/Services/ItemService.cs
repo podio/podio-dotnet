@@ -1,33 +1,39 @@
-﻿using PodioAPI.Models;
-using PodioAPI.Models.Request;
-using PodioAPI.Utils;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System;
 using Newtonsoft.Json.Linq;
+using PodioAPI.Models;
+using PodioAPI.Models.Request;
+using PodioAPI.Utils;
 
 namespace PodioAPI.Services
 {
     public class ItemService
     {
-        private Podio _podio;
+        private readonly Podio _podio;
+
         public ItemService(Podio currentInstance)
         {
             _podio = currentInstance;
         }
 
         /// <summary>
-        /// Adds a new item to the given app.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/add-new-item-22362 </para>
+        ///     Adds a new item to the given app.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/add-new-item-22362 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="item"></param>
-        /// <param name="silent">If set to true, the object will not be bumped up in the stream and notifications will not be generated</param>
+        /// <param name="silent">
+        ///     If set to true, the object will not be bumped up in the stream and notifications will not be
+        ///     generated
+        /// </param>
         /// <param name="hook">If set to false, hooks will not be executed for the change</param>
         /// <returns>Id of the created item</returns>
         public int AddNewItem(int appId, Item item, bool silent = false, bool hook = true)
         {
-            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
+            JArray fieldValues =
+                JArray.FromObject(
+                    item.Fields.Select(f => new {external_id = f.ExternalId, field_id = f.FieldId, values = f.Values}));
             var requestData = new ItemCreateUpdateRequest()
             {
                 ExternalId = item.ExternalId,
@@ -47,17 +53,22 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Update an already existing item.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/update-item-22363 </para>
+        ///     Update an already existing item.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/update-item-22363 </para>
         /// </summary>
         /// <param name="item"></param>
         /// <param name="revision">The revision of the item that is being updated. This is optional</param>
-        /// <param name="silent">If set to true, the object will not be bumped up in the stream and notifications will not be generated</param>
+        /// <param name="silent">
+        ///     If set to true, the object will not be bumped up in the stream and notifications will not be
+        ///     generated
+        /// </param>
         /// <param name="hook">If set to false, hooks will not be executed for the change</param>
         /// <returns>The id of the new revision / null if no change</returns>
         public int? UpdateItem(Item item, int? revision = null, bool silent = false, bool hook = true)
         {
-            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
+            JArray fieldValues =
+                JArray.FromObject(
+                    item.Fields.Select(f => new {external_id = f.ExternalId, field_id = f.FieldId, values = f.Values}));
             var requestData = new ItemCreateUpdateRequest()
             {
                 ExternalId = item.ExternalId,
@@ -75,18 +86,21 @@ namespace PodioAPI.Services
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic response = _podio.Put<dynamic>(url, requestData);
             if (response != null)
-                return (int)response["revision"];
+                return (int) response["revision"];
             else
                 return null;
         }
 
 
         /// <summary>
-        /// Update the item values for a specific field.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/update-item-field-values-22367 </para>
+        ///     Update the item values for a specific field.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/update-item-field-values-22367 </para>
         /// </summary>
         /// <param name="item"></param>
-        /// <param name="silent">If set to true, the object will not be bumped up in the stream and notifications will not be generated</param>
+        /// <param name="silent">
+        ///     If set to true, the object will not be bumped up in the stream and notifications will not be
+        ///     generated
+        /// </param>
         /// <param name="hook">If set to false, hooks will not be executed for the change</param>
         /// <returns>The id of the new revision / null if no change</returns>
         public int? UpdateItemFieldValues(Item item, bool silent = false, bool hook = true)
@@ -118,17 +132,20 @@ namespace PodioAPI.Services
             dynamic response = _podio.Put<dynamic>(url, updatedValue);
 
             if (response != null)
-                return (int)response["revision"];
+                return (int) response["revision"];
             else
                 return null;
         }
 
         /// <summary>
-        /// Updates all the values for an item.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/update-item-values-22366 </para>
+        ///     Updates all the values for an item.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/update-item-values-22366 </para>
         /// </summary>
         /// <param name="item">Item with fields to be updated</param>
-        /// <param name="silent">If set to true, the object will not be bumped up in the stream and notifications will not be generated</param>
+        /// <param name="silent">
+        ///     If set to true, the object will not be bumped up in the stream and notifications will not be
+        ///     generated
+        /// </param>
         /// <param name="hook">If set to false, hooks will not be executed for the change</param>
         /// <returns>The id of the new revision / null if no change</returns>
         public int? UpdateItemValues(Item item, bool silent = false, bool hook = true)
@@ -145,21 +162,27 @@ namespace PodioAPI.Services
                 var newRevisionId = ItemService.UpdateItemValues(item); 
            */
 
-            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
+            JArray fieldValues =
+                JArray.FromObject(
+                    item.Fields.Select(f => new {external_id = f.ExternalId, field_id = f.FieldId, values = f.Values}));
             string url = string.Format("/item/{0}/value", item.ItemId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic response = _podio.Put<dynamic>(url, fieldValues);
             if (response != null)
-                return (int)response["revision"];
+                return (int) response["revision"];
             else
                 return null;
         }
 
-        /// <summary> Returns the item with the specified id. 
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-22360 </para>
-        /// </summary> 
+        /// <summary>
+        ///     Returns the item with the specified id.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-22360 </para>
+        /// </summary>
         /// <param name="itemId"></param>
-        /// <param name="markedAsViewed">If true marks any new notifications on the given item as viewed, otherwise leaves any notifications untouched, Default value true</param>       
+        /// <param name="markedAsViewed">
+        ///     If true marks any new notifications on the given item as viewed, otherwise leaves any
+        ///     notifications untouched, Default value true
+        /// </param>
         public Item GetItem(int itemId, bool markedAsViewed = true)
         {
             string markAsViewdValue = markedAsViewed == true ? "1" : "0";
@@ -169,15 +192,18 @@ namespace PodioAPI.Services
             };
             string url = string.Format("/item/{0}", itemId);
             return _podio.Get<Item>(url, requestData);
-
         }
 
         /// <summary>
-        /// Gets the basic details about the given item. Similar to the full get item method, but only returns data for the item itself.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-basic-61768 </para>
+        ///     Gets the basic details about the given item. Similar to the full get item method, but only returns data for the
+        ///     item itself.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-basic-61768 </para>
         /// </summary>
         /// <param name="itemId"></param>
-        /// <param name="markedAsViewed">If true marks any new notifications on the given item as viewed, otherwise leaves any notifications untouched, Default value true</param>
+        /// <param name="markedAsViewed">
+        ///     If true marks any new notifications on the given item as viewed, otherwise leaves any
+        ///     notifications untouched, Default value true
+        /// </param>
         /// <returns></returns>
         public Item GetItemBasic(int itemId, bool markedAsViewed = true)
         {
@@ -190,9 +216,10 @@ namespace PodioAPI.Services
             return _podio.Get<Item>(url, requestData);
         }
 
-        /// <summary> Returns the full item by its app_item_id, which is a unique ID for items per app.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-by-app-item-id-66506688 </para>
-        /// </summary> 
+        /// <summary>
+        ///     Returns the full item by its app_item_id, which is a unique ID for items per app.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-by-app-item-id-66506688 </para>
+        /// </summary>
         public Item GetItemByAppItemId(int appId, int appItemId)
         {
             string url = string.Format("/app/{0}/item/{1}", appId, appItemId);
@@ -200,8 +227,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Retrieve an app item with the given external_id.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-by-external-id-19556702 </para>
+        ///     Retrieve an app item with the given external_id.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-by-external-id-19556702 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="external_id"></param>
@@ -214,8 +241,8 @@ namespace PodioAPI.Services
 
 
         /// <summary>
-        /// Filters the items and returns the matching items.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/filter-items-4496747 </para>
+        ///     Filters the items and returns the matching items.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/filter-items-4496747 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="filterOptions"></param>
@@ -228,8 +255,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Filters the items and returns the matching items.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/filter-items-4496747 </para>
+        ///     Filters the items and returns the matching items.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/filter-items-4496747 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="limit">The maximum number of items to return, defaults to 30</param>
@@ -239,7 +266,8 @@ namespace PodioAPI.Services
         /// <param name="sortBy">The sort order to use</param>
         /// <param name="sortDesc">True to sort descending, false otherwise</param>
         /// <returns></returns>
-        public PodioCollection<Item> FilterItems(int appId, int? limit = 30, int? offset = 0, Object filters = null, bool? remember = null, string sortBy = null, bool? sortDesc = null)
+        public PodioCollection<Item> FilterItems(int appId, int? limit = 30, int? offset = 0, Object filters = null,
+            bool? remember = null, string sortBy = null, bool? sortDesc = null)
         {
             var filterOptions = new FilterOptions()
             {
@@ -254,8 +282,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the items in the Xlsx format.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-items-as-xlsx-63233 </para>
+        ///     Returns the items in the Xlsx format.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/get-items-as-xlsx-63233 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="filters">The key with corresponding value to use for filtering the results</param>
@@ -267,7 +295,8 @@ namespace PodioAPI.Services
         /// <param name="sortDesc">Use true to sort descending, use false to sort ascending Default value: true</param>
         /// <param name="viewId">Applies the given view, if set to 0, the last used view will be used</param>
         /// <returns></returns>
-        public FileResponse GetItemsAsXlsx(int appId, Dictionary<string, string> filters, int limit = 20, int offset = 0, bool deletedColumns = false, string sortBy = null, bool sortDesc = true, int? viewId = null)
+        public FileResponse GetItemsAsXlsx(int appId, Dictionary<string, string> filters, int limit = 20, int offset = 0,
+            bool deletedColumns = false, string sortBy = null, bool sortDesc = true, int? viewId = null)
         {
             string url = string.Format("/item/app/{0}/xlsx/", appId);
             var requestData = new Dictionary<string, string>();
@@ -291,12 +320,15 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        ///  Deletes items from a given app based in bulk and removes them from all views. The data can no longer be retrieved.
-        ///  <para>Podio API Reference: https://developers.podio.com/doc/items/bulk-delete-items-19406111 </para>
+        ///     Deletes items from a given app based in bulk and removes them from all views. The data can no longer be retrieved.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/bulk-delete-items-19406111 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="deleteRequest"></param>
-        /// <param name="silent">If set to true, the object will not be bumped up in the stream and notifications will not be generated</param>
+        /// <param name="silent">
+        ///     If set to true, the object will not be bumped up in the stream and notifications will not be
+        ///     generated
+        /// </param>
         /// <returns>Collection of matching items</returns>
         public BulkDeletionStatus BulkDeleteItems(int appId, BulkDeleteRequest deleteRequest, bool silent = false)
         {
@@ -306,11 +338,14 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Clones the given item creating a new item with identical values in the same app.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/clone-item-37722742 </para>
+        ///     Clones the given item creating a new item with identical values in the same app.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/clone-item-37722742 </para>
         /// </summary>
         /// <param name="itemId"></param>
-        /// <param name="silent">If set to true, the object will not be bumped up in the stream and notifications will not be generated</param>
+        /// <param name="silent">
+        ///     If set to true, the object will not be bumped up in the stream and notifications will not be
+        ///     generated
+        /// </param>
         /// <returns>The id of the cloned item</returns>
         public int CloneItem(int itemId, bool silent = false)
         {
@@ -321,11 +356,14 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Deletes an item and removes it from all views. The item can no longer be retrieved. 
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/delete-item-22364 </para>
+        ///     Deletes an item and removes it from all views. The item can no longer be retrieved.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/delete-item-22364 </para>
         /// </summary>
         /// <param name="itemId"></param>
-        /// <param name="silent">If set to true, the object will not be bumped up in the stream and notifications will not be generated</param>
+        /// <param name="silent">
+        ///     If set to true, the object will not be bumped up in the stream and notifications will not be
+        ///     generated
+        /// </param>
         /// <param name="hook">If set to false, hooks will not be executed for the change</param>
         public void DeleteItem(int itemId, bool silent = false, bool hook = true)
         {
@@ -335,8 +373,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Removes the reference from the item if any
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/delete-item-reference-7302326 </para>
+        ///     Removes the reference from the item if any
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/delete-item-reference-7302326 </para>
         /// </summary>
         /// <param name="itemId"></param>
         public void DeleteItemReference(int itemId)
@@ -346,8 +384,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Creates a batch for exporting the items.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/export-items-4235696 </para>
+        ///     Creates a batch for exporting the items.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/export-items-4235696 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="exporter">Valid exporters are currently "xls" and "xlsx"</param>
@@ -357,11 +395,11 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/item/app/{0}/export/{1}", appId, exporter);
             dynamic response = _podio.Post<dynamic>(url, filter);
-            return (int)response["batch_id"];
+            return (int) response["batch_id"];
         }
 
         /// <summary>
-        /// Creates a batch for exporting the items.
+        ///     Creates a batch for exporting the items.
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="exporter">Valid exporters are currently "xls" and "xlsx"</param>
@@ -372,7 +410,8 @@ namespace PodioAPI.Services
         /// <param name="sortBy">The sorting order if not using predefined filter</param>
         /// <param name="sortDesc">True if sorting should be descending, false otherwise</param>
         /// <returns>The id of the batch created for this export</returns>
-        public int ExportItems(int appId, string exporter, int? limit = null, int? offset = null, int? viewId = null, Object filters = null, string sortBy = null, bool? sortDesc = null)
+        public int ExportItems(int appId, string exporter, int? limit = null, int? offset = null, int? viewId = null,
+            Object filters = null, string sortBy = null, bool? sortDesc = null)
         {
             var requestData = new ExportFilter()
             {
@@ -388,8 +427,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Retrieves the items in the app based on the given view.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/filter-items-by-view-4540284 </para>
+        ///     Retrieves the items in the app based on the given view.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/filter-items-by-view-4540284 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="viewId"></param>
@@ -397,7 +436,8 @@ namespace PodioAPI.Services
         /// <param name="offset">The offset into the returned items, defaults to 0</param>
         /// <param name="remember">True if the view should be remembered, defaults to false</param>
         /// <returns></returns>
-        public PodioCollection<Item> FilterItemsByView(int appId, int viewId, int limit = 30, int offset = 0, bool remember = false)
+        public PodioCollection<Item> FilterItemsByView(int appId, int viewId, int limit = 30, int offset = 0,
+            bool remember = false)
         {
             string url = string.Format("/item/app/{0}/filter/{1}/", appId, viewId);
             var filterOptions = new FilterOptions()
@@ -410,8 +450,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the top possible values for the given field. This is currently only valid for fields of type "app".
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-top-values-for-field-68334 </para>
+        ///     Returns the top possible values for the given field. This is currently only valid for fields of type "app".
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/get-top-values-for-field-68334 </para>
         /// </summary>
         /// <param name="fieldId"></param>
         /// <param name="limit">The maximum number of results to return Default value: 13</param>
@@ -423,7 +463,7 @@ namespace PodioAPI.Services
             var requestData = new Dictionary<string, string>()
             {
                 {"limit", limit.ToString()},
-                {"not_item_id", itemIdCSV }
+                {"not_item_id", itemIdCSV}
             };
 
             string url = string.Format("/item/field/{0}/top/", fieldId);
@@ -431,9 +471,12 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Used to get the distinct values for all items in an app. 
-        /// <para>Will return a list of the distinct item creators, as well as a list of the possible values for fields of type "state", "member", "app", "number", "calculation", "progress" and "question".</para>
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-app-values-22455 </para>
+        ///     Used to get the distinct values for all items in an app.
+        ///     <para>
+        ///         Will return a list of the distinct item creators, as well as a list of the possible values for fields of type
+        ///         "state", "member", "app", "number", "calculation", "progress" and "question".
+        ///     </para>
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/get-app-values-22455 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
@@ -444,8 +487,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the values for a specified field on an item in specified type.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-field-values-22368 </para>
+        ///     Returns the values for a specified field on an item in specified type.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-field-values-22368 </para>
         /// </summary>
         /// <typeparam name="T">Type of field. Response will be deserialized to this type</typeparam>
         /// <param name="itemId"></param>
@@ -458,8 +501,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns a preview of the item for referencing on the given field.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-preview-for-field-reference-7529318 </para>
+        ///     Returns a preview of the item for referencing on the given field.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-preview-for-field-reference-7529318 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="fieldId"></param>
@@ -471,8 +514,9 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the items that have a reference to the given item. The references are grouped by app. Both the apps and the items are sorted by title.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-references-22439 </para>
+        ///     Returns the items that have a reference to the given item. The references are grouped by app. Both the apps and the
+        ///     items are sorted by title.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-references-22439 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
@@ -483,8 +527,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the number of items on app.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-count-34819997 </para>
+        ///     Returns the number of items on app.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-count-34819997 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
@@ -496,8 +540,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the range for the given field. Only valid for fields of type "number", "calculation" and "money".
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/get-field-ranges-24242866 </para>
+        ///     Returns the range for the given field. Only valid for fields of type "number", "calculation" and "money".
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/get-field-ranges-24242866 </para>
         /// </summary>
         /// <param name="fieldId"></param>
         /// <returns></returns>
@@ -508,10 +552,9 @@ namespace PodioAPI.Services
         }
 
 
-
         /// <summary>
-        /// Returns all the values for an item, with the additional data provided by the get item operation.
-        /// <para> Podio API Reference : https://developers.podio.com/doc/items/get-item-values-22365 </para>
+        ///     Returns all the values for an item, with the additional data provided by the get item operation.
+        ///     <para> Podio API Reference : https://developers.podio.com/doc/items/get-item-values-22365 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
@@ -522,8 +565,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns all the revisions that have been made to an item.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-revision-22373 </para>
+        ///     Returns all the revisions that have been made to an item.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-revision-22373 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
@@ -534,8 +577,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns all the revisions that have been made to an item.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-revisions-22372 </para>
+        ///     Returns all the revisions that have been made to an item.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-revisions-22372 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
@@ -546,8 +589,9 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Gets the URL to join the given meeting. If the user is the organizer of the meeting, the meeting will be started and the URL will log in the user automatically.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/get-meeting-url-14763260 </para>
+        ///     Gets the URL to join the given meeting. If the user is the organizer of the meeting, the meeting will be started
+        ///     and the URL will log in the user automatically.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/get-meeting-url-14763260 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
@@ -562,8 +606,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Updates the participation status for the active user on the item.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/set-participation-7156154 </para>
+        ///     Updates the participation status for the active user on the item.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/set-participation-7156154 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="status">The new status, either "invited", "accepted", "declined" or "tentative"</param>
@@ -578,8 +622,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns all the references to the item from the given field.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/get-references-to-item-by-field-7403920 </para>
+        ///     Returns all the references to the item from the given field.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/get-references-to-item-by-field-7403920 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="fieldId"></param>
@@ -596,8 +640,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Updates the reference on the item.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/update-item-reference-7421495 </para>
+        ///     Updates the reference on the item.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/update-item-reference-7421495 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="type">The type of the reference</param>
@@ -614,8 +658,9 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Reverts the change done in the given revision. This restores the changes done between the given revision and the previous revision, overwriting any changes done on the same fields after the revision.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/revert-item-revision-953195 </para>
+        ///     Reverts the change done in the given revision. This restores the changes done between the given revision and the
+        ///     previous revision, overwriting any changes done on the same fields after the revision.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/revert-item-revision-953195 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="revisionId"></param>
@@ -626,38 +671,43 @@ namespace PodioAPI.Services
             var response = _podio.Delete<dynamic>(url);
             if (response["revision"] != null)
             {
-                return (int)response["revision"];
+                return (int) response["revision"];
             }
             return null;
         }
 
         /// <summary>
-        /// Used to find possible items for a given application field. It searches the relevant apps for items matching the given text.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/get-references-to-item-by-field-7403920 </para>
+        ///     Used to find possible items for a given application field. It searches the relevant apps for items matching the
+        ///     given text.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/get-references-to-item-by-field-7403920 </para>
         /// </summary>
         /// <param name="fieldId"></param>
         /// <param name="limit">The maximum number of results to return Default value: 13</param>
         /// <param name="notItemIds">If supplied the items with these ids will not be returned</param>
-        /// <param name="sort">The ordering of the returned items. Can be either "created_on", "title" or blank for relevance ordering.</param>
+        /// <param name="sort">
+        ///     The ordering of the returned items. Can be either "created_on", "title" or blank for relevance
+        ///     ordering.
+        /// </param>
         /// <param name="text">The text to search for. The search will be lower case, and with a wildcard in each end.</param>
         /// <returns></returns>
-        public List<Item> FindReferenceableItems(int fieldId, int limit = 13, int[] notItemIds = null, string sort = null, string text = null)
+        public List<Item> FindReferenceableItems(int fieldId, int limit = 13, int[] notItemIds = null,
+            string sort = null, string text = null)
         {
             string itemIdCSV = Utilities.ArrayToCSV(notItemIds);
             var requestData = new Dictionary<string, string>()
             {
                 {"limit", limit.ToString()},
-                {"not_item_id",itemIdCSV},
-                {"sort",sort},
-                {"text",text}
+                {"not_item_id", itemIdCSV},
+                {"sort", sort},
+                {"text", text}
             };
             string url = string.Format("/item/field/{0}/find", fieldId);
             return _podio.Get<List<Item>>(url, requestData);
         }
 
         /// <summary>
-        /// Return all the values cloned for an item.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-clone-96822231 </para>
+        ///     Return all the values cloned for an item.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-clone-96822231 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
@@ -668,8 +718,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the difference in fields values between the two revisions.
-        /// <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-revision-difference-22374 </para>
+        ///     Returns the difference in fields values between the two revisions.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/get-item-revision-difference-22374 </para>
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="revisionFrom"></param>
@@ -687,7 +737,5 @@ namespace PodioAPI.Services
             string url = string.Format("/item/app/{0}/calculate", itemId);
             return _podio.Post<ItemCalculate>(url, ItemCalculateRequest);
         }
-
     }
-
 }

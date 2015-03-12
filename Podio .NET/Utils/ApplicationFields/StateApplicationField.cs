@@ -1,12 +1,13 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
-using System.Collections.Generic;
 
 namespace PodioAPI.Utils.ApplicationFields
 {
     public class StateApplicationField : ApplicationField
     {
         private IEnumerable<string> _allowedValues;
+
         public IEnumerable<string> AllowedValues
         {
             get

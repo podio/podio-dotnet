@@ -12,7 +12,7 @@ namespace PodioAPI.Utils.ItemFields
             {
                 if (this.HasValue("value"))
                 {
-                    return Convert.ToInt32((Int64)this.Values.First()["value"]);
+                    return Convert.ToInt32((Int64) this.Values.First()["value"]);
                 }
                 else
                 {
@@ -25,7 +25,5 @@ namespace PodioAPI.Utils.ItemFields
                 this.Values.First()["value"] = value;
             }
         }
-
     }
-
 }

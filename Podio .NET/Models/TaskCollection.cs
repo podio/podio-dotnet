@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models
 {
@@ -10,5 +10,5 @@ namespace PodioAPI.Models
 
         [JsonProperty("tasks")]
         public List<Task> Tasks { get; set; }
-    }  
+    }
 }

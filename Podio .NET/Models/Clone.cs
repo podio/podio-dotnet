@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models
 {
@@ -7,8 +7,10 @@ namespace PodioAPI.Models
     {
         [JsonProperty("files")]
         public List<FileAttachment> Files { get; set; }
+
         [JsonProperty("values")]
         public Dictionary<string, object> Values { get; set; }
+
         [JsonProperty("tags")]
         public List<string> Tags { get; set; }
     }

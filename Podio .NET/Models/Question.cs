@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models
 {
@@ -19,7 +19,5 @@ namespace PodioAPI.Models
 
         [JsonProperty("options")]
         public List<QuestionOption> Options { get; set; }
-
-       
     }
 }

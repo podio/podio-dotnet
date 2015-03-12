@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models
 {
@@ -9,8 +9,9 @@ namespace PodioAPI.Models
         public int RowCount { get; set; }
 
         [JsonProperty("columns")]
-        List<FileColumn> Columns { get; set; }
+        private List<FileColumn> Columns { get; set; }
     }
+
     public class FileColumn
     {
         [JsonProperty("id")]

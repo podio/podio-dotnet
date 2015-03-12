@@ -1,16 +1,16 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
 using PodioAPI.Utils.ItemFields;
-using System.Collections.Generic;
 
 namespace PodioAPI.Utils.ApplicationFields
 {
     public class CategoryApplicationField : ApplicationField
     {
-        IEnumerable<CategoryItemField.Option> _options;
+        private IEnumerable<CategoryItemField.Option> _options;
 
         /// <summary>
-        /// The list of options for the category
+        ///     The list of options for the category
         /// </summary>
         public IEnumerable<CategoryItemField.Option> Options
         {
@@ -30,14 +30,11 @@ namespace PodioAPI.Utils.ApplicationFields
         }
 
         /// <summary>
-        /// True if multiple options should be allowed, False otherwise
+        ///     True if multiple options should be allowed, False otherwise
         /// </summary>
         public bool Multiple
         {
-            get
-            {
-                return (bool)this.GetSetting("multiple");
-            }
+            get { return (bool) this.GetSetting("multiple"); }
             set
             {
                 InitializeFieldSettings();
@@ -46,14 +43,11 @@ namespace PodioAPI.Utils.ApplicationFields
         }
 
         /// <summary>
-        /// The way the options are displayed on the item, one of "inline", "list" or "dropdown"
+        ///     The way the options are displayed on the item, one of "inline", "list" or "dropdown"
         /// </summary>
         public string Display
         {
-            get
-            {
-                return (string)this.GetSetting("display");
-            }
+            get { return (string) this.GetSetting("display"); }
             set
             {
                 InitializeFieldSettings();

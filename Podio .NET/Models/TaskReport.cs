@@ -10,6 +10,7 @@ namespace PodioAPI.Models
         [JsonProperty("own")]
         public TaskType Own { get; set; }
     }
+
     public class TaskType
     {
         [JsonProperty("completed_yesterday")]

@@ -1,15 +1,15 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
-using System.Collections.Generic;
 
 namespace PodioAPI.Utils.ApplicationFields
 {
-    public class AppReferenceApplicationField: ApplicationField
+    public class AppReferenceApplicationField : ApplicationField
     {
         private IEnumerable<int> _referenceableTypes;
 
         /// <summary>
-        /// List of ids of the apps that can be referenced.
+        ///     List of ids of the apps that can be referenced.
         /// </summary>
         public IEnumerable<int> ReferenceableTypes
         {

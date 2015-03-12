@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 
 namespace PodioAPI.Models
 {
@@ -35,7 +35,7 @@ namespace PodioAPI.Models
 
         [JsonProperty("allowed_refs")]
         public string[] AllowedRefs { get; set; }
-        
+
         [JsonProperty("cols")]
         public int Cols { get; set; }
 

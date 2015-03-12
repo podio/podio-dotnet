@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Utils
 {
     internal class JSONSerializer
-    {       
+    {
         public static string Serilaize(object entity)
         {
             var settings = new JsonSerializerSettings();
@@ -16,12 +16,14 @@ namespace PodioAPI.Utils
 
         public static T Deserilaize<T>(string json)
         {
-            return JsonConvert.DeserializeObject<T>(json, new JsonConverter[] { new NestedDictionaryConverter() });
+            return JsonConvert.DeserializeObject<T>(json, new JsonConverter[] {new NestedDictionaryConverter()});
         }
     }
 
     #region Nested Dictionary converter
-    internal class NestedDictionaryConverter : Newtonsoft.Json.Converters.CustomCreationConverter<IDictionary<string, object>>
+
+    internal class NestedDictionaryConverter :
+        Newtonsoft.Json.Converters.CustomCreationConverter<IDictionary<string, object>>
     {
         public override IDictionary<string, object> Create(Type objectType)
         {
@@ -33,10 +35,11 @@ namespace PodioAPI.Utils
             // in addition to handling IDictionary<string, object>
             // we want to handle the deserialization of dict value
             // which is of type object
-            return objectType == typeof(object) || base.CanConvert(objectType);
+            return objectType == typeof (object) || base.CanConvert(objectType);
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
+            JsonSerializer serializer)
         {
             if (reader.TokenType == JsonToken.StartObject
                 || reader.TokenType == JsonToken.Null)
@@ -47,5 +50,6 @@ namespace PodioAPI.Utils
             return serializer.Deserialize(reader);
         }
     }
+
     #endregion
 }

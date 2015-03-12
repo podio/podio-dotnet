@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System;
 
 namespace PodioAPI.Models
 {
@@ -21,7 +21,7 @@ namespace PodioAPI.Models
         [JsonProperty("action")]
         public string Action { get; set; }
 
-        [JsonProperty("data")] 
+        [JsonProperty("data")]
         public JObject Data { get; set; }
     }
 }

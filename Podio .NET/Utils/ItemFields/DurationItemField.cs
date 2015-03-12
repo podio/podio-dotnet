@@ -12,7 +12,7 @@ namespace PodioAPI.Utils.ItemFields
             {
                 if (this.HasValue("value"))
                 {
-                    return TimeSpan.FromSeconds(Convert.ToDouble((Int64)this.Values.First()["value"]));
+                    return TimeSpan.FromSeconds(Convert.ToDouble((Int64) this.Values.First()["value"]));
                 }
                 else
                 {
@@ -24,14 +24,13 @@ namespace PodioAPI.Utils.ItemFields
                 ensureValuesInitialized(true);
                 if (value != null)
                 {
-                    this.Values.First()["value"] = (Int64)value.Value.TotalSeconds;
+                    this.Values.First()["value"] = (Int64) value.Value.TotalSeconds;
                 }
-                else {
+                else
+                {
                     this.Values.First()["value"] = null;
                 }
             }
         }
-
     }
-
 }

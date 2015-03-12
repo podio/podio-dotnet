@@ -5,7 +5,6 @@ namespace PodioAPI.Models
 {
     public class RatingType
     {
-
         [JsonProperty("average")]
         public double? Average { get; set; }
 

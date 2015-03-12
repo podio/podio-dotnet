@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Globalization;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models
 {
@@ -22,12 +22,13 @@ namespace PodioAPI.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// The file id of the avatar
+        ///     The file id of the avatar
         /// </summary>
         [JsonProperty("avatar", NullValueHandling = NullValueHandling.Ignore)]
         public int Avatar { get; set; }
 
-        public DateTime? BirthDate {
+        public DateTime? BirthDate
+        {
             get
             {
                 if (!string.IsNullOrEmpty(BirthDateString))
@@ -35,10 +36,7 @@ namespace PodioAPI.Models
 
                 return null;
             }
-            set 
-            { 
-                BirthDateString = value.Value.ToString("yyyy-MM-dd"); 
-            } 
+            set { BirthDateString = value.Value.ToString("yyyy-MM-dd"); }
         }
 
         [JsonProperty("birthdate", NullValueHandling = NullValueHandling.Ignore)]
@@ -141,6 +139,5 @@ namespace PodioAPI.Models
 
         [JsonProperty("image", NullValueHandling = NullValueHandling.Ignore)]
         public FileAttachment Image { get; set; }
-       
     }
 }

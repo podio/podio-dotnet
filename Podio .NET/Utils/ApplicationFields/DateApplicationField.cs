@@ -5,13 +5,11 @@ namespace PodioAPI.Utils.ApplicationFields
     public class DateApplicationField : ApplicationField
     {
         /// <summary>
-        /// True if the items should show up in the calendar, false otherwise
+        ///     True if the items should show up in the calendar, false otherwise
         /// </summary>
-        public bool Calendar {
-            get
-            {
-                return (bool)this.GetSetting("calendar");
-            }
+        public bool Calendar
+        {
+            get { return (bool) this.GetSetting("calendar"); }
             set
             {
                 InitializeFieldSettings();
@@ -20,14 +18,11 @@ namespace PodioAPI.Utils.ApplicationFields
         }
 
         /// <summary>
-        /// End date:  is either "disabled", "enabled" or "required"
+        ///     End date:  is either "disabled", "enabled" or "required"
         /// </summary>
         public string End
         {
-            get
-            {
-                return (string)this.GetSetting("end");
-            }
+            get { return (string) this.GetSetting("end"); }
             set
             {
                 InitializeFieldSettings();
@@ -36,14 +31,11 @@ namespace PodioAPI.Utils.ApplicationFields
         }
 
         /// <summary>
-        /// Time component: is either "disabled", "enabled" or "required"
+        ///     Time component: is either "disabled", "enabled" or "required"
         /// </summary>
         public string Time
         {
-            get
-            {
-                return (string)this.GetSetting("time");
-            }
+            get { return (string) this.GetSetting("time"); }
             set
             {
                 InitializeFieldSettings();

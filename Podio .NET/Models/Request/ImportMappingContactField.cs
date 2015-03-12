@@ -5,22 +5,21 @@ namespace PodioAPI.Models.Request
     public class ImportMappingContactField
     {
         /// <summary>
-        /// The key for the field on the contact
+        ///     The key for the field on the contact
         /// </summary>
         [JsonProperty("field_key")]
-        public string FieldKey{get;set;}
+        public string FieldKey { get; set; }
 
         /// <summary>
-        /// True of the value for the field is unique, false otherwise
+        ///     True of the value for the field is unique, false otherwise
         /// </summary>
         [JsonProperty("unique")]
-        public bool Unique{get;set;}
+        public bool Unique { get; set; }
 
         /// <summary>
-        /// The id of the column to be used for the given field
+        ///     The id of the column to be used for the given field
         /// </summary>
         [JsonProperty("column_id")]
-        public string ColumnId {get;set;}
-
+        public string ColumnId { get; set; }
     }
 }

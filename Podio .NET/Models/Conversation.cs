@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models
 {
@@ -59,8 +59,5 @@ namespace PodioAPI.Models
 
         [JsonProperty(PropertyName = "messages")]
         public List<ConversationMessage> Messages { get; set; }
-
-        
     }
-   
 }

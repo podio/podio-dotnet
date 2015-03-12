@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models.Request
 {
@@ -17,10 +17,10 @@ namespace PodioAPI.Models.Request
         [JsonProperty("participants", NullValueHandling = NullValueHandling.Ignore)]
         public List<int> Participants { get; set; }
 
-        [JsonProperty("embed_id", NullValueHandling = NullValueHandling.Ignore)]    
+        [JsonProperty("embed_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? EmbedId { get; set; }
 
-        [JsonProperty("embed_url", NullValueHandling = NullValueHandling.Ignore)]    
+        [JsonProperty("embed_url", NullValueHandling = NullValueHandling.Ignore)]
         public string EmbedUrl { get; set; }
     }
 }

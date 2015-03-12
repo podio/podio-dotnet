@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models.Request
 {
@@ -8,38 +8,39 @@ namespace PodioAPI.Models.Request
     public class TaskCreateUpdateRequest
     {
         /// <summary>
-        /// The text of the task
+        ///     The text of the task
         /// </summary>
         [JsonProperty("text", NullValueHandling = NullValueHandling.Ignore)]
         public string Text { get; set; }
 
         /// <summary>
-        /// The description of the task
+        ///     The description of the task
         /// </summary>
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
         public string Description { get; set; }
 
         /// <summary>
-        /// True if the task should be private, false otherwise
+        ///     True if the task should be private, false otherwise
         /// </summary>
         [JsonProperty("private", NullValueHandling = NullValueHandling.Ignore)]
         public bool? Private { get; set; }
 
         /// <summary>
-        /// The due date and time of the task, if any (in local time)
+        ///     The due date and time of the task, if any (in local time)
         /// </summary>
-        public DateTime? DueDate {
-            set 
-            { 
-                 if (value.HasValue)
-                 {
-                     DueTimeInternal = value.Value.Date.ToString("yyyy-MM-dd");
-                     if (value.Value.TimeOfDay != default(TimeSpan))
-                     {
-                         this.DueTime = value.Value.ToString("HH:mm");
-                     }
-                 }
-            } 
+        public DateTime? DueDate
+        {
+            set
+            {
+                if (value.HasValue)
+                {
+                    DueTimeInternal = value.Value.Date.ToString("yyyy-MM-dd");
+                    if (value.Value.TimeOfDay != default(TimeSpan))
+                    {
+                        this.DueTime = value.Value.ToString("HH:mm");
+                    }
+                }
+            }
         }
 
         [JsonProperty("due_date", NullValueHandling = NullValueHandling.Ignore)]
@@ -49,7 +50,7 @@ namespace PodioAPI.Models.Request
         private string DueTime { get; set; }
 
         /// <summary>
-        /// The due date and time of the task, if any (in UTC)
+        ///     The due date and time of the task, if any (in UTC)
         /// </summary>
         [JsonProperty("due_on", NullValueHandling = NullValueHandling.Ignore)]
         public DateTime? DueOn { get; set; }
@@ -59,49 +60,49 @@ namespace PodioAPI.Models.Request
         internal dynamic Responsible { get; set; }
 
         /// <summary>
-        /// The list of files to attach to this task
+        ///     The list of files to attach to this task
         /// </summary>
         [JsonProperty("file_ids", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<int> FileIds { get; set; }
 
         /// <summary>
-        ///  The list of labels in text form
+        ///     The list of labels in text form
         /// </summary>
         [JsonProperty("labels", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<string> Labels { get; set; }
 
         /// <summary>
-        /// The list labels in id form
+        ///     The list labels in id form
         /// </summary>
         [JsonProperty("label_ids", NullValueHandling = NullValueHandling.Ignore)]
         public IEnumerable<int> LabelIds { get; set; }
 
         /// <summary>
-        /// Optional reminder on this task
+        ///     Optional reminder on this task
         /// </summary>
         [JsonProperty("reminder", NullValueHandling = NullValueHandling.Ignore)]
         public Reminder Reminder { get; set; }
 
         /// <summary>
-        /// The recurrence for the task, if any
+        ///     The recurrence for the task, if any
         /// </summary>
         [JsonProperty("recurrence", NullValueHandling = NullValueHandling.Ignore)]
         public Recurrence Recurrence { get; set; }
 
         /// <summary>
-        /// Any external id for the task, if from another system
+        ///     Any external id for the task, if from another system
         /// </summary>
         [JsonProperty("external_id", NullValueHandling = NullValueHandling.Ignore)]
         public string ExternalId { get; set; }
 
         /// <summary>
-        /// The reference type for the task. Only for task update operation
+        ///     The reference type for the task. Only for task update operation
         /// </summary>
         [JsonProperty("ref_type", NullValueHandling = NullValueHandling.Ignore)]
         public string RefType { get; set; }
 
         /// <summary>
-        /// The reference id for the task. Only for task update operation
+        ///     The reference id for the task. Only for task update operation
         /// </summary>
         [JsonProperty("ref_id", NullValueHandling = NullValueHandling.Ignore)]
         public int? Id { get; set; }
@@ -117,18 +118,24 @@ namespace PodioAPI.Models.Request
         }
 
         /// <summary>
-        /// Set a list of contact identifier objects
+        ///     Set a list of contact identifier objects
         /// </summary>
-        /// <param name="reference">A list of contact identifier objects. supported contact identifier types: "user", "profile", "mail", "space", "external"</param>
+        /// <param name="reference">
+        ///     A list of contact identifier objects. supported contact identifier types: "user", "profile",
+        ///     "mail", "space", "external"
+        /// </param>
         public void SetResponsible(IEnumerable<Ref> contactIdentifiers)
         {
             this.Responsible = contactIdentifiers;
         }
 
         /// <summary>
-        /// Set a list of contact identifier objects
+        ///     Set a list of contact identifier objects
         /// </summary>
-        /// <param name="reference">A contactIdentifier. supported contact identifier types: "user", "profile", "mail", "space", "external"</param>
+        /// <param name="reference">
+        ///     A contactIdentifier. supported contact identifier types: "user", "profile", "mail", "space",
+        ///     "external"
+        /// </param>
         public void SetResponsible(Ref contactIdentifier)
         {
             this.Responsible = contactIdentifier;

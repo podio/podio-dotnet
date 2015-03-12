@@ -8,7 +8,7 @@ namespace PodioAPI.Models
         public int ReminderId { get; private set; }
 
         /// <summary>
-        /// Minutes to remind before the due_date
+        ///     Minutes to remind before the due_date
         /// </summary>
         [JsonProperty("remind_delta", NullValueHandling = NullValueHandling.Ignore)]
         public int ReminderDelta { get; set; }

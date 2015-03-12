@@ -60,13 +60,13 @@ namespace PodioAPI.Models
         public DateTime? LastActivityOn { get; set; }
 
         [JsonProperty("created_by")]
-        public ByLine CreatedBy { get; set; }   
+        public ByLine CreatedBy { get; set; }
 
         [JsonProperty("org")]
         public Organization Org { get; set; }
 
         [JsonProperty("is_overdue")]
-        public bool IsOverdue { get;  set; }
+        public bool IsOverdue { get; set; }
 
         [JsonProperty("owner")]
         public Ref Owner { get; set; }

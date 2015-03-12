@@ -84,6 +84,5 @@ namespace PodioAPI.Models
 
         [JsonProperty("comments")]
         public List<Comment> Comments { get; set; }
-
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace PodioAPI.Utils.Authentication
+﻿namespace PodioAPI.Utils.Authentication
 {
     public class NullAuthStore : IAuthStore
     {
@@ -10,12 +9,10 @@ namespace PodioAPI.Utils.Authentication
 
         public void Set(PodioOAuth podioOAuth)
         {
-            
         }
 
         public void Clear()
         {
-            
         }
     }
 }

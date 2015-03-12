@@ -94,11 +94,11 @@ namespace PodioAPI.Models
         [JsonProperty("reminder")]
         public Reminder Reminder { get; set; }
 
-    	[JsonProperty("recurrence")]
-		public Recurrence Recurrence { get; set; }
-        
+        [JsonProperty("recurrence")]
+        public Recurrence Recurrence { get; set; }
+
         [JsonProperty("linked_account_data")]
-		public LinkedAccountData LinkedAccountData { get; set; }
+        public LinkedAccountData LinkedAccountData { get; set; }
 
         [JsonProperty("comments")]
         public List<Comment> Comments { get; set; }
@@ -148,16 +148,19 @@ namespace PodioAPI.Models
         }
 
         protected T fieldInstance<T>(ItemField genericField, string externalId = null, int? fieldId = null)
-                    where T : ItemField, new()
+            where T : ItemField, new()
         {
             T specificField = new T();
             if (genericField != null)
             {
                 foreach (var property in genericField.GetType().GetProperties())
                 {
-                    var jsonAttribute = ((JsonPropertyAttribute[])property.GetCustomAttributes(typeof(JsonPropertyAttribute), false));
+                    var jsonAttribute =
+                        ((JsonPropertyAttribute[]) property.GetCustomAttributes(typeof (JsonPropertyAttribute), false));
                     if (jsonAttribute.Length > 0)
-                        specificField.GetType().GetProperty(property.Name).SetValue(specificField, property.GetValue(genericField, null), null);
+                        specificField.GetType()
+                            .GetProperty(property.Name)
+                            .SetValue(specificField, property.GetValue(genericField, null), null);
                 }
             }
             else

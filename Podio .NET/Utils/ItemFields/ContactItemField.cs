@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
-using System.Collections.Generic;
 
 namespace PodioAPI.Utils.ItemFields
 {
@@ -10,14 +10,11 @@ namespace PodioAPI.Utils.ItemFields
 
         public IEnumerable<Contact> Contacts
         {
-            get
-            {
-                 return this.valuesAs<Contact>(_contacts);
-            }
+            get { return this.valuesAs<Contact>(_contacts); }
         }
 
         /// <summary>
-        /// The profile_id's of the contacts
+        ///     The profile_id's of the contacts
         /// </summary>
         public IEnumerable<int> ContactIds
         {
@@ -32,18 +29,17 @@ namespace PodioAPI.Utils.ItemFields
                 }
             }
         }
-        public int  ContactId
+
+        public int ContactId
         {
             set
             {
                 ensureValuesInitialized();
-                
-                    var jobject = new JObject();
-                    jobject["value"] = value;
-                    this.Values.Add(jobject);
-                
+
+                var jobject = new JObject();
+                jobject["value"] = value;
+                this.Values.Add(jobject);
             }
         }
-      
     }
 }

@@ -1,5 +1,4 @@
-﻿
-namespace PodioAPI.Utils.ItemFields
+﻿namespace PodioAPI.Utils.ItemFields
 {
     public class QuestionItemField : CategoryItemField
     {

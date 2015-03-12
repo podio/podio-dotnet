@@ -1,5 +1,5 @@
-﻿using PodioAPI.Models;
-using System.Linq;
+﻿using System.Linq;
+using PodioAPI.Models;
 
 namespace PodioAPI.Utils.ItemFields
 {
@@ -11,7 +11,7 @@ namespace PodioAPI.Utils.ItemFields
             {
                 if (this.HasValue("value"))
                 {
-                    return (double)this.Values.First()["value"];
+                    return (double) this.Values.First()["value"];
                 }
                 else
                 {

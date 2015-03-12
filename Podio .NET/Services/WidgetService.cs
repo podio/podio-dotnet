@@ -1,19 +1,20 @@
-﻿using PodioAPI.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PodioAPI.Models;
 
 namespace PodioAPI.Services
 {
     public class WidgetService
     {
-        private Podio _podio;
+        private readonly Podio _podio;
+
         public WidgetService(Podio currentInstance)
         {
             _podio = currentInstance;
         }
 
         /// <summary>
-        /// Create a new widget on the given reference.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/widgets/create-widget-22491 </para>
+        ///     Create a new widget on the given reference.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/widgets/create-widget-22491 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
@@ -32,12 +33,12 @@ namespace PodioAPI.Services
             };
 
             dynamic respone = _podio.Post<dynamic>(url, requestData);
-            return (int)respone["widget_id"];
+            return (int) respone["widget_id"];
         }
 
         /// <summary>
-        /// Updates a widget with a new title and configuration.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/widgets/update-widget-22490 </para>
+        ///     Updates a widget with a new title and configuration.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/widgets/update-widget-22490 </para>
         /// </summary>
         /// <param name="widgetId"></param>
         /// <param name="title"></param>
@@ -55,8 +56,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Clones the widget to a new position. 
-        /// <para>Podio API Reference: https://developers.podio.com/doc/widgets/clone-widget-105850650 </para>
+        ///     Clones the widget to a new position.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/widgets/clone-widget-105850650 </para>
         /// </summary>
         /// <param name="widgetId">Widget id to be cloned</param>
         /// <param name="type">The type of the new position, either "user" or "space",</param>
@@ -72,12 +73,12 @@ namespace PodioAPI.Services
             };
 
             dynamic respone = _podio.Post<dynamic>(url, requestData);
-            return (int)respone["widget_id"];
+            return (int) respone["widget_id"];
         }
 
         /// <summary>
-        /// Deletes the given widget.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/widgets/delete-widget-22492 </para>
+        ///     Deletes the given widget.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/widgets/delete-widget-22492 </para>
         /// </summary>
         /// <param name="widgetId"></param>
         public void DeleteWidget(int widgetId)
@@ -87,21 +88,21 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Updates the order of the widgets on a reference.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/widgets/update-widget-order-22495 </para>
+        ///     Updates the order of the widgets on a reference.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/widgets/update-widget-order-22495 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <param name="widgetIds">The ids of the widgets in the new requested order.</param>
         public void UpdateWidgetOrder(string refType, string refId, List<int> widgetIds)
         {
-            string url = string.Format("/widget/{0}/{1}/order", refType, refId );
+            string url = string.Format("/widget/{0}/{1}/order", refType, refId);
             _podio.Put<dynamic>(url, widgetIds);
         }
 
         /// <summary>
-        /// Returns the widget with the given id.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/widgets/get-widget-22489 </para>
+        ///     Returns the widget with the given id.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/widgets/get-widget-22489 </para>
         /// </summary>
         /// <param name="widgetId"></param>
         /// <returns></returns>
@@ -112,8 +113,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the widgets on the given reference.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/widgets/get-widgets-22494 </para>
+        ///     Returns the widgets on the given reference.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/widgets/get-widgets-22494 </para>
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>

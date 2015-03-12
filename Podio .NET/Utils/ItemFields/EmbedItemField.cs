@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
-using System.Collections.Generic;
 
 namespace PodioAPI.Utils.ItemFields
 {
@@ -15,7 +15,7 @@ namespace PodioAPI.Utils.ItemFields
                 if (_embeds == null)
                 {
                     _embeds = new List<Embed>();
-                    if(this.Values != null)
+                    if (this.Values != null)
                     {
                         foreach (var embedFilePair in this.Values)
                         {
@@ -31,7 +31,7 @@ namespace PodioAPI.Utils.ItemFields
                             }
                             _embeds.Add(embed);
                         }
-                    }      
+                    }
                 }
                 return _embeds;
             }

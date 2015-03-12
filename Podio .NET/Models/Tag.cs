@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+
 namespace PodioAPI.Models
 {
     public class Tag

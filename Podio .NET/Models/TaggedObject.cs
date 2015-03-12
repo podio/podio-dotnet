@@ -1,23 +1,23 @@
-﻿using Newtonsoft.Json;
-using System;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace PodioAPI.Models
 {
     public class TaggedObject
     {
         [JsonProperty("id")]
-        public int Id {get;set;}
+        public int Id { get; set; }
 
         [JsonProperty("type")]
-        public string Type{get;set;}
+        public string Type { get; set; }
 
         [JsonProperty("title")]
-        public string Title{get;set;}
+        public string Title { get; set; }
 
         [JsonProperty("link")]
-        public string Link {get;set;}
+        public string Link { get; set; }
 
         [JsonProperty("created_on")]
-        public DateTime CreatedOn {get;set;}
+        public DateTime CreatedOn { get; set; }
     }
 }

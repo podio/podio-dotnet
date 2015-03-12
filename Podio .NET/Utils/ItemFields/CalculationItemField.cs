@@ -1,6 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using PodioAPI.Models;
-using System;
 
 namespace PodioAPI.Utils.ItemFields
 {
@@ -12,7 +12,7 @@ namespace PodioAPI.Utils.ItemFields
             {
                 if (this.HasValue("value"))
                 {
-                    return float.Parse((string)this.Values.First()["value"]);
+                    return float.Parse((string) this.Values.First()["value"]);
                 }
                 else
                 {
@@ -27,7 +27,7 @@ namespace PodioAPI.Utils.ItemFields
             {
                 if (this.HasValue("value"))
                 {
-                    return (string)this.Values.First()["value"];
+                    return (string) this.Values.First()["value"];
                 }
                 else
                 {
@@ -42,7 +42,7 @@ namespace PodioAPI.Utils.ItemFields
             {
                 if (this.HasValue("start"))
                 {
-                    return (DateTime)this.Values.First()["start"];
+                    return (DateTime) this.Values.First()["start"];
                 }
                 else
                 {
@@ -57,7 +57,7 @@ namespace PodioAPI.Utils.ItemFields
             {
                 if (this.HasValue("start_utc"))
                 {
-                    return (DateTime)this.Values.First()["start_utc"];
+                    return (DateTime) this.Values.First()["start_utc"];
                 }
                 else
                 {
@@ -66,5 +66,4 @@ namespace PodioAPI.Utils.ItemFields
             }
         }
     }
-
 }

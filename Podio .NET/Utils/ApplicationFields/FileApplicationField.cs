@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
-using System.Collections.Generic;
 
 namespace PodioAPI.Utils.ApplicationFields
 {
@@ -9,7 +9,7 @@ namespace PodioAPI.Utils.ApplicationFields
         private IEnumerable<string> _allowedMimetypes;
 
         /// <summary>
-        /// A list of allowed mimetypes on the form "image/png" or "image/*"
+        ///     A list of allowed mimetypes on the form "image/png" or "image/*"
         /// </summary>
         public IEnumerable<string> AllowedMimetypes
         {

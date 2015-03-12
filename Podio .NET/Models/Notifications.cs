@@ -5,7 +5,6 @@ using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
-    
     public class Notifications
     {
         [JsonProperty("notifications")]

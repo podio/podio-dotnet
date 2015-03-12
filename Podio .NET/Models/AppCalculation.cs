@@ -35,6 +35,7 @@ namespace PodioAPI.Models
         [JsonProperty("label")]
         public string Label { get; set; }
     }
+
     public class ReferenceFieldSetting
     {
         [JsonProperty("referenceable_types")]
@@ -46,6 +47,7 @@ namespace PodioAPI.Models
         [JsonProperty("config")]
         public ValueFieldConfig Config { get; set; }
     }
+
     public class ValueFieldConfig
     {
         [JsonProperty("mapping")]
@@ -61,10 +63,10 @@ namespace PodioAPI.Models
     public class CommenFieldsValues
     {
         [JsonProperty("external_id")]
-        string ExternalId { get; set; }
+        private string ExternalId { get; set; }
 
         [JsonProperty("type")]
-        string Type { get; set; }
+        private string Type { get; set; }
 
         [JsonProperty("label")]
         public string Label { get; set; }

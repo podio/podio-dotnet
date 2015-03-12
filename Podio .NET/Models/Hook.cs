@@ -25,6 +25,5 @@ namespace PodioAPI.Models
 
         [JsonProperty("created_via")]
         public Via CreatedVia { get; set; }
-
     }
 }

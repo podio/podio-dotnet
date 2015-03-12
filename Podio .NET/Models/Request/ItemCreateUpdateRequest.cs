@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using System.Collections.Generic;
 
 namespace PodioAPI.Models.Request
 {
@@ -10,7 +10,7 @@ namespace PodioAPI.Models.Request
         public string ExternalId { get; set; }
 
         /// <summary>
-        /// Only used for update item
+        ///     Only used for update item
         /// </summary>
         [JsonProperty(PropertyName = "revision", NullValueHandling = NullValueHandling.Ignore)]
         public int? Revision { get; set; }
@@ -37,4 +37,3 @@ namespace PodioAPI.Models.Request
         public Reference Ref { get; set; }
     }
 }
-

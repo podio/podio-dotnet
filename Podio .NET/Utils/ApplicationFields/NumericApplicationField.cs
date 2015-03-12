@@ -5,14 +5,11 @@ namespace PodioAPI.Utils.ApplicationFields
     public class NumericApplicationField : ApplicationField
     {
         /// <summary>
-        /// The number of decimals displayed
+        ///     The number of decimals displayed
         /// </summary>
         public int? Decimals
         {
-            get
-            {
-                return (int?)this.GetSetting("decimals");
-            }
+            get { return (int?) this.GetSetting("decimals"); }
             set
             {
                 InitializeFieldSettings();

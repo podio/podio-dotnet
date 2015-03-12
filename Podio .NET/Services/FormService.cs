@@ -1,19 +1,21 @@
-﻿using PodioAPI.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using PodioAPI.Models;
 
 namespace PodioAPI.Services
 {
     public class FormService
     {
-        private Podio _podio;
+        private readonly Podio _podio;
+
         public FormService(Podio currentInstance)
         {
             _podio = currentInstance;
         }
 
         /// <summary>
-        /// Enables the form with the given id. Only disabled forms can be enabled, which makes it once again possible to create items in the app using the form.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/forms/activate-form-1107439 </para>
+        ///     Enables the form with the given id. Only disabled forms can be enabled, which makes it once again possible to
+        ///     create items in the app using the form.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/forms/activate-form-1107439 </para>
         /// </summary>
         /// <param name="formId"></param>
         public void ActivateForm(int formId)
@@ -23,8 +25,9 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Disables the form with given id. This makes it impossible to create new items using the form. Instead, a message about the form being disabled is shown.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/forms/deactivate-form-1107378 </para>
+        ///     Disables the form with given id. This makes it impossible to create new items using the form. Instead, a message
+        ///     about the form being disabled is shown.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/forms/deactivate-form-1107378 </para>
         /// </summary>
         /// <param name="formId"></param>
         public void DeactivateForm(int formId)
@@ -34,8 +37,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns the form with the given id.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/forms/get-form-53754 </para>
+        ///     Returns the form with the given id.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/forms/get-form-53754 </para>
         /// </summary>
         /// <param name="formId"></param>
         /// <returns></returns>
@@ -46,8 +49,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Returns all the active forms on the given app.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/forms/get-forms-53771 </para>
+        ///     Returns all the active forms on the given app.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/forms/get-forms-53771 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
@@ -58,8 +61,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Deletes the form with the given id.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/forms/delete-from-53810 </para>
+        ///     Deletes the form with the given id.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/forms/delete-from-53810 </para>
         /// </summary>
         /// <param name="formId"></param>
         public void DeleteFrom(int formId)
@@ -69,8 +72,8 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
-        /// Creates a new form on the app.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/forms/create-form-53803 </para>
+        ///     Creates a new form on the app.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/forms/create-form-53803 </para>
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="fromSettings">The settings of the form.</param>
@@ -78,7 +81,8 @@ namespace PodioAPI.Services
         /// <param name="fields">The id and settings for each field.</param>
         /// <param name="attachments">True if attachments are allowed, false otherwise.</param>
         /// <returns></returns>
-        public int CreateForm(int appId, FormSettings fromSettings, string[] domains, List<FormField> fields, bool attachments)
+        public int CreateForm(int appId, FormSettings fromSettings, string[] domains, List<FormField> fields,
+            bool attachments)
         {
             string url = string.Format("/form/app/{0}/", appId);
             var requestData = new
@@ -89,19 +93,20 @@ namespace PodioAPI.Services
                 attachments = attachments
             };
             dynamic response = _podio.Post<dynamic>(url, requestData);
-            return (int)response["form_id"];
+            return (int) response["form_id"];
         }
 
         /// <summary>
-        /// Updates the form with new settings, domains, fields, etc.
-        /// <para>Podio API Reference: https://developers.podio.com/doc/forms/update-form-53808 </para>
+        ///     Updates the form with new settings, domains, fields, etc.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/forms/update-form-53808 </para>
         /// </summary>
         /// <param name="formId"></param>
         /// <param name="fromSettings">The settings of the form.</param>
         /// <param name="domains">The list of domains where the form can be used.</param>
         /// <param name="fields">The id and settings for each field.</param>
         /// <param name="attachments">True if attachments are allowed, false otherwise.</param>
-        public void UpdateForm(int formId, FormSettings fromSettings, string[] domains, List<FormField> fields, bool attachments)
+        public void UpdateForm(int formId, FormSettings fromSettings, string[] domains, List<FormField> fields,
+            bool attachments)
         {
             string url = string.Format("/form/{0}", formId);
             var requestData = new
