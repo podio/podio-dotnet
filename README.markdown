@@ -68,10 +68,9 @@ After constructing `Podio` object  you can use all of the wrapper functions to m
 // Getting an item
 var item = podio.ItemService.GetItem(123456);
 
-//Filtering items with a date field named 'deadline' and text field named 'title' and limit the results by 10
+//Filtering items with a date field with external_id 'deadline' and limit the results by 10
   var filters = new Dictionary<string,object>
   {
-    {"title","Project 1234"},
     {"deadline",new  { from = new DateTime(2013, 10, 1), to = DateTime.Now }}
   };
 
@@ -94,7 +93,7 @@ catch (PodioException exception)
 {
     Response.Write(exception.Status); // Status code of the response
     Response.Write(exception.Error.Error); // Error
-    Response.Write(exception.Error.ErrorDescription); // Error description
+    Response.Write(exception.Error.ErrorDescription); // Error description -> You need this in most cases
     Response.Write(exception.Error.ErrorDetail); // Error detail
 }
 ```
