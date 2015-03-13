@@ -7,7 +7,7 @@ namespace PodioAPI.Models
     public class View
     {
         [JsonProperty("view_id")]
-        public int viewId { get; set; }
+        public int ViewId { get; set; }
 
         [JsonProperty("name")]
         public string Name { get; set; }
