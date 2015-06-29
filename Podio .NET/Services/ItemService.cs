@@ -23,17 +23,17 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="item"></param>
+        /// <param name="spaceId"> For use in Podio platform</param>
         /// <param name="silent">
         ///     If set to true, the object will not be bumped up in the stream and notifications will not be
         ///     generated
         /// </param>
         /// <param name="hook">If set to false, hooks will not be executed for the change</param>
         /// <returns>Id of the created item</returns>
-        public int AddNewItem(int appId, Item item, bool silent = false, bool hook = true)
+        public int AddNewItem(int appId, Item item, int? spaceId = null, bool silent = false, bool hook = true)
         {
-            JArray fieldValues =
-                JArray.FromObject(
-                    item.Fields.Select(f => new {external_id = f.ExternalId, field_id = f.FieldId, values = f.Values}));
+            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new {external_id = f.ExternalId, field_id = f.FieldId, values = f.Values}));
+
             var requestData = new ItemCreateUpdateRequest()
             {
                 ExternalId = item.ExternalId,
@@ -43,7 +43,8 @@ namespace PodioAPI.Services
                 Recurrence = item.Recurrence,
                 LinkedAccountId = item.LinkedAccountId,
                 Reminder = item.Reminder,
-                Ref = item.Ref
+                Ref = item.Ref,
+                SpaceId = spaceId
             };
 
             string url = string.Format("/item/app/{0}/", appId);
@@ -57,6 +58,7 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/items/update-item-22363 </para>
         /// </summary>
         /// <param name="item"></param>
+        /// <param name="spaceId"> For use in Podio platform</param>
         /// <param name="revision">The revision of the item that is being updated. This is optional</param>
         /// <param name="silent">
         ///     If set to true, the object will not be bumped up in the stream and notifications will not be
@@ -64,11 +66,12 @@ namespace PodioAPI.Services
         /// </param>
         /// <param name="hook">If set to false, hooks will not be executed for the change</param>
         /// <returns>The id of the new revision / null if no change</returns>
-        public int? UpdateItem(Item item, int? revision = null, bool silent = false, bool hook = true)
+        public int? UpdateItem(Item item, int? spaceId = null, int? revision = null, bool silent = false, bool hook = true)
         {
             JArray fieldValues =
                 JArray.FromObject(
                     item.Fields.Select(f => new {external_id = f.ExternalId, field_id = f.FieldId, values = f.Values}));
+
             var requestData = new ItemCreateUpdateRequest()
             {
                 ExternalId = item.ExternalId,
@@ -79,7 +82,8 @@ namespace PodioAPI.Services
                 Recurrence = item.Recurrence,
                 LinkedAccountId = item.LinkedAccountId,
                 Reminder = item.Reminder,
-                Ref = item.Ref
+                Ref = item.Ref,
+                SpaceId = spaceId
             };
 
             string url = string.Format("/item/{0}", item.ItemId);
@@ -233,10 +237,10 @@ namespace PodioAPI.Services
         /// <param name="appId"></param>
         /// <param name="external_id"></param>
         /// <returns></returns>
-        public PodioCollection<Item> GetItemByExternalId(int appId, string external_id)
+        public Item GetItemByExternalId(int appId, string external_id)
         {
             string url = string.Format("/item/app/{0}/external_id/{1}", appId, external_id);
-            return _podio.Get<PodioCollection<Item>>(url);
+            return _podio.Get<Item>(url);
         }
 
 

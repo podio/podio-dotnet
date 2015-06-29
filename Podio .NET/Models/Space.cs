@@ -11,6 +11,9 @@ namespace PodioAPI.Models
         [JsonProperty("name")]
         public string Name { get; set; }
 
+        [JsonProperty("description")]
+        public string Description { get; set; }
+
         [JsonProperty("url")]
         public string Url { get; set; }
 

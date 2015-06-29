@@ -94,6 +94,7 @@ namespace PodioAPI.Exceptions
         }
     }
 
+
     public class PodioUnavailableException : PodioException
     {
         public PodioUnavailableException(int status, PodioError error)

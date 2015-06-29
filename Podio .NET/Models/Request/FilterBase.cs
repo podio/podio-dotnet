@@ -34,5 +34,11 @@ namespace PodioAPI.Models.Request
         /// </summary>
         [JsonProperty("offset", NullValueHandling = NullValueHandling.Ignore)]
         public int? Offset { get; set; }
+
+        /// <summary>
+        ///   Space Id (To be used with Platform API)
+        /// </summary>
+        [JsonProperty("space_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? SpaceId { get; set; }
     }
 }

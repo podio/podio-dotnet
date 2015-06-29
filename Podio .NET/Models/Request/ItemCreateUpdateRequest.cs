@@ -35,5 +35,11 @@ namespace PodioAPI.Models.Request
 
         [JsonProperty(PropertyName = "ref", NullValueHandling = NullValueHandling.Ignore)]
         public Reference Ref { get; set; }
+
+        /// <summary>
+        /// To use with the Platform API
+        /// </summary>
+        [JsonProperty(PropertyName = "space_id", NullValueHandling = NullValueHandling.Ignore)]
+        public int? SpaceId { get; set; }
     }
 }
