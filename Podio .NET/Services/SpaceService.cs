@@ -68,6 +68,18 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
+        ///     Returns the workspaces in the organization that are accesible for the active user.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/spaces/get-list-of-organization-workspaces-238875316 </para>
+        /// </summary>
+        /// <param name="orgId"></param>
+        /// <returns></returns>
+        public List<SpaceMicro> GetOrganizationSpaces(int orgId)
+        {
+            string url = string.Format("/space/org/{0}/", orgId);
+            return _podio.Get<List<SpaceMicro>>(url);
+        }
+
+        /// <summary>
         ///     Returns the available spaces for the given organization. This is spaces that are open and available for the user to
         ///     join.
         ///     <para>Podio API Reference: https://developers.podio.com/doc/spaces/get-available-spaces-1911961 </para>
