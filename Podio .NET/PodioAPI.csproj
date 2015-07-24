@@ -233,11 +233,13 @@
     <Compile Include="Utils\ItemFields\ContactItemField.cs" />
     <Compile Include="Utils\ItemFields\DateItemField.cs" />
     <Compile Include="Utils\ItemFields\DurationItemField.cs" />
+    <Compile Include="Utils\ItemFields\EmailItemField.cs" />
     <Compile Include="Utils\ItemFields\EmbedItemField.cs" />
     <Compile Include="Utils\ItemFields\ImageItemField.cs" />
     <Compile Include="Utils\ItemFields\LocationItemField.cs" />
     <Compile Include="Utils\ItemFields\MoneyItemField.cs" />
     <Compile Include="Utils\ItemFields\NumericItemField.cs" />
+    <Compile Include="Utils\ItemFields\PhoneItemField.cs" />
     <Compile Include="Utils\ItemFields\ProgressItemField.cs" />
     <Compile Include="Utils\ItemFields\QuestionItemField.cs" />
     <Compile Include="Utils\ItemFields\StateItemField.cs" />

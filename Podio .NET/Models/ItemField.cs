@@ -34,7 +34,7 @@ namespace PodioAPI.Models
             return this.Values != null
                    && this.Values.Any()
                    && (key == null ||
-                       (this.Values.First() != null &&
+                       (this.Values.FirstOrDefault() != null &&
                         this.Values.First()[key] != null));
         }
 
