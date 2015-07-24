@@ -13,11 +13,13 @@ Below you'll find examples for getting and setting field values for each of the 
 * [Contact field](#contact-field)
 * [Date field](#date-field)
 * [Duration field](#duration-field)
+* [Email field](#email-field)
 * [Image field](#image-field)
 * [Link/embed field](#linkembed-field)
 * [Location/Google Maps field](#locationgoogle-maps-field)
 * [Money field](#money-field)
 * [Number field](#number-field)
+* [Phone field](#phone-field)
 * [Progress field](#progress-field)
 * [Text field](#text-field)
 
@@ -198,6 +200,37 @@ durationField.Value = new TimeSpan(1, 30, 0);
 
 ------------------------------------------------------------------------------
 
+## Email field
+
+#### Getting values
+Values are returned as a List of `PodioAPI.Utils.ItemFields.EmailPhoneFieldResult` object:
+
+{% highlight csharp startinline %}
+var item = podio.ItemService.GetItemBasic(123);
+
+// An Email field with external_id 'email'
+EmailItemField emailField = item.Field<EmailItemField>("email");
+IEnumerable<EmailPhoneFieldResult> emails = emailField.Value;
+{% endhighlight %}
+
+#### Setting values
+Simply assign Value property with a List of `PodioAPI.Utils.ItemFields.EmailPhoneFieldResult`
+
+{% highlight csharp startinline %}
+Item myNewItem = new Item();
+
+// An Email field with external_id 'email'
+EmailItemField emailField = item.Field<EmailItemField>("email");
+emailField.Value = new List<EmailPhoneFieldResult>
+{
+    new EmailPhoneFieldResult { Type = "work", Value = "john@examples.dk" },
+    new EmailPhoneFieldResult { Type = "home", Value = "test@example.com" },
+};
+{% endhighlight %}
+
+
+------------------------------------------------------------------------------
+
 ## Image field
 
 #### Getting values
@@ -357,6 +390,37 @@ Item myNewItem = new Item();
 
 NumericItemField numberField = myNewItem.Field<NumericItemField>("number");
 numberField.Value = 567.89;
+{% endhighlight %}
+
+
+------------------------------------------------------------------------------
+
+## Phone field
+
+#### Getting values
+Values are returned as a List of `PodioAPI.Utils.ItemFields.EmailPhoneFieldResult` object:
+
+{% highlight csharp startinline %}
+var item = podio.ItemService.GetItemBasic(123);
+
+// A Phone field with external_id 'phone'
+PhoneItemField phoneField = item.Field<PhoneItemField>("phone");
+IEnumerable<EmailPhoneFieldResult> emails = phoneField.Value;
+{% endhighlight %}
+
+#### Setting values
+Simply assign Value property with a List of `PodioAPI.Utils.ItemFields.EmailPhoneFieldResult`
+
+{% highlight csharp startinline %}
+Item myNewItem = new Item();
+
+// A Phone field with external_id 'phone'
+PhoneItemField phoneField = item.Field<PhoneItemField>("phone");
+phoneField.Value = new List<EmailPhoneFieldResult>
+{
+    new EmailPhoneFieldResult { Type = "mobile", Value = "9847071777" },
+    new EmailPhoneFieldResult { Type = "home", Value = "8954621419" },
+};
 {% endhighlight %}
 
 
