@@ -39,7 +39,7 @@ namespace PodioAPI.Services
                 filePath = filePath,
                 fileName = fileName
             };
-            Dictionary<string, object> options = new Dictionary<string, object>() {{"upload", true}};
+            Dictionary<string, bool> options = new Dictionary<string, bool>() {{"upload", true}};
             return _podio.Post<FileAttachment>(url, requestData, options);
         }
 
