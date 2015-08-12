@@ -120,6 +120,11 @@ namespace PodioAPI
                         requestHeaders["Content-type"] = "multipart/form-data";
                         data.Add("file");
                     }
+                    else if (options != null && options.ContainsKey("byteUpload") && options["byteUpload"])
+                    {
+                        requestHeaders["Content-type"] = "multipart/form-data";
+                        data.Add("fileByteUpload");
+                    }
                     else if (options != null && options.ContainsKey("oauth_request") && options["oauth_request"])
                     {
                         data.Add("oauth");
@@ -183,6 +188,8 @@ namespace PodioAPI
                 {
                     if (item == "file")
                         AddFileToRequestStream(requestData.filePath, requestData.fileName, request);
+                    else if(item == "fileByteUpload")
+                        AddFileToRequestStream(requestData.fileName, requestData.data, requestData.mimeType, request);
                     else if (item == "oauth")
                         WriteToRequestStream(EncodeAttributes(requestData), request);
                     else
@@ -328,9 +335,11 @@ namespace PodioAPI
             string urlWithOptions = "";
             List<string> parameters = new List<string>();
             if (options.Silent)
-                parameters.Add("silent=1");
+                parameters.Add("silent=true");
             if (!options.Hook)
                 parameters.Add("hook=false");
+            if (options.AlertInvite)
+                parameters.Add("alert_invite=true");
             if (options.Fields != null && options.Fields.Any())
                 parameters.Add(string.Join(",", options.Fields.Select(s => s).ToArray()));
 
@@ -399,41 +408,16 @@ namespace PodioAPI
         private void AddFileToRequestStream(string filePath, string fileName, HttpWebRequest request)
         {
             byte[] inputData;
-            string contentType = "";
+            string boundary = String.Format("----------{0:N}", Guid.NewGuid());
+            var contentType = "multipart/form-data; boundary=" + boundary;
+
             request.ServicePoint.Expect100Continue = false;
             if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                string boundary = String.Format("----------{0:N}", Guid.NewGuid());
-                contentType = "multipart/form-data; boundary=" + boundary;
-                MemoryStream ms = new MemoryStream();
-
-                ms.Write(Encoding.UTF8.GetBytes("\r\n"), 0, Encoding.UTF8.GetByteCount("\r\n"));
-
-                string postData = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}",
-                    boundary,
-                    "filename",
-                    fileName);
-                ms.Write(Encoding.UTF8.GetBytes(postData), 0, Encoding.UTF8.GetByteCount(postData));
-
                 byte[] data = File.ReadAllBytes(filePath);
                 string mimeType = MimeTypeMapping.GetMimeType(Path.GetExtension(filePath));
 
-                ms.Write(Encoding.UTF8.GetBytes("\r\n"), 0, Encoding.UTF8.GetByteCount("\r\n"));
-
-                string header =
-                    string.Format(
-                        "--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\";\r\nContent-Type: {3}\r\n\r\n",
-                        boundary,
-                        "source",
-                        fileName,
-                        mimeType);
-                ms.Write(Encoding.UTF8.GetBytes(header), 0, Encoding.UTF8.GetByteCount(header));
-                ms.Write(data, 0, data.Length);
-
-                string footer = "\r\n--" + boundary + "--\r\n";
-
-                ms.Write(Encoding.UTF8.GetBytes(footer), 0, Encoding.UTF8.GetByteCount(footer));
-                inputData = ms.ToArray();
+                inputData = PrepareFileInput(fileName, data, mimeType, boundary);
             }
             else
             {
@@ -446,6 +430,54 @@ namespace PodioAPI
             {
                 requestStream.Write(inputData, 0, inputData.Length);
             }
+        }
+
+        private void AddFileToRequestStream(string fileName, byte[] data, string mimeType, HttpWebRequest request)
+        {
+            byte[] inputData;
+            string boundary = String.Format("----------{0:N}", Guid.NewGuid());
+            var contentType = "multipart/form-data; boundary=" + boundary;
+
+            inputData = PrepareFileInput(fileName, data, mimeType, boundary);
+
+            request.ContentType = contentType;
+            request.ContentLength = inputData.Length;
+            using (Stream requestStream = request.GetRequestStream())
+            {
+                requestStream.Write(inputData, 0, inputData.Length);
+            }
+        }
+
+        private static byte[] PrepareFileInput(string fileName, byte[] data, string mimeType, string boundary)
+        {
+            MemoryStream memoryStream = new MemoryStream();
+            byte[] inputData;
+
+            memoryStream.Write(Encoding.UTF8.GetBytes("\r\n"), 0, Encoding.UTF8.GetByteCount("\r\n"));
+
+            string postData = string.Format("--{0}\r\nContent-Disposition: form-data; name=\"{1}\"\r\n\r\n{2}",
+                boundary,
+                "filename",
+                fileName);
+            memoryStream.Write(Encoding.UTF8.GetBytes(postData), 0, Encoding.UTF8.GetByteCount(postData));
+
+            memoryStream.Write(Encoding.UTF8.GetBytes("\r\n"), 0, Encoding.UTF8.GetByteCount("\r\n"));
+
+            string header =
+                string.Format(
+                    "--{0}\r\nContent-Disposition: form-data; name=\"{1}\"; filename=\"{2}\";\r\nContent-Type: {3}\r\n\r\n",
+                    boundary,
+                    "source",
+                    fileName,
+                    mimeType);
+            memoryStream.Write(Encoding.UTF8.GetBytes(header), 0, Encoding.UTF8.GetByteCount(header));
+            memoryStream.Write(data, 0, data.Length);
+
+            string footer = "\r\n--" + boundary + "--\r\n";
+
+            memoryStream.Write(Encoding.UTF8.GetBytes(footer), 0, Encoding.UTF8.GetByteCount(footer));
+            inputData = memoryStream.ToArray();
+            return inputData;
         }
 
         #endregion

@@ -75,7 +75,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public int AddCommentToObject(string type, int id, string text, string externalId = null,
             List<int> fieldIds = null, string embedUrl = null, int? embedId = null, bool alertInvite = false,
-            bool silent = false)
+            bool silent = false, bool hook = true)
         {
             CommentCreateUpdateRequest comment = new CommentCreateUpdateRequest()
             {
@@ -85,7 +85,7 @@ namespace PodioAPI.Services
                 EmbedUrl = embedUrl,
                 EmbedId = embedId
             };
-            return AddCommentToObject(type, id, comment, alertInvite, silent);
+            return AddCommentToObject(type, id, comment, alertInvite, silent, hook);
         }
 
         /// <summary>
@@ -105,10 +105,10 @@ namespace PodioAPI.Services
         /// </param>
         /// <returns></returns>
         public int AddCommentToObject(string type, int id, CommentCreateUpdateRequest comment, bool alertInvite = false,
-            bool silent = false)
+            bool silent = false, bool hook = true)
         {
             string url = string.Format("/comment/{0}/{1}/", type, id);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(alertInvite, silent));
+            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook, null, alertInvite));
             dynamic response = _podio.Post<dynamic>(url, comment);
             return (int) response["comment_id"];
         }

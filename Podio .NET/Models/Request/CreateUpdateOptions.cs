@@ -16,11 +16,19 @@ namespace PodioAPI.Models.Request
 
         public List<string> Fields { get; set; }
 
-        public CreateUpdateOptions(bool silent = false, bool hook = true, List<string> fields = null)
+        /// <summary>
+        /// True if any mentioned user should be automatically invited to the workspace if the user does not have access to the object 
+        /// and access cannot be granted to the object.
+        /// Default value: false
+        /// </summary>
+        public bool AlertInvite { get; set; }
+
+        public CreateUpdateOptions(bool silent = false, bool hook = true, List<string> fields = null, bool alertInvite = false)
         {
             Silent = silent;
             Hook = hook;
             Fields = fields;
+            AlertInvite = alertInvite;
         }
     }
 }

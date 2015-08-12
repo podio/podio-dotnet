@@ -36,10 +36,32 @@ namespace PodioAPI.Services
             string url = "/file/v2/";
             dynamic requestData = new
             {
-                filePath = filePath,
-                fileName = fileName
+                filePath,
+                fileName
             };
             Dictionary<string, bool> options = new Dictionary<string, bool>() {{"upload", true}};
+            return _podio.Post<FileAttachment>(url, requestData, options);
+        }
+
+        /// <summary>
+        ///     Uploads a new file
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/files/upload-file-1004361 </para>
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <param name="data"></param>
+        /// <param name="mimeType"></param>
+        /// <returns></returns>
+        public FileAttachment UploadFile(string fileName, byte[] data, string mimeType)
+        {
+            string url = "/file/v2/";
+            dynamic requestData = new
+            {
+                fileName,
+                data,
+                mimeType
+            };
+
+            Dictionary<string, bool> options = new Dictionary<string, bool>() { { "byteUpload", true } };
             return _podio.Post<FileAttachment>(url, requestData, options);
         }
 
