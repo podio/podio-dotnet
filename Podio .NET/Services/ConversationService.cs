@@ -188,6 +188,17 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
+        /// Mark the conversation as read.
+        ///  <para>Podio API Reference: https://developers.podio.com/doc/conversations/mark-conversation-as-read-35441525 </para>
+        /// </summary>
+        /// <param name="conversationId"></param>
+        public void MarkConversationAsRead(int conversationId)
+        {
+            string url = string.Format("/conversation/{0}/read", conversationId);
+            _podio.Post<dynamic>(url);
+        }
+
+        /// <summary>
         ///     Marks all the users conversations as read.
         ///     <para>Podio API Reference: https://developers.podio.com/doc/conversations/mark-conversation-as-read-35441525 </para>
         /// </summary>
