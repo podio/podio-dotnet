@@ -8,6 +8,6 @@ namespace PodioAPI.Models
         public string Type { get; set; }
 
         [JsonProperty("id")]
-        public int? Id { get; set; }
+        public dynamic Id { get; set; }
     }
 }

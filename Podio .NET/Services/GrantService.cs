@@ -19,7 +19,7 @@ namespace PodioAPI.Services
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <returns></returns>
-        public int CountGrantsOnObject(string refType, int refId)
+        public int CountGrantsOnObject(string refType, dynamic refId)
         {
             string url = string.Format("/grant/{0}/{1}/count", refType, refId);
             dynamic response = _podio.Get<dynamic>(url);
@@ -33,7 +33,7 @@ namespace PodioAPI.Services
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <returns></returns>
-        public List<Grant> GetGrantsOnObject(string refType, int refId)
+        public List<Grant> GetGrantsOnObject(string refType, dynamic refId)
         {
             string url = string.Format("/grant/{0}/{1}/", refType, refId);
             return _podio.Get<List<Grant>>(url);
@@ -46,7 +46,7 @@ namespace PodioAPI.Services
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <returns></returns>
-        public Grant GetOwnGrantInformation(string refType, int refId)
+        public Grant GetOwnGrantInformation(string refType, dynamic refId)
         {
             string url = string.Format("/grant/{0}/{1}/own", refType, refId);
             return _podio.Get<Grant>(url);
@@ -59,7 +59,7 @@ namespace PodioAPI.Services
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <param name="userId"></param>
-        public void RemoveGrant(string refType, int refId, int userId)
+        public void RemoveGrant(string refType, dynamic refId, int userId)
         {
             string url = string.Format("/grant/{0}/{1}/{2}", refType, refId, userId);
             _podio.Delete<dynamic>(url);
