@@ -1,7 +1,7 @@
 About
 =====
 
-This is the .NET Client for accessing the Podio API.
+This is the development version of .NET Client for accessing the Podio API.
 
 Installation
 -------
