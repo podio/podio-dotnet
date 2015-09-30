@@ -40,7 +40,7 @@ namespace PodioAPI.Services
                 filePath,
                 fileName
             };
-            Dictionary<string, bool> options = new Dictionary<string, bool>() {{"upload", true}};
+            Dictionary<string, bool> options = new Dictionary<string, bool>() { { "upload", true } };
             return await _podio.Post<FileAttachment>(url, requestData, options);
         }
 
@@ -159,7 +159,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/file/{0}/copy", fileId);
             dynamic response = await _podio.Post<dynamic>(url);
-            return (int) response["file_id"];
+            return (int)response["file_id"];
         }
 
         /// <summary>

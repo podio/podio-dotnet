@@ -33,7 +33,7 @@ namespace PodioAPI.Services
         /// <returns>Id of the created item</returns>
         public async Task<int> AddNewItem(int appId, Item item, int? spaceId = null, bool silent = false, bool hook = true)
         {
-            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new {external_id = f.ExternalId, field_id = f.FieldId, values = f.Values}));
+            JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
 
             var requestData = new ItemCreateUpdateRequest()
             {
@@ -71,7 +71,7 @@ namespace PodioAPI.Services
         {
             JArray fieldValues =
                 JArray.FromObject(
-                    item.Fields.Select(f => new {external_id = f.ExternalId, field_id = f.FieldId, values = f.Values}));
+                    item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
 
             var requestData = new ItemCreateUpdateRequest()
             {
@@ -91,7 +91,7 @@ namespace PodioAPI.Services
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic response = await _podio.Put<dynamic>(url, requestData);
             if (response != null)
-                return (int) response["revision"];
+                return (int)response["revision"];
             else
                 return null;
         }
@@ -137,7 +137,7 @@ namespace PodioAPI.Services
             dynamic response = await _podio.Put<dynamic>(url, updatedValue);
 
             if (response != null)
-                return (int) response["revision"];
+                return (int)response["revision"];
             else
                 return null;
         }
@@ -169,12 +169,12 @@ namespace PodioAPI.Services
 
             JArray fieldValues =
                 JArray.FromObject(
-                    item.Fields.Select(f => new {external_id = f.ExternalId, field_id = f.FieldId, values = f.Values}));
+                    item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
             string url = string.Format("/item/{0}/value", item.ItemId);
             url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic response = await _podio.Put<dynamic>(url, fieldValues);
             if (response != null)
-                return (int) response["revision"];
+                return (int)response["revision"];
             else
                 return null;
         }
@@ -400,7 +400,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/item/app/{0}/export/{1}", appId, exporter);
             dynamic response = await _podio.Post<dynamic>(url, filter);
-            return (int) response["batch_id"];
+            return (int)response["batch_id"];
         }
 
         /// <summary>
@@ -676,7 +676,7 @@ namespace PodioAPI.Services
             var response = await _podio.Delete<dynamic>(url);
             if (response["revision"] != null)
             {
-                return (int) response["revision"];
+                return (int)response["revision"];
             }
             return null;
         }
