@@ -251,7 +251,7 @@ namespace PodioAPI
 
                     using (StreamReader sr = new StreamReader(response.GetResponseStream()))
                     {
-                        podioResponse.Body = sr.ReadToEnd();
+                        podioResponse.Body = sr.ReadToEndAsync().ConfigureAwait(false);
                     }
                     podioResponse.Headers = responseHeaders;
                 }

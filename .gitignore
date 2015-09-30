@@ -33,3 +33,6 @@ obj
 *.jpeg
 *.png
 !NuGet.exe
+
+**/PodioAPITests/*
+**/TestResults/*
