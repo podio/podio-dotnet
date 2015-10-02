@@ -421,32 +421,32 @@ namespace PodioAPI
             get { return new FileService(this); }
         }
 
-        ///// <summary>
-        /////     Provies all API methods in Embed Area
-        /////     <para>https://developers.podio.com/doc/embeds</para>
-        ///// </summary>
-        //public EmbedService EmbedService
-        //{
-        //    get { return new EmbedService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Embed Area
+        ///     <para>https://developers.podio.com/doc/embeds</para>
+        /// </summary>
+        public EmbedService EmbedService
+        {
+            get { return new EmbedService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Embed Area
-        /////     <para>https://developers.podio.com/doc/applications</para>
-        ///// </summary>
-        //public ApplicationService ApplicationService
-        //{
-        //    get { return new ApplicationService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Embed Area
+        ///     <para>https://developers.podio.com/doc/applications</para>
+        /// </summary>
+        public ApplicationService ApplicationService
+        {
+            get { return new ApplicationService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Tasks Area
-        /////     <para>https://developers.podio.com/doc/tasks</para>
-        ///// </summary>
-        //public TaskService TaskService
-        //{
-        //    get { return new TaskService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Tasks Area
+        ///     <para>https://developers.podio.com/doc/tasks</para>
+        /// </summary>
+        public TaskService TaskService
+        {
+            get { return new TaskService(this); }
+        }
 
         ///// <summary>
         /////     Provies all API methods in Status Area

@@ -3,6 +3,7 @@ using System.Linq;
 using PodioAPI.Models;
 using PodioAPI.Models.Request;
 using PodioAPI.Utils;
+using System.Threading.Tasks;
 
 namespace PodioAPI.Services
 {
@@ -25,14 +26,14 @@ namespace PodioAPI.Services
         ///     value: full
         /// </param>
         /// <returns></returns>
-        public Application GetApp(int appId, string type = "full")
+        public async Task<Application> GetApp(int appId, string type = "full")
         {
             string url = string.Format("/app/{0}", appId);
             var requestData = new Dictionary<string, string>()
             {
                 {"type", type}
             };
-            return _podio.Get<Application>(url, requestData);
+            return await _podio.Get<Application>(url, requestData);
         }
 
         /// <summary>
@@ -40,10 +41,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/applications/activate-app-43822 </para>
         /// </summary>
         /// <param name="appId"></param>
-        public void ActivateApp(int appId)
+        public async System.Threading.Tasks.Task ActivateApp(int appId)
         {
             string url = string.Format("/app/{0}/activate", appId);
-            _podio.Post<dynamic>(url);
+            await _podio.Post<dynamic>(url);
         }
 
         /// <summary>
@@ -52,10 +53,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/applications/deactivate-app-43821 </para>
         /// </summary>
         /// <param name="appId"></param>
-        public void DeactivateApp(int appId)
+        public async System.Threading.Tasks.Task DeactivateApp(int appId)
         {
             string url = string.Format("/app/{0}/deactivate", appId);
-            _podio.Post<dynamic>(url);
+            await _podio.Post<dynamic>(url);
         }
 
         /// <summary>
@@ -65,14 +66,14 @@ namespace PodioAPI.Services
         /// <param name="spaceId"></param>
         /// <param name="includeInactive"> True if inactive apps should be included, false otherwise.Default value: false </param>
         /// <returns></returns>
-        public List<Application> GetAppsBySpace(int spaceId, bool includeInactive = false)
+        public async Task<List<Application>> GetAppsBySpace (int spaceId, bool includeInactive = false)
         {
             var requestData = new Dictionary<string, string>()
             {
                 {"include_inactive", includeInactive.ToString()}
             };
             string url = string.Format("/app/space/{0}/", spaceId);
-            return _podio.Get<List<Application>>(url, requestData);
+            return await _podio.Get<List<Application>>(url, requestData);
         }
 
         /// <summary>
@@ -83,7 +84,7 @@ namespace PodioAPI.Services
         /// <param name="appId"> A comma-separated list of app ids from which the features should be extracted </param>
         /// <param name="includeSpace"></param>
         /// <returns></returns>
-        public List<string> GetFeatures(int[] appIds, bool includeSpace = false)
+        public async Task<List<string>> GetFeatures(int[] appIds, bool includeSpace = false)
         {
             string appIdCSV = Utilities.ArrayToCSV(appIds);
             string url = "/app/features/";
@@ -92,7 +93,7 @@ namespace PodioAPI.Services
                 {"app_ids", appIdCSV},
                 {"include_space", includeSpace.ToString()}
             };
-            return _podio.Get<List<string>>(url, requestData);
+            return await _podio.Get<List<string>>(url, requestData);
         }
 
         /// <summary>
@@ -102,10 +103,10 @@ namespace PodioAPI.Services
         /// <param name="appId"></param>
         /// <param name="fieldId"></param>
         /// <returns></returns>
-        public ApplicationField GetAppField(int appId, int fieldId)
+        public async Task<ApplicationField> GetAppField(int appId, int fieldId)
         {
             string url = string.Format("/app/{0}/field/{1}", appId, fieldId);
-            return _podio.Get<ApplicationField>(url);
+            return await _podio.Get<ApplicationField>(url);
         }
 
         /// <summary>
@@ -113,14 +114,14 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="query">Any search term to match.</param>
         /// <returns></returns>
-        public List<int> GetIconSuggestions(string query)
+        public async Task<List<int>> GetIconSuggestions(string query)
         {
             string url = "/app/icon/search";
             var requestData = new Dictionary<string, string>()
             {
                 {"query", query}
             };
-            return _podio.Get<List<int>>(url, requestData);
+            return await _podio.Get<List<int>>(url, requestData);
         }
 
         /// <summary>
@@ -130,7 +131,7 @@ namespace PodioAPI.Services
         /// <param name="excludeDemo"> True if apps from demo workspace should be excluded, false otherwiseDefault value: false </param>
         /// <param name="limit">  maximum number of apps to return Default value: 4 </param>
         /// <returns></returns>
-        public List<Application> GetTopApps(bool excludeDemo = false, int limit = 4)
+        public async Task<List<Application>> GetTopApps(bool excludeDemo = false, int limit = 4)
         {
             string url = "/app/top/";
             var requestData = new Dictionary<string, string>()
@@ -138,7 +139,7 @@ namespace PodioAPI.Services
                 {"exclude_demo", excludeDemo.ToString()},
                 {"limit", limit.ToString()}
             };
-            return _podio.Get<List<Application>>(url, requestData);
+            return await _podio.Get<List<Application>>(url, requestData);
         }
 
         /// <summary>
@@ -147,10 +148,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="organizationId"></param>
         /// <returns></returns>
-        public List<Application> GetTopAppsForOrganization(int organizationId)
+        public async Task<List<Application>> GetTopAppsForOrganization(int organizationId)
         {
             string url = string.Format("/app/org/{0}/top/", organizationId);
-            return _podio.Get<List<Application>>(url);
+            return await _podio.Get<List<Application>>(url);
         }
 
         /// <summary>
@@ -159,10 +160,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/applications/delete-app-43693 </para>
         /// </summary>
         /// <param name="appId"></param>
-        public void DeleteApp(int appId)
+        public async System.Threading.Tasks.Task DeleteApp(int appId)
         {
             string url = string.Format("/app/{0}", appId);
-            _podio.Delete<dynamic>(url);
+            await _podio.Delete<dynamic>(url);
         }
 
         /// <summary>
@@ -174,14 +175,14 @@ namespace PodioAPI.Services
         /// <param name="fieldId"></param>
         /// <param name="deleteValues"> True if the values for the fields should be deleted, false otherwise Default value: false </param>
         /// <returns></returns>
-        public ApplicationRevision DeleteAppField(int appId, int fieldId, bool deleteValues = false)
+        public async Task<ApplicationRevision> DeleteAppField(int appId, int fieldId, bool deleteValues = false)
         {
             string url = string.Format("/app/{0}/field/{1}", appId, fieldId);
             dynamic requestData = new
             {
                 delete_values = deleteValues.ToString()
             };
-            return _podio.Delete<ApplicationRevision>(url, requestData);
+            return await _podio.Delete<ApplicationRevision>(url, requestData);
         }
 
         /// <summary>
@@ -205,7 +206,7 @@ namespace PodioAPI.Services
         ///     Order by the name of the app. Default value: score
         /// </param>
         /// <returns></returns>
-        public List<Application> GetAllUserApps(int[] excludeAppIds = null, int? referenceableInOrg = null,
+        public async Task<List<Application>> GetAllUserApps(int[] excludeAppIds = null, int? referenceableInOrg = null,
             string right = null, string text = null, bool excludeDemo = false, int limit = 4, string order = "score")
         {
             string appIdCSV = Utilities.ArrayToCSV(excludeAppIds);
@@ -220,7 +221,7 @@ namespace PodioAPI.Services
                 {"right", right},
                 {"text", text}
             };
-            return _podio.Get<List<Application>>(url, requestData);
+            return await _podio.Get<List<Application>>(url, requestData);
         }
 
         /// <summary>
@@ -234,14 +235,14 @@ namespace PodioAPI.Services
         ///     value: full
         /// </param>
         /// <returns></returns>
-        public Application GetAppOnSpaceByURLLabel(int spaceId, string UrlLabel, string type = "full")
+        public async Task<Application> GetAppOnSpaceByURLLabel(int spaceId, string UrlLabel, string type = "full")
         {
             string url = string.Format("/app/space/{0}/{1}", spaceId, UrlLabel);
             var requestData = new Dictionary<string, string>()
             {
                 {"type", type}
             };
-            return _podio.Get<Application>(url, requestData);
+            return await _podio.Get<Application>(url, requestData);
         }
 
         /// <summary>
@@ -255,10 +256,10 @@ namespace PodioAPI.Services
         /// <param name="spaceLabel"></param>
         /// <param name="appLabel"></param>
         /// <returns></returns>
-        public Application GetAppByOrgLabelSpaceLabelAndAppLabel(string orgLabel, string spaceLabel, string appLabel)
+        public async Task<Application> GetAppByOrgLabelSpaceLabelAndAppLabel(string orgLabel, string spaceLabel, string appLabel)
         {
             string url = string.Format("/app/org/{0}/space/{1}/{2}", orgLabel, spaceLabel, appLabel);
-            return _podio.Get<Application>(url);
+            return await _podio.Get<Application>(url);
         }
 
         /// <summary>
@@ -267,11 +268,11 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="appIds"></param>
-        public void UpdateAppOrder(int spaceId, List<int> appIds)
+        public async System.Threading.Tasks.Task UpdateAppOrder(int spaceId, List<int> appIds)
         {
             appIds = new List<int>();
             string url = string.Format("/app/space/{0}/order", spaceId);
-            _podio.Put<dynamic>(url, appIds);
+            await _podio.Put<dynamic>(url, appIds);
         }
 
         /// <summary>
@@ -280,14 +281,14 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="description"></param>
-        public void UpdateAppDescription(int appId, string description)
+        public async System.Threading.Tasks.Task UpdateAppDescription(int appId, string description)
         {
             string url = string.Format("/app/{0}/description", appId);
             dynamic requestData = new
             {
                 description = description
             };
-            _podio.Put<dynamic>(url, requestData);
+            await _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -296,14 +297,14 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="usage"></param>
-        public void UpdateAppUsageInstructions(int appId, string usage)
+        public async System.Threading.Tasks.Task UpdateAppUsageInstructions(int appId, string usage)
         {
             string url = string.Format("/app/{0}/usage", appId);
             dynamic requestData = new
             {
                 usage = usage
             };
-            _podio.Put<dynamic>(url, requestData);
+            await _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -317,7 +318,7 @@ namespace PodioAPI.Services
         ///     integration, forms, items. If the value is not given all but the "items" feature will be selected.
         /// </param>
         /// <returns></returns>
-        public int InstallApp(int appId, int spaceId, string[] features = null)
+        public async Task<int> InstallApp(int appId, int spaceId, string[] features = null)
         {
             features = features == null ? new string[] {"items"} : features;
             string url = string.Format("/app/{0}/install", appId);
@@ -326,7 +327,7 @@ namespace PodioAPI.Services
                 space_id = spaceId,
                 features = features
             };
-            dynamic response = _podio.Post<dynamic>(url, requestData);
+            dynamic response = await _podio.Post<dynamic>(url, requestData);
             return (int) response["app_id"];
         }
 
@@ -336,10 +337,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public List<AppCalculation> GetCalculationsForApp(int appId)
+        public async Task<List<AppCalculation>> GetCalculationsForApp(int appId)
         {
             string url = string.Format("/app/{0}/calculation/", appId);
-            return _podio.Get<List<AppCalculation>>(url);
+            return await _podio.Get<List<AppCalculation>>(url);
         }
 
         /// <summary>
@@ -348,7 +349,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="application"></param>
         /// <returns>The id of the newly created app</returns>
-        public int AddNewApp(Application application)
+        public async Task<int> AddNewApp(Application application)
         {
             /*
                 Example Usage: Adding a new application with a text field and category field.
@@ -386,7 +387,7 @@ namespace PodioAPI.Services
                 Config = application.Config,
                 Fields = application.Fields
             };
-            dynamic response = _podio.Post<dynamic>(url, requestDate);
+            dynamic response = await _podio.Post<dynamic>(url, requestDate);
             return (int) response["app_id"];
         }
 
@@ -396,7 +397,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="field"></param>
-        public int AddNewAppField(int appId, ApplicationField field)
+        public async Task<int> AddNewAppField(int appId, ApplicationField field)
         {
             /*
                Example Usage: Adding a new text field.
@@ -411,7 +412,7 @@ namespace PodioAPI.Services
                 podio.ApplicationService.AddNewAppField(APP_ID, applicationField);
             */
             string url = string.Format("/app/{0}/field/", appId);
-            dynamic response = _podio.Post<dynamic>(url, field);
+            dynamic response = await _podio.Post<dynamic>(url, field);
             return (int) response["field_id"];
         }
 
@@ -425,7 +426,7 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/applications/update-app-22352 </para>
         /// </summary>
         /// <param name="application"></param>
-        public void UpdateApp(Application application, bool silent = false)
+        public async System.Threading.Tasks.Task UpdateApp(Application application, bool silent = false)
         {
             /*
                Example Usage: Updating an App by adding a new Category Field and Updating a Text Field
@@ -467,7 +468,7 @@ namespace PodioAPI.Services
                 Config = application.Config,
                 Fields = application.Fields
             };
-            _podio.Put<dynamic>(url, requestData);
+            await _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -476,7 +477,7 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/applications/update-an-app-field-22356 </para>
         /// </summary>
         /// <param name="application"></param>
-        public void UpdateAnAppField(Application application)
+        public async System.Threading.Tasks.Task UpdateAnAppField(Application application)
         {
             /*
                 Example Usage: Updating the configuration of a text field.
@@ -490,7 +491,7 @@ namespace PodioAPI.Services
                 textField.Size = "large";
             */
             ApplicationField fieldToUpdate = application.Fields.FirstOrDefault();
-            UpdateAnAppField(application.AppId, fieldToUpdate.FieldId.Value, fieldToUpdate.InternalConfig);
+            await UpdateAnAppField(application.AppId, fieldToUpdate.FieldId.Value, fieldToUpdate.InternalConfig);
         }
 
         /// <summary>
@@ -500,10 +501,10 @@ namespace PodioAPI.Services
         /// <param name="appId"></param>
         /// <param name="fieldId"></param>
         /// <param name="config"></param>
-        public void UpdateAnAppField(int appId, int fieldId, FieldConfig config)
+        public async System.Threading.Tasks.Task UpdateAnAppField(int appId, int fieldId, FieldConfig config)
         {
             string url = string.Format("/app/{0}/field/{1}", appId, fieldId);
-            _podio.Put<dynamic>(url, config);
+            await _podio.Put<dynamic>(url, config);
         }
 
         /// <summary>
@@ -512,10 +513,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public ApplicationDependency GetAppDependencies(int appId)
+        public async Task<ApplicationDependency> GetAppDependencies(int appId)
         {
             string url = string.Format("/app/{0}/dependencies/", appId);
-            return _podio.Get<ApplicationDependency>(url);
+            return await _podio.Get<ApplicationDependency>(url);
         }
 
         /// <summary>
@@ -524,10 +525,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="spaceId"></param>
         /// <returns></returns>
-        public ApplicationDependency GetSpaceAppDependencies(int spaceId)
+        public async Task<ApplicationDependency> GetSpaceAppDependencies(int spaceId)
         {
             string url = string.Format("/space/{0}/dependencies/", spaceId);
-            return _podio.Get<ApplicationDependency>(url);
+            return await _podio.Get<ApplicationDependency>(url);
         }
     }
 }
