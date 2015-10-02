@@ -199,6 +199,7 @@
     <Compile Include="Utils\Authentication\NullAuthStore.cs" />
     <Compile Include="Utils\Authentication\PodioOAuth.cs" />
     <Compile Include="Utils\Authentication\SessionAuthStore.cs" />
+    <Compile Include="Utils\FileUtils.cs" />
     <Compile Include="Utils\ItemFields\AppItemField.cs" />
     <Compile Include="Utils\ItemFields\CalculationItemField.cs" />
     <Compile Include="Utils\ItemFields\CategoryItemField.cs" />
@@ -218,7 +219,7 @@
     <Compile Include="Utils\ItemFields\TextItemField.cs" />
     <Compile Include="Utils\MimeTypeMapping.cs" />
     <Compile Include="Utils\ObjectExtensions.cs" />
-    <Compile Include="Utils\PodioCollection.cs" />
+    <Compile Include="Models\PodioCollection.cs" />
     <Compile Include="Utils\Serialization\JSONSerializer.cs" />
     <Compile Include="Utils\Utilities.cs" />
   </ItemGroup>

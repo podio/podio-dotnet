@@ -321,7 +321,7 @@ namespace PodioAPI.Services
             if (filters.Any())
                 requestData = parameters.Concat(filters).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
 
-            return await _podio.Get<FileResponse>(url, requestData, options);
+            return await _podio.Get<FileResponse>(url, requestData);
         }
 
         /// <summary>

@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using PodioAPI.Models;
 using System.Threading.Tasks;
+using System.IO;
+using PodioAPI.Utils;
 
 namespace PodioAPI.Services
 {
@@ -34,14 +36,17 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public async Task<FileAttachment> UploadFile(string filePath, string fileName)
         {
-            string url = "/file/v2/";
-            dynamic requestData = new
+            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                filePath,
-                fileName
-            };
-            Dictionary<string, bool> options = new Dictionary<string, bool>() { { "upload", true } };
-            return await _podio.Post<FileAttachment>(url, requestData, options);
+                byte[] data = await FileUtils.ReadAllBytesAsync(filePath);
+                string mimeType = MimeTypeMapping.GetMimeType(Path.GetExtension(filePath));
+
+                return await UploadFile(fileName, data, mimeType);
+            }
+            else
+            {
+                throw new FileNotFoundException("File not found in the specified path");
+            }
         }
 
         /// <summary>
@@ -61,9 +66,7 @@ namespace PodioAPI.Services
                 data,
                 mimeType
             };
-
-            Dictionary<string, bool> options = new Dictionary<string, bool>() { { "byteUpload", true } };
-            return await _podio.Post<FileAttachment>(url, requestData, options);
+            return await _podio.PostMultipartFormData<FileAttachment>(url, data, fileName, mimeType);
         }
 
         /// <summary>
@@ -309,14 +312,11 @@ namespace PodioAPI.Services
         public async Task<FileResponse> DownloadFile(FileAttachment fileAttachment)
         {
             var fileLink = fileAttachment.Link;
-
-            //For URL's other than of root 'api.podio.com' , pass the url as an option
-            var options = new Dictionary<string, dynamic>()
+            var options = new Dictionary<string, object>()
             {
-                {"file_download", true},
-                {"url", fileLink}
+                {"file_download", true}
             };
-            return await _podio.Get<FileResponse>(url: null, options: options);
+            return await _podio.Get<FileResponse>(fileLink, new Dictionary<string, string>(), true);
         }
     }
 }

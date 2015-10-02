@@ -14,7 +14,7 @@ namespace PodioAPI.Utils
             return JsonConvert.SerializeObject(entity, settings);
         }
 
-        public static T Deserilaize<T>(string json)
+        public static T Deserialize<T>(string json)
         {
             return JsonConvert.DeserializeObject<T>(json, new JsonConverter[] {new NestedDictionaryConverter()});
         }
