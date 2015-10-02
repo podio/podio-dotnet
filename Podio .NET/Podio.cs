@@ -185,7 +185,7 @@ namespace PodioAPI
             };
 
             if (isFileDownload)
-                request.Headers.Accept.Remove(new MediaTypeWithQualityHeaderValue("application/json"));
+                request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("*/*"));
             else
                 request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
