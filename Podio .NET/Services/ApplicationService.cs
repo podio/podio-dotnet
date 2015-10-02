@@ -86,7 +86,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public async Task<List<string>> GetFeatures(int[] appIds, bool includeSpace = false)
         {
-            string appIdCSV = Utilities.ArrayToCSV(appIds);
+            string appIdCSV = Utility.ArrayToCSV(appIds);
             string url = "/app/features/";
             var requestData = new Dictionary<string, string>()
             {
@@ -209,7 +209,7 @@ namespace PodioAPI.Services
         public async Task<List<Application>> GetAllUserApps(int[] excludeAppIds = null, int? referenceableInOrg = null,
             string right = null, string text = null, bool excludeDemo = false, int limit = 4, string order = "score")
         {
-            string appIdCSV = Utilities.ArrayToCSV(excludeAppIds);
+            string appIdCSV = Utility.ArrayToCSV(excludeAppIds);
             string url = "/app/v2/";
             var requestData = new Dictionary<string, string>()
             {
@@ -462,7 +462,7 @@ namespace PodioAPI.Services
             */
 
             string url = string.Format("/app/{0}", application.AppId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, false));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, false));
             var requestData = new ApplicationCreateUpdateRequest()
             {
                 Config = application.Config,

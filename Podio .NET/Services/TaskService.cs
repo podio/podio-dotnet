@@ -168,7 +168,7 @@ namespace PodioAPI.Services
         public async System.Threading.Tasks.Task IncompleteTask(int taskId, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/incomplete", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             await _podio.Post<dynamic>(url);
         }
 
@@ -193,7 +193,7 @@ namespace PodioAPI.Services
             {
                 url = string.Format("/task/{0}/{1}/", refType, refId);
             }
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             var createdTasks = new List<Models.Task>();
             if ((task.Responsible is IEnumerable<int> || task.Responsible is IEnumerable<Ref>) &&
                 task.Responsible.Count > 1)
@@ -256,7 +256,7 @@ namespace PodioAPI.Services
         public async Task<Models.Task> UpdateTask(int taskId, TaskCreateUpdateRequest task, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             return await _podio.Put<Models.Task>(url, task);
         }
 
@@ -273,7 +273,7 @@ namespace PodioAPI.Services
         public async System.Threading.Tasks.Task DeleteTask(int taskId, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             await _podio.Delete<dynamic>(url);
         }
 
@@ -346,7 +346,7 @@ namespace PodioAPI.Services
         public async System.Threading.Tasks.Task UpdateTaskDescription(int taskId, string description, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/description", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic requestData = new
             {
                 description = description
@@ -365,7 +365,7 @@ namespace PodioAPI.Services
         public async System.Threading.Tasks.Task UpdateTaskPrivate(int taskId, bool isPrivate, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/private", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic requestData = new
             {
                 @private = isPrivate
@@ -384,7 +384,7 @@ namespace PodioAPI.Services
         public async System.Threading.Tasks.Task UpdateTaskText(int taskId, string text, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/text", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic requestData = new
             {
                 text = text
@@ -405,7 +405,7 @@ namespace PodioAPI.Services
             bool silent = false)
         {
             string url = string.Format("/task/{0}/due", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic requestData = new
             {
                 due_on = dueOn,
@@ -441,7 +441,7 @@ namespace PodioAPI.Services
         public async System.Threading.Tasks.Task UpdateTaskReference(int taskId, string refType, int refId, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/ref", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic requestData = new
             {
                 ref_type = refType,
@@ -542,7 +542,7 @@ namespace PodioAPI.Services
             var requestData = new Dictionary<string, string>();
             if (spaceIds != null)
             {
-                string spaceIdCsv = Utilities.ArrayToCSV(spaceIds, ";");
+                string spaceIdCsv = Utility.ArrayToCSV(spaceIds, ";");
                 requestData.Add("space", spaceIdCsv);
             }
             return await _podio.Get<TaskReport>(url, requestData);
@@ -581,7 +581,7 @@ namespace PodioAPI.Services
         public async Task<int?> CompleteTask(int taskId, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/complete", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic response = await _podio.Post<dynamic>(url);
             if (response != null)
                 return (int?) response["recurring_task_id"];
@@ -601,7 +601,7 @@ namespace PodioAPI.Services
         public async System.Threading.Tasks.Task AssignTask(int taskId, int? responsible = null, bool silent = false)
         {
             string url = string.Format("/task/{0}/assign", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
             dynamic requestData = new
             {
                 responsible = responsible

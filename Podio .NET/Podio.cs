@@ -1,7 +1,5 @@
-﻿using Newtonsoft.Json;
-using PodioAPI.Exceptions;
+﻿using PodioAPI.Exceptions;
 using PodioAPI.Models;
-using PodioAPI.Models.Request;
 using PodioAPI.Services;
 using PodioAPI.Utils;
 using PodioAPI.Utils.Authentication;
@@ -23,10 +21,9 @@ namespace PodioAPI
         protected string ClientSecret { get; set; }
         public PodioOAuth OAuth { get; set; }
         public IAuthStore AuthStore { get; set; }
-        private WebProxy Proxy { get; set; }
         public int RateLimit { get; private set; }
         public int RateLimitRemaining { get; private set; }
-        protected string ApiUrl { get; set; }
+        private string ApiUrl { get; set; }
 
         private static readonly HttpClient HttpClient;
 
@@ -42,12 +39,11 @@ namespace PodioAPI
         ///     <para> You can use the IsAuthenticated method to check if there is a stored access token already present</para>
         /// </param>
         /// <param name="proxy">To set proxy to HttpWebRequest</param>
-        public Podio(string clientId, string clientSecret, IAuthStore authStore = null, WebProxy proxy = null)
+        public Podio(string clientId, string clientSecret, IAuthStore authStore = null)
         {
             ClientId = clientId;
             ClientSecret = clientSecret;
             ApiUrl = "https://api.podio.com:443";
-            Proxy = proxy;
 
             AuthStore = authStore ?? new NullAuthStore();
             OAuth = AuthStore.Get();
@@ -63,7 +59,7 @@ namespace PodioAPI
         internal async Task<T> Get<T>(string url, Dictionary<string, string> requestData = null, bool isFileDownload = false)
             where T : new()
         {
-            string queryString = EncodeAttributes(requestData);
+            string queryString = Utility.DictionaryToQueryString(requestData);
             if (!string.IsNullOrEmpty(queryString))
             {
                 url = url + "?" + queryString;
@@ -237,54 +233,6 @@ namespace PodioAPI
             }
         }
 
-        /// <summary>
-        ///     Transform options object to query parameteres
-        /// </summary>
-        /// <param name="url"></param>
-        /// <param name="options"></param>
-        /// <returns></returns>
-        internal string PrepareUrlWithOptions(string url, CreateUpdateOptions options)
-        {
-            string urlWithOptions = "";
-            List<string> parameters = new List<string>();
-            if (options.Silent)
-                parameters.Add("silent=true");
-            if (!options.Hook)
-                parameters.Add("hook=false");
-            if (options.AlertInvite)
-                parameters.Add("alert_invite=true");
-            if (options.Fields != null && options.Fields.Any())
-                parameters.Add(string.Join(",", options.Fields.Select(s => s).ToArray()));
-
-            urlWithOptions = parameters.Any() ? url + "?" + string.Join("&", parameters.ToArray()) : url;
-            return urlWithOptions;
-        }
-
-        /// <summary>
-        ///     Convert dictionay to to query string
-        /// </summary>
-        /// <param name="attributes"></param>
-        /// <returns></returns>
-        internal static string EncodeAttributes(Dictionary<string, string> attributes)
-        {
-            var encodedString = string.Empty;
-            if (attributes != null && attributes.Any())
-            {
-                var parameters = new List<string>();
-                foreach (var item in attributes)
-                {
-                    if (item.Key != string.Empty && !string.IsNullOrEmpty(item.Value))
-                    {
-                        parameters.Add(HttpUtility.UrlEncode(item.Key) + "=" + (HttpUtility.UrlEncode(item.Value)));
-                    }
-                }
-                if (parameters.Any())
-                    encodedString = string.Join("&", parameters.ToArray());
-            }
-
-            return encodedString;
-        }
-
         #endregion
 
         #region Authentication
@@ -364,7 +312,7 @@ namespace PodioAPI
             attributes["client_id"] = ClientId;
             attributes["client_secret"] = ClientSecret;
 
-            var options = new Dictionary<string, object>()
+            var options = new Dictionary<string, bool>()
             {
                 {"oauth_request", true}
             };

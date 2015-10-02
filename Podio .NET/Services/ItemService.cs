@@ -49,7 +49,7 @@ namespace PodioAPI.Services
             };
 
             string url = string.Format("/item/app/{0}/", appId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             var response = await _podio.Post<Item>(url, requestData);
             return response.ItemId;
         }
@@ -88,7 +88,7 @@ namespace PodioAPI.Services
             };
 
             string url = string.Format("/item/{0}", item.ItemId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic response = await _podio.Put<dynamic>(url, requestData);
             if (response != null)
                 return (int)response["revision"];
@@ -133,7 +133,7 @@ namespace PodioAPI.Services
                     fieldIdentifier = fieldToUpdate.FieldId.ToString();
             }
             string url = string.Format("/item/{0}/value/{1}", item.ItemId, fieldIdentifier);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic response = await _podio.Put<dynamic>(url, updatedValue);
 
             if (response != null)
@@ -171,7 +171,7 @@ namespace PodioAPI.Services
                 JArray.FromObject(
                     item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
             string url = string.Format("/item/{0}/value", item.ItemId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic response = await _podio.Put<dynamic>(url, fieldValues);
             if (response != null)
                 return (int)response["revision"];
@@ -338,7 +338,7 @@ namespace PodioAPI.Services
         public async Task<BulkDeletionStatus> BulkDeleteItems(int appId, BulkDeleteRequest deleteRequest, bool silent = false)
         {
             string url = string.Format("/item/app/{0}/delete", appId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
             return await _podio.Post<BulkDeletionStatus>(url, deleteRequest);
         }
 
@@ -355,7 +355,7 @@ namespace PodioAPI.Services
         public async Task<int> CloneItem(int itemId, bool silent = false)
         {
             string url = string.Format("/item/{0}/clone", itemId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
             dynamic tw = await _podio.Post<dynamic>(url);
             return int.Parse(tw["item_id"].ToString());
         }
@@ -373,7 +373,7 @@ namespace PodioAPI.Services
         public async System.Threading.Tasks.Task DeleteItem(int itemId, bool silent = false, bool hook = true)
         {
             string url = string.Format("/item/{0}", itemId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             await _podio.Delete<dynamic>(url);
         }
 
@@ -464,7 +464,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public async Task<List<Item>> GetTopValuesByField(int fieldId, int limit = 13, int[] notItemIds = null)
         {
-            string itemIdCSV = Utilities.ArrayToCSV(notItemIds);
+            string itemIdCSV = Utility.ArrayToCSV(notItemIds);
             var requestData = new Dictionary<string, string>()
             {
                 {"limit", limit.ToString()},
@@ -698,7 +698,7 @@ namespace PodioAPI.Services
         public async Task<List<Item>> FindReferenceableItems(int fieldId, int limit = 13, int[] notItemIds = null,
             string sort = null, string text = null)
         {
-            string itemIdCSV = Utilities.ArrayToCSV(notItemIds);
+            string itemIdCSV = Utility.ArrayToCSV(notItemIds);
             var requestData = new Dictionary<string, string>()
             {
                 {"limit", limit.ToString()},
