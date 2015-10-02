@@ -11,14 +11,14 @@ namespace PodioAPI.Exceptions
         public PodioError Error { get; internal set; }
 
         /// <summary>
-        ///     Status code of the response
+        ///   HTTP Status code of the response
         /// </summary>
-        public int Status { get; internal set; }
+        public int StatusCode { get; internal set; }
 
-        public PodioException(int status, PodioError error)
+        public PodioException(int statusCode, PodioError error)
         {
             this.Error = error;
-            this.Status = status;
+            this.StatusCode = statusCode;
         }
     }
 

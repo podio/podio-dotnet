@@ -69,7 +69,7 @@ namespace PodioAPI
             return await Request<T>(request, isFileDownload);
         }
 
-        internal async Task<T> Post<T>(string url, dynamic requestData = null, dynamic options = null) where T : new()
+        internal async Task<T> Post<T>(string url, dynamic requestData = null, Dictionary<string, bool> options = null) where T : new()
         {
             var request = CreateHttpRequest(url, HttpMethod.Post);
             if (options != null && options.ContainsKey("oauth_request") && options["oauth_request"])
@@ -98,7 +98,7 @@ namespace PodioAPI
             return await Request<T>(request);
         }
 
-        internal async Task<T> Put<T>(string url, dynamic requestData = null) where T : new()
+        internal async Task<T> Put<T>(string url, object requestData = null) where T : new()
         {
             var request = CreateHttpRequest(url, HttpMethod.Put);
             var jsonString = JSONSerializer.Serilaize(requestData);
@@ -107,9 +107,12 @@ namespace PodioAPI
             return await Request<T>(request);
         }
 
-        internal async Task<T> Delete<T>(string url, dynamic requestData = null) where T : new()
+        internal async Task<T> Delete<T>(string url, Dictionary<string, string> requestData = null) where T : new()
         {
             var request = CreateHttpRequest(url, HttpMethod.Delete);
+            if(requestData != null)
+                request.Content = new FormUrlEncodedContent(requestData);
+
             return await Request<T>(request);
         }
 

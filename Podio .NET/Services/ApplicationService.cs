@@ -178,10 +178,11 @@ namespace PodioAPI.Services
         public async Task<ApplicationRevision> DeleteAppField(int appId, int fieldId, bool deleteValues = false)
         {
             string url = string.Format("/app/{0}/field/{1}", appId, fieldId);
-            dynamic requestData = new
+            var requestData = new Dictionary<string, string>()
             {
-                delete_values = deleteValues.ToString()
+                {"delete_values", deleteValues.ToString()}
             };
+           
             return await _podio.Delete<ApplicationRevision>(url, requestData);
         }
 
