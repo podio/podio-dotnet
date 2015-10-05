@@ -10,7 +10,7 @@ When you want to attach a file to an object (e.g. a comment, status message etc.
 
 {% highlight csharp startinline %}
 string filePath = Server.MapPath("\\files\\report.pdf");
-FileAttachment file = podio.FileService.UploadFile(filePath, "report.pdf");
+FileAttachment file = await podio.FileService.UploadFile(filePath, "report.pdf");
 
 Response.Write("File uploaded. The file id is: " + file.FileId);
 {% endhighlight %}
@@ -20,10 +20,10 @@ To download a file you must first procure a `FileAttachment` object. If you alre
 
 {% highlight csharp startinline %}
 // Get the file object. Only necessary if you don't already have it!
-FileAttachment file = podio.FileService.GetFile(fileId);
+FileAttachment file = await podio.FileService.GetFile(fileId);
 
 // Download the file. This might take a while...
-FileResponse fileResponse = podio.FileService.DownloadFile(file);
+FileResponse fileResponse = await podio.FileService.DownloadFile(file);
 
 // Store the file on local disk
 string filePath = Server.MapPath("/Files/" + file.Name);

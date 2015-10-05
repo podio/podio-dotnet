@@ -2,3 +2,6 @@
 Gemfile.lock
 .bundle
 _site
+
+**/PodioAPITests/*
+**/TestResults/*

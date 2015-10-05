@@ -29,7 +29,7 @@ Below you'll find examples for getting and setting field values for each of the 
 Values are returned as a list of `PodioAPI.Models.Item` object:
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // A App reference field with external_id 'related-items'
 AppItemField appField = item.Field<AppItemField>("related-items");
@@ -119,7 +119,7 @@ categoryField.OptionIds = new List<int> { 4, 5, 6 }; // option_ids: 4, 5 and 6
 Values are returned as a List of `PodioAPI.Models.Contact` objects:
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // A Contact field with external_id 'client'
 ContactItemField contactField = item.Field<ContactItemField>("client");
@@ -147,7 +147,7 @@ contactField.ContactIds = new List<int> { 3254, 89745 };
 Date field values have two components: The start date and the end date. You can also access date and time sections individually. This is often preferred as the time component will be null for events without time.
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // A Date field with external_id 'deadline-date'
 DateItemField dateField = item.Field<DateItemField>("deadline-date");
@@ -206,7 +206,7 @@ durationField.Value = new TimeSpan(1, 30, 0);
 Values are returned as a List of `PodioAPI.Utils.ItemFields.EmailPhoneFieldResult` object:
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // An Email field with external_id 'email'
 EmailItemField emailField = item.Field<EmailItemField>("email");
@@ -238,7 +238,7 @@ emailField.Value = new List<EmailPhoneFieldResult>
 Values are returned as a List of `PodioAPI.Models.FileAttachment` objects:
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // A Image field with external_id 'image'
 ImageItemField imageField = item.Field<ImageItemField>("image");
@@ -250,7 +250,7 @@ foreach (var file in images)
     string fileUrl = file.Link;
 
     // You can download and save to a file
-    FileResponse fileResponse = podio.FileService.DownloadFile(file);
+    FileResponse fileResponse = await podio.FileService.DownloadFile(file);
     string filePath = Server.MapPath("/Images/" + file.Name);
 
     System.IO.File.WriteAllBytes(filePath, fileResponse.FileContents);
@@ -264,7 +264,7 @@ Setting value can be done by setting a list of file_id's to `FileIds` property. 
 {% highlight csharp startinline %}
 // Upload file
 var filePath = Server.MapPath("\\files\\report.pdf");
-var uploadedFile = podio.FileService.UploadFile(filePath, "report.pdf");
+var uploadedFile = await podio.FileService.UploadFile(filePath, "report.pdf");
 
 // Set FileIds
 Item myNewItem = new Item();
@@ -282,7 +282,7 @@ imageField.FileIds = new List<int>{uploadedFile.FileId};
 Values are returned as a List of `PodioAPI.Models.Embed` objects:
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // A Link field with external_id 'link'
 EmbedItemField embedField = item.Field<EmbedItemField>("link");
@@ -299,7 +299,7 @@ Setting value to EmbedItemField can be done by calling AddEmbed method and passi
 Item myNewItem = new Item();
 
 // Creating an embed
-var embed = podio.EmbedService.AddAnEmbed("https://www.google.com/");
+var embed = await podio.EmbedService.AddAnEmbed("https://www.google.com/");
 
 // Embed/Link field with with external_id 'link'
 var embedField = myNewItem.Field<EmbedItemField>("link");
@@ -315,7 +315,7 @@ embedField.AddEmbed(embed.EmbedId);
 Location fields return an list of strings (addresses)
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // A Location field with external_id 'location'
 LocationItemField locationField = item.Field<LocationItemField>("location");
@@ -346,7 +346,7 @@ locationField.Locations = new List<string>
 Money field values have two components: The amount and the currency. You can access these through properties.
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // A Money field with external_id 'price'
 MoneyItemField moneyField = item.Field<MoneyItemField>("price");
@@ -375,7 +375,7 @@ moneyField.Value = 250.50M;
 The value of a number is of type `double?`.
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // A Number field with external_id 'number'
 NumericItemField numberField = item.Field<NumericItemField>("number");
@@ -401,7 +401,7 @@ numberField.Value = 567.89;
 Values are returned as a List of `PodioAPI.Utils.ItemFields.EmailPhoneFieldResult` object:
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // A Phone field with external_id 'phone'
 PhoneItemField phoneField = item.Field<PhoneItemField>("phone");
@@ -432,7 +432,7 @@ phoneField.Value = new List<EmailPhoneFieldResult>
 Progress fields return a integer between 0 and 100.
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // A Progress field with external_id 'progress'
 ProgressItemField progressField = item.Field<ProgressItemField>("progress");
@@ -459,7 +459,7 @@ progressField.Value = 70;
 Text fields return a regular string
 
 {% highlight csharp startinline %}
-var item = podio.ItemService.GetItemBasic(123);
+var item = await podio.ItemService.GetItemBasic(123);
 
 // Text field with external_id 'title'.
 TextItemField titleField = item.Field<TextItemField>("title");

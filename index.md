@@ -26,8 +26,8 @@ To get started right away, use app authentication to work on a single Podio app.
 using PodioAPI;
 
 var podio = new Podio(clientId, clientSecret);
-podio.AuthenticateWithApp(appId, appSecret);
+await podio.AuthenticateWithApp(appId, appSecret);
 
-var items = podio.ItemService.FilterItems(appId);
+var items = await podio.ItemService.FilterItems(appId);
 Response.Write("My app has " + items.Total + " items");
 {% endhighlight %}

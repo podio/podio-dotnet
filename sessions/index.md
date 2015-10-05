@@ -25,7 +25,7 @@ else
 }
 {% endhighlight %}
 
-If you use an AuthStore your authentication tokens will automatically be stored/updated when ever authentication or refresh of token happends and automatically retrieved when you initialize `Podio` class. By default it takes the SessionStore Implementation (Store access token is session)
+If you use an AuthStore your authentication tokens will automatically be stored/updated when ever authentication or refresh of token happends and automatically retrieved when you initialize `Podio` class.
 
 ## Writing your own session manager
 Writing a AuthStore is straight-forward. You need to create a new class that implements `IAuthStore` interface.
@@ -79,7 +79,7 @@ if(!podio.IsAuthenticated())
     // No authentication found in AuthStore.
     // You must re-authenticate here.
 
-    podio.AuthenticateWithApp(appId, appToken);
+    await podio.AuthenticateWithApp(appId, appToken);
 }
 
 //Api calls here
