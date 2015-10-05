@@ -1,5 +1,5 @@
-About
-=====
+# Podio.NET [![Build status](https://ci.appveyor.com/api/projects/status/mv39ht4y9uk09593?svg=true)](https://ci.appveyor.com/project/AjmalVh/podio-dotnet)
+
 
 This is the development version of .NET Client for accessing the Podio API.
 

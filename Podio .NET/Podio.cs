@@ -69,10 +69,10 @@ namespace PodioAPI
             return await Request<T>(request, isFileDownload);
         }
 
-        internal async Task<T> Post<T>(string url, dynamic requestData = null, Dictionary<string, bool> options = null) where T : new()
+        internal async Task<T> Post<T>(string url, dynamic requestData = null, bool isOAuthTokenRequest = false) where T : new()
         {
             var request = CreateHttpRequest(url, HttpMethod.Post);
-            if (options != null && options.ContainsKey("oauth_request") && options["oauth_request"])
+            if (isOAuthTokenRequest)
             {
                 request.Content = new FormUrlEncodedContent(requestData);
             }
@@ -320,7 +320,7 @@ namespace PodioAPI
                 {"oauth_request", true}
             };
 
-            PodioOAuth podioOAuth = await Post<PodioOAuth>("/oauth/token", attributes, options).ConfigureAwait(false);
+            PodioOAuth podioOAuth = await Post<PodioOAuth>("/oauth/token", attributes, true).ConfigureAwait(false);
             this.OAuth = podioOAuth;
             AuthStore.Set(podioOAuth);
 
@@ -338,7 +338,7 @@ namespace PodioAPI
         public string GetAuthorizeUrl(string redirectUri)
         {
             string authorizeUrl = "https://podio.com/oauth/authorize?response_type=code&client_id={0}&redirect_uri={1}";
-            return String.Format(authorizeUrl, this.ClientId, HttpUtility.UrlEncode(redirectUri));
+            return String.Format(authorizeUrl, this.ClientId, WebUtility.UrlEncode(redirectUri));
         }
 
         /// <summary>

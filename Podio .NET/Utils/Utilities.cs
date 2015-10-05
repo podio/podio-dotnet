@@ -3,6 +3,7 @@ using PodioAPI.Models.Request;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -41,7 +42,7 @@ namespace PodioAPI.Utils
                 {
                     if (item.Key != string.Empty && !string.IsNullOrEmpty(item.Value))
                     {
-                        parameters.Add(HttpUtility.UrlEncode(item.Key) + "=" + (HttpUtility.UrlEncode(item.Value)));
+                        parameters.Add(WebUtility.UrlEncode(item.Key) + "=" + (WebUtility.UrlEncode(item.Value)));
                     }
                 }
                 if (parameters.Any())

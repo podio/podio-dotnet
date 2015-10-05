@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Reflection;
 
 namespace PodioAPI.Models
 {
@@ -156,7 +157,7 @@ namespace PodioAPI.Models
                 foreach (var property in genericField.GetType().GetProperties())
                 {
                     var jsonAttribute =
-                        ((JsonPropertyAttribute[]) property.GetCustomAttributes(typeof (JsonPropertyAttribute), false));
+                        ((JsonPropertyAttribute[])property.GetCustomAttributes(typeof(JsonPropertyAttribute), false));
                     if (jsonAttribute.Length > 0)
                         specificField.GetType()
                             .GetProperty(property.Name)

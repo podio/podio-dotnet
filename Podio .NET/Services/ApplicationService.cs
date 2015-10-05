@@ -34,6 +34,7 @@ namespace PodioAPI.Services
                 {"type", type}
             };
             return await _podio.Get<Application>(url, requestData);
+            
         }
 
         /// <summary>
