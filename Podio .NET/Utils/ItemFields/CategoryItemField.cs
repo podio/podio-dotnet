@@ -8,11 +8,10 @@ namespace PodioAPI.Utils.ItemFields
 {
     public class CategoryItemField : ItemField
     {
-        private List<Option> _options;
 
         public IEnumerable<Option> Options
         {
-            get { return this.valuesAs<Option>(_options); }
+            get { return this.ValuesAs<Option>(); }
         }
 
         public int OptionId

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PodioAPI.Models;
+using System.Threading.Tasks;
 
 namespace PodioAPI.Services
 {
@@ -22,14 +23,14 @@ namespace PodioAPI.Services
         /// <param name="ratingType"></param>
         /// <param name="value">The value of the rating, see the area for information on the value to use.</param>
         /// <returns>The id of the rating created.</returns>
-        public int AddRating(string refType, int refId, string ratingType, int value)
+        public async Task<int> AddRating(string refType, int refId, string ratingType, int value)
         {
             string url = string.Format("/rating/{0}/{1}/{2}", refType, refId, ratingType);
             dynamic requestData = new
             {
                 value = value
             };
-            dynamic response = _podio.Post<dynamic>(url, requestData);
+            dynamic response =  await _podio.Post<dynamic>(url, requestData);
             return (int) response["rating_id"];
         }
 
@@ -40,10 +41,10 @@ namespace PodioAPI.Services
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <returns></returns>
-        public int GetLikeCount(string refType, int refId)
+        public async Task<int> GetLikeCount(string refType, int refId)
         {
             string url = string.Format("/rating/{0}/{1}/like_count", refType, refId);
-            dynamic response = _podio.Get<dynamic>(url);
+            dynamic response =  await _podio.Get<dynamic>(url);
             return (int) response["like_count"];
         }
 
@@ -56,10 +57,10 @@ namespace PodioAPI.Services
         /// <param name="ratingType"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public int GetRating(string refType, int refId, string ratingType, int userId)
+        public async Task<int> GetRating(string refType, int refId, string ratingType, int userId)
         {
             string url = string.Format("/rating/{0}/{1}/{2}/{3}", refType, refId, ratingType, userId);
-            dynamic response = _podio.Get<dynamic>(url);
+            dynamic response =  await _podio.Get<dynamic>(url);
             return (int) response["value"];
         }
 
@@ -71,10 +72,10 @@ namespace PodioAPI.Services
         /// <param name="refId"></param>
         /// <param name="ratingType"></param>
         /// <returns></returns>
-        public int GetRatingOwn(string refType, int refId, string ratingType)
+        public async Task<int> GetRatingOwn(string refType, int refId, string ratingType)
         {
             string url = string.Format("/rating/{0}/{1}/{2}/self", refType, refId, ratingType);
-            dynamic response = _podio.Get<dynamic>(url);
+            dynamic response =  await _podio.Get<dynamic>(url);
             return (int) response["value"];
         }
 
@@ -86,14 +87,14 @@ namespace PodioAPI.Services
         /// <param name="refId"></param>
         /// <param name="limit">How many profiles that liked something to return. Default value: 10</param>
         /// <returns></returns>
-        public List<Contact> GetWhoLikedAnObject(string refType, int refId, int limit = 10)
+        public async Task<List<Contact>> GetWhoLikedAnObject(string refType, int refId, int limit = 10)
         {
             string url = string.Format("/rating/{0}/{1}/liked_by/", refType, refId);
             Dictionary<string, string> requestData = new Dictionary<string, string>()
             {
                 {"limit", limit.ToString()}
             };
-            return _podio.Get<List<Contact>>(url, requestData);
+            return  await _podio.Get<List<Contact>>(url, requestData);
         }
 
         /// <summary>
@@ -103,10 +104,10 @@ namespace PodioAPI.Services
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <param name="ratingType"></param>
-        public void RemoveRating(string refType, int refId, string ratingType)
+        public async Task<dynamic> RemoveRating(string refType, int refId, string ratingType)
         {
             string url = string.Format("/rating/{0}/{1}/{2}", refType, refId, ratingType);
-            _podio.Delete<dynamic>(url);
+            return await _podio.Delete<dynamic>(url);
         }
 
         /// <summary>
@@ -116,10 +117,10 @@ namespace PodioAPI.Services
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <returns></returns>
-        public Rating GetAllRatings(string refType, int refId)
+        public async Task<Rating> GetAllRatings(string refType, int refId)
         {
             string url = string.Format("/rating/{0}/{1}", refType, refId);
-            return _podio.Get<Rating>(url);
+            return  await _podio.Get<Rating>(url);
         }
 
         /// <summary>
@@ -130,10 +131,10 @@ namespace PodioAPI.Services
         /// <param name="refId"></param>
         /// <param name="ratingType"></param>
         /// <returns></returns>
-        public RatingType GetRatings(string refType, int refId, string ratingType)
+        public async Task<RatingType> GetRatings(string refType, int refId, string ratingType)
         {
             string url = string.Format("/rating/{0}/{1}/{2}", refType, refId, ratingType);
-            return _podio.Get<RatingType>(url);
+            return  await _podio.Get<RatingType>(url);
         }
     }
 }

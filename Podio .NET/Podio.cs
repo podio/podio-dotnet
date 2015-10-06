@@ -56,7 +56,7 @@ namespace PodioAPI
 
         #region Request Helpers
 
-        internal async Task<T> Get<T>(string url, Dictionary<string, string> requestData = null, bool isFileDownload = false)
+        internal async Task<T> Get<T>(string url, Dictionary<string, string> requestData = null, bool isFileDownload = false, bool returnAsString = false)
             where T : new()
         {
             string queryString = Utility.DictionaryToQueryString(requestData);
@@ -66,7 +66,7 @@ namespace PodioAPI
             }
 
             var request = CreateHttpRequest(url, HttpMethod.Get, true, isFileDownload);
-            return await Request<T>(request, isFileDownload);
+            return await Request<T>(request, isFileDownload, returnAsString);
         }
 
         internal async Task<T> Post<T>(string url, dynamic requestData = null, bool isOAuthTokenRequest = false) where T : new()
@@ -116,7 +116,7 @@ namespace PodioAPI
             return await Request<T>(request);
         }
 
-        internal async Task<T> Request<T>(HttpRequestMessage httpRequest, bool isFileDownload = false) where T : new()
+        internal async Task<T> Request<T>(HttpRequestMessage httpRequest, bool isFileDownload = false, bool returnAsString = false) where T : new()
         {
             var response = await HttpClient.SendAsync(httpRequest);
 
@@ -131,7 +131,7 @@ namespace PodioAPI
                 if(isFileDownload)
                 {
                     var fileResponse = new FileResponse();
-                    fileResponse.FileContents = await response.Content.ReadAsByteArrayAsync();
+                    fileResponse.FileContents = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
                     fileResponse.ContentType = response.Content.Headers.ContentType.ToString();
                     fileResponse.ContentLength = response.Content.Headers.ContentLength ?? 0;
 
@@ -140,6 +140,12 @@ namespace PodioAPI
                 else
                 {
                     var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    if (returnAsString)
+                    {
+                        var stringResponse = new StringResponse() { Data = responseBody };
+                        return stringResponse.ChangeType<T>();
+                    }
+
                     return JSONSerializer.Deserialize<T>(responseBody);
                 }
             }

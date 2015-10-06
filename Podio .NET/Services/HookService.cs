@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PodioAPI.Models;
+using System.Threading.Tasks;
 
 namespace PodioAPI.Services
 {
@@ -21,7 +22,7 @@ namespace PodioAPI.Services
         /// <param name="externalURL">The url of endpoint.</param>
         /// <param name="type">The type of events to listen to, see the area for options.</param>
         /// <returns></returns>
-        public int CreateHook(string refType, int refId, string externalURL, string type)
+        public async Task<int> CreateHook(string refType, int refId, string externalURL, string type)
         {
             string url = string.Format("/hook/{0}/{1}/", refType, refId);
             dynamic requestData = new
@@ -29,7 +30,7 @@ namespace PodioAPI.Services
                 url = externalURL,
                 type = type
             };
-            dynamic response = _podio.Post<dynamic>(url, requestData);
+            dynamic response = await _podio.Post<dynamic>(url, requestData);
             return (int) response["hook_id"];
         }
 
@@ -38,10 +39,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/hooks/delete-hook-215291 </para>
         /// </summary>
         /// <param name="hookId"></param>
-        public void DeleteHook(int hookId)
+        public async Task<dynamic> DeleteHook(int hookId)
         {
             string url = string.Format("/hook/{0}", hookId);
-            _podio.Delete<dynamic>(url);
+            return await _podio.Delete<dynamic>(url);
         }
 
         /// <summary>
@@ -51,10 +52,10 @@ namespace PodioAPI.Services
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <returns></returns>
-        public List<Hook> GetHooks(string refType, int refId)
+        public async Task<List<Hook>> GetHooks(string refType, int refId)
         {
             string url = string.Format("/hook/{0}/{1}/", refType, refId);
-            return _podio.Get<List<Hook>>(url);
+            return await _podio.Get<List<Hook>>(url);
         }
 
         /// <summary>
@@ -64,10 +65,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/hooks/request-hook-verification-215232 </para>
         /// </summary>
         /// <param name="hookId"></param>
-        public void Verify(int hookId)
+        public async Task<dynamic> Verify(int hookId)
         {
             string url = string.Format("/hook/{0}/verify/request", hookId);
-            _podio.Post<dynamic>(url);
+            return await _podio.Post<dynamic>(url);
         }
 
         /// <summary>
@@ -76,14 +77,14 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/hooks/validate-hook-verification-215241 </para>
         /// </summary>
         /// <param name="hookId"></param>
-        public void ValidateHookVerification(int hookId, string code)
+        public async Task<dynamic> ValidateHookVerification(int hookId, string code)
         {
             string url = string.Format("/hook/{0}/verify/validate", hookId);
             dynamic requestData = new
             {
                 code = code
             };
-            _podio.Post<dynamic>(url, requestData);
+            return await _podio.Post<dynamic>(url, requestData);
         }
     }
 }

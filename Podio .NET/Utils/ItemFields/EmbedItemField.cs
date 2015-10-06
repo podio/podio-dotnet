@@ -19,10 +19,10 @@ namespace PodioAPI.Utils.ItemFields
                     {
                         foreach (var embedFilePair in this.Values)
                         {
-                            var embed = this.valueAs<Embed>(embedFilePair, "embed");
+                            var embed = this.ValueAs<Embed>(embedFilePair, "embed");
                             if (embedFilePair["file"] != null)
                             {
-                                var file = this.valueAs<FileAttachment>(embedFilePair, "file");
+                                var file = this.ValueAs<FileAttachment>(embedFilePair, "file");
                                 if (embed.Files == null)
                                 {
                                     embed.Files = new List<FileAttachment>();

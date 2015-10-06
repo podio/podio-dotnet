@@ -6,11 +6,10 @@ namespace PodioAPI.Utils.ItemFields
 {
     public class ContactItemField : ItemField
     {
-        private List<Contact> _contacts;
 
         public IEnumerable<Contact> Contacts
         {
-            get { return this.valuesAs<Contact>(_contacts); }
+            get { return this.ValuesAs<Contact>(); }
         }
 
         /// <summary>

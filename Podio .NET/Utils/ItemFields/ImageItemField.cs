@@ -6,11 +6,9 @@ namespace PodioAPI.Utils.ItemFields
 {
     public class ImageItemField : ItemField
     {
-        private List<FileAttachment> _images;
-
         public IEnumerable<FileAttachment> Images
         {
-            get { return this.valuesAs<FileAttachment>(_images); }
+            get { return this.ValuesAs<FileAttachment>(); }
         }
 
         public IEnumerable<int> FileIds
