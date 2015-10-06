@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using PodioAPI.Models;
+using System.Threading.Tasks;
 
 namespace PodioAPI.Services
 {
@@ -18,14 +19,14 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="questionId"></param>
         /// <param name="questionOptionId"></param>
-        public void AnswerQuestion(int questionId, int questionOptionId)
+        public async Task<dynamic> AnswerQuestion(int questionId, int questionOptionId)
         {
             string url = string.Format("/question/{0}/", questionId);
             dynamic requestData = new
             {
                 question_option_id = questionOptionId
             };
-            _podio.Post<dynamic>(url, requestData);
+             return await _podio.Post<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -34,10 +35,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="questionId"></param>
         /// <returns></returns>
-        public List<Answer> GetAnswers(int questionId)
+        public async Task<List<Answer>> GetAnswers(int questionId)
         {
             string url = string.Format("/question/{0}/", questionId);
-            return _podio.Get<List<Answer>>(url);
+            return  await _podio.Get<List<Answer>>(url);
         }
 
         /// <summary>
@@ -49,7 +50,7 @@ namespace PodioAPI.Services
         /// <param name="questionText">The text of the question.</param>
         /// <param name="options">The list of text for the option</param>
         /// <returns></returns>
-        public int CreateQuestion(string refType, int refId, string questionText, List<string> options)
+        public async Task<int> CreateQuestion(string refType, int refId, string questionText, List<string> options)
         {
             string url = string.Format("/question/{0}/{1}/", refType, refId);
             dynamic requestData = new
@@ -57,7 +58,7 @@ namespace PodioAPI.Services
                 text = questionText,
                 options = options
             };
-            dynamic response = _podio.Post<dynamic>(url, requestData);
+            dynamic response =  await _podio.Post<dynamic>(url, requestData);
             return (int) response["question_id"];
         }
     }

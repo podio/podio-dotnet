@@ -1,4 +1,5 @@
 ﻿using PodioAPI.Models;
+using System.Threading.Tasks;
 
 namespace PodioAPI.Services
 {
@@ -17,10 +18,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="subscriptionId"></param>
         /// <returns></returns>
-        public Subscription GetSubscriptionById(int subscriptionId)
+        public async Task<Subscription> GetSubscriptionById(int subscriptionId)
         {
             string url = string.Format("/subscription/{0}", subscriptionId);
-            return _podio.Get<Subscription>(url);
+            return await  _podio.Get<Subscription>(url);
         }
 
         /// <summary>
@@ -31,10 +32,10 @@ namespace PodioAPI.Services
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <returns></returns>
-        public int Subscribe(string refType, int refId)
+        public async Task<int> Subscribe(string refType, int refId)
         {
             string url = string.Format("/subscription/{0}/{1}", refType, refId);
-            dynamic response = _podio.Post<dynamic>(url);
+            dynamic response = await  _podio.Post<dynamic>(url);
             return (int) response["subscription_id"];
         }
 
@@ -44,10 +45,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="refType"></param>
         /// <param name="refId"></param>
-        public void UnsubscribeByReference(string refType, int refId)
+        public async Task<dynamic> UnsubscribeByReference(string refType, int refId)
         {
             string url = string.Format("/subscription/{0}/{1}", refType, refId);
-            _podio.Delete<dynamic>(url);
+            return await  _podio.Delete<dynamic>(url);
         }
 
         /// <summary>
@@ -57,10 +58,10 @@ namespace PodioAPI.Services
         /// <param name="refType"></param>
         /// <param name="refId"></param>
         /// <returns></returns>
-        public Subscription GetSubscriptionByReference(string refType, int refId)
+        public async Task<Subscription> GetSubscriptionByReference(string refType, int refId)
         {
             string url = string.Format("/subscription/{0}/{1}", refType, refId);
-            return _podio.Get<Subscription>(url);
+            return await  _podio.Get<Subscription>(url);
         }
 
         /// <summary>
@@ -68,10 +69,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/subscriptions/unsubscribe-by-id-22445 </para>
         /// </summary>
         /// <param name="subscriptionId"></param>
-        public void UnsubscribeById(int subscriptionId)
+        public async Task<dynamic> UnsubscribeById(int subscriptionId)
         {
             string url = string.Format("/subscription/{0}", subscriptionId);
-            _podio.Delete<dynamic>(url);
+            return await  _podio.Delete<dynamic>(url);
         }
     }
 }

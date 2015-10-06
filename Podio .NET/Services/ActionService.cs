@@ -1,4 +1,5 @@
 ﻿using PodioAPI.Models;
+using System.Threading.Tasks;
 
 namespace PodioAPI.Services
 {
@@ -17,10 +18,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="actionId"></param>
         /// <returns></returns>
-        public Action GetAction(int actionId)
+        public async Task<Action> GetAction(int actionId)
         {
             string url = string.Format("/action/{0}", actionId);
-            return _podio.Get<Action>(url);
+            return await _podio.Get<Action>(url);
         }
     }
 }

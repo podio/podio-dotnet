@@ -1,4 +1,5 @@
 ﻿using PodioAPI.Models;
+using System.Threading.Tasks;
 
 namespace PodioAPI.Services
 {
@@ -21,7 +22,7 @@ namespace PodioAPI.Services
         ///     "delayed" if the lookup can be performed delayed (optional, default is "immediate")
         /// </param>
         /// <returns></returns>
-        public Embed AddAnEmbed(string embedUrl, string mode = "immediate")
+        public async Task<Embed> AddAnEmbed(string embedUrl, string mode = "immediate")
         {
             string url = "/embed/";
             dynamic requestData = new
@@ -29,7 +30,7 @@ namespace PodioAPI.Services
                 url = embedUrl,
                 mode = mode
             };
-            return _podio.Post<Embed>(url, requestData);
+            return await _podio.Post<Embed>(url, requestData);
         }
     }
 }

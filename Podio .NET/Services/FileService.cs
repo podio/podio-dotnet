@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
 using PodioAPI.Models;
+using System.Threading.Tasks;
+using System.IO;
+using PodioAPI.Utils;
 
 namespace PodioAPI.Services
 {
@@ -18,10 +21,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="fileId"></param>
         /// <returns></returns>
-        public FileAttachment GetFile(int fileId)
+        public async Task<FileAttachment> GetFile(int fileId)
         {
             string url = string.Format("/file/{0}", fileId);
-            return _podio.Get<FileAttachment>(url);
+            return await _podio.Get<FileAttachment>(url);
         }
 
         /// <summary>
@@ -31,16 +34,19 @@ namespace PodioAPI.Services
         /// <param name="filePath">Full physical path to the file</param>
         /// <param name="fileName">File Name with extension</param>
         /// <returns></returns>
-        public FileAttachment UploadFile(string filePath, string fileName)
+        public async Task<FileAttachment> UploadFile(string filePath, string fileName)
         {
-            string url = "/file/v2/";
-            dynamic requestData = new
+            if (!string.IsNullOrEmpty(filePath) && File.Exists(filePath))
             {
-                filePath,
-                fileName
-            };
-            Dictionary<string, bool> options = new Dictionary<string, bool>() {{"upload", true}};
-            return _podio.Post<FileAttachment>(url, requestData, options);
+                byte[] data = await FileUtils.ReadAllBytesAsync(filePath);
+                string mimeType = MimeTypeMapping.GetMimeType(Path.GetExtension(filePath));
+
+                return await UploadFile(fileName, data, mimeType);
+            }
+            else
+            {
+                throw new FileNotFoundException("File not found in the specified path");
+            }
         }
 
         /// <summary>
@@ -51,7 +57,7 @@ namespace PodioAPI.Services
         /// <param name="data"></param>
         /// <param name="mimeType"></param>
         /// <returns></returns>
-        public FileAttachment UploadFile(string fileName, byte[] data, string mimeType)
+        public async Task<FileAttachment> UploadFile(string fileName, byte[] data, string mimeType)
         {
             string url = "/file/v2/";
             dynamic requestData = new
@@ -60,9 +66,7 @@ namespace PodioAPI.Services
                 data,
                 mimeType
             };
-
-            Dictionary<string, bool> options = new Dictionary<string, bool>() { { "byteUpload", true } };
-            return _podio.Post<FileAttachment>(url, requestData, options);
+            return await _podio.PostMultipartFormData<FileAttachment>(url, data, fileName, mimeType);
         }
 
         /// <summary>
@@ -70,7 +74,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="fileUrl"></param>
         /// <returns></returns>
-        public FileAttachment UploadFileFromUrl(string fileUrl)
+        public async Task<FileAttachment> UploadFileFromUrl(string fileUrl)
         {
             string url = "/file/from_url/";
             dynamic requestData = new
@@ -78,7 +82,7 @@ namespace PodioAPI.Services
                 url = fileUrl
             };
 
-            return _podio.Post<FileAttachment>(url, requestData);
+            return await _podio.Post<FileAttachment>(url, requestData);
         }
 
         /// <summary>
@@ -88,14 +92,14 @@ namespace PodioAPI.Services
         /// <param name="fileId"></param>
         /// <param name="description">The new description of the file</param>
         /// <returns></returns>
-        public void UpdateFile(int fileId, string description)
+        public async System.Threading.Tasks.Task UpdateFile(int fileId, string description)
         {
             string url = string.Format("/file/{0}", fileId);
             dynamic requestData = new
             {
                 description = description
             };
-            _podio.Put<dynamic>(url, requestData);
+            await _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -103,10 +107,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/files/delete-file-22453 </para>
         /// </summary>
         /// <param name="fileId"></param>
-        public void DeleteFile(int fileId)
+        public async System.Threading.Tasks.Task DeleteFile(int fileId)
         {
             string url = string.Format("/file/{0}", fileId);
-            _podio.Delete<dynamic>(url);
+            await _podio.Delete<dynamic>(url);
         }
 
         /// <summary>
@@ -116,14 +120,14 @@ namespace PodioAPI.Services
         /// <param name="oldFileId">The id of the old file that should be replacd with the new file</param>
         /// <param name="fileId"></param>
         /// <returns></returns>
-        public void ReplaceFile(int oldFileId, int fileId)
+        public async System.Threading.Tasks.Task ReplaceFile(int oldFileId, int fileId)
         {
             string url = string.Format("/file/{0}/replace", fileId);
             dynamic requestData = new
             {
                 old_file_id = oldFileId
             };
-            _podio.Post<dynamic>(url, requestData);
+            await _podio.Post<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -137,7 +141,7 @@ namespace PodioAPI.Services
         /// </param>
         /// <param name="refId"></param>
         /// <returns></returns>
-        public void AttachFile(int fileId, string refType, int refId)
+        public async System.Threading.Tasks.Task AttachFile(int fileId, string refType, int refId)
         {
             string url = string.Format("/file/{0}/attach", fileId);
             dynamic requestData = new
@@ -145,7 +149,7 @@ namespace PodioAPI.Services
                 ref_type = refType,
                 ref_id = refId
             };
-            _podio.Post<dynamic>(url, requestData);
+            await _podio.Post<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -154,11 +158,11 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="fileId"></param>
         /// <returns>The id of the newly created file</returns>
-        public int CopyFile(int fileId)
+        public async Task<int> CopyFile(int fileId)
         {
             string url = string.Format("/file/{0}/copy", fileId);
-            dynamic response = _podio.Post<dynamic>(url);
-            return (int) response["file_id"];
+            dynamic response = await _podio.Post<dynamic>(url);
+            return (int)response["file_id"];
         }
 
         /// <summary>
@@ -186,7 +190,7 @@ namespace PodioAPI.Services
         /// <param name="sortBy">How the files should be sorted. Can be one of {"name", "created_on"} Default value: name</param>
         /// <param name="sortDesc">true for to sort in descending order, false in ascending Default value: false</param>
         /// <returns></returns>
-        public List<FileAttachment> GetFiles(string attachedTo = null, string createdBy = null, string createdOn = null,
+        public async Task<List<FileAttachment>> GetFiles(string attachedTo = null, string createdBy = null, string createdOn = null,
             string filetype = null, string hostedBy = null, int limit = 20, string sortBy = null, bool sortDesc = false)
         {
             string url = "/file/";
@@ -201,7 +205,7 @@ namespace PodioAPI.Services
                 {"sort_by", sortBy},
                 {"sort_desc", sortDesc.ToString()}
             };
-            return _podio.Get<List<FileAttachment>>(url, requestData);
+            return await _podio.Get<List<FileAttachment>>(url, requestData);
         }
 
         /// <summary>
@@ -232,7 +236,7 @@ namespace PodioAPI.Services
         /// <param name="sortBy">How the files should be sorted. Can be one of {"name", "created_on"} Default value: name</param>
         /// <param name="sortDesc">true for to sort in descending order, false in ascending Default value: false</param>
         /// <returns></returns>
-        public List<FileAttachment> GetFilesOnApp(int appId, string attachedTo = null, string createdBy = null,
+        public async Task<List<FileAttachment>> GetFilesOnApp(int appId, string attachedTo = null, string createdBy = null,
             string createdOn = null, string filetype = null, string hostedBy = null, int limit = 20, int offset = 0,
             string sortBy = null, bool sortDesc = false)
         {
@@ -249,7 +253,7 @@ namespace PodioAPI.Services
                 {"sort_by", sortBy},
                 {"sort_desc", sortDesc.ToString()}
             };
-            return _podio.Get<List<FileAttachment>>(url, requestData);
+            return await _podio.Get<List<FileAttachment>>(url, requestData);
         }
 
         /// <summary>
@@ -279,7 +283,7 @@ namespace PodioAPI.Services
         /// <param name="sortBy">How the files should be sorted. Can be one of {"name", "created_on"} Default value: name</param>
         /// <param name="sortDesc">true for to sort in descending order, false in ascending Default value: false</param>
         /// <returns></returns>
-        public List<FileAttachment> GetFilesOnSpace(int spaceId, string attachedTo = null, string createdBy = null,
+        public async Task<List<FileAttachment>> GetFilesOnSpace(int spaceId, string attachedTo = null, string createdBy = null,
             string createdOn = null, string filetype = null, string hostedBy = null, int limit = 20, int offset = 0,
             string sortBy = null, bool sortDesc = false)
         {
@@ -296,7 +300,7 @@ namespace PodioAPI.Services
                 {"sort_by", sortBy},
                 {"sort_desc", sortDesc.ToString()}
             };
-            return _podio.Get<List<FileAttachment>>(url, requestData);
+            return await _podio.Get<List<FileAttachment>>(url, requestData);
         }
 
         /// <summary>
@@ -305,17 +309,14 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="fileAttachment"></param>
         /// <returns></returns>
-        public FileResponse DownloadFile(FileAttachment fileAttachment)
+        public async Task<FileResponse> DownloadFile(FileAttachment fileAttachment)
         {
             var fileLink = fileAttachment.Link;
-
-            //For URL's other than of root 'api.podio.com' , pass the url as an option
-            var options = new Dictionary<string, dynamic>()
+            var options = new Dictionary<string, object>()
             {
-                {"file_download", true},
-                {"url", fileLink}
+                {"file_download", true}
             };
-            return _podio.Get<FileResponse>(url: null, options: options);
+            return await _podio.Get<FileResponse>(fileLink, new Dictionary<string, string>(), true);
         }
     }
 }

@@ -10,9 +10,5 @@
         public void Set(PodioOAuth podioOAuth)
         {
         }
-
-        public void Clear()
-        {
-        }
     }
 }

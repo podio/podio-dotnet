@@ -35,3 +35,4 @@ obj
 !NuGet.exe
 
 **/PodioAPITests/*
+**/TestResults/*

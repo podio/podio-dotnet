@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using PodioAPI.Models;
+using System.Threading.Tasks;
 
 namespace PodioAPI.Services
 {
@@ -18,10 +19,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/users/delete-user-property-29800 </para>
         /// </summary>
         /// <param name="name"></param>
-        public void DeleteUserProperty(string name)
+        public async Task<dynamic> DeleteUserProperty(string name)
         {
             string url = string.Format("/user/property/{0}", name);
-            _podio.Delete<dynamic>(url);
+            return  await _podio.Delete<dynamic>(url);
         }
 
         /// <summary>
@@ -34,10 +35,10 @@ namespace PodioAPI.Services
         ///     "subscription", "user", "reminder", "push_notification", "push_notification_sound" or "push_notification_browser".
         /// </param>
         /// <returns></returns>
-        public bool GetNotificationSetting(string clientType, string notificationType)
+        public async Task<bool> GetNotificationSetting(string clientType, string notificationType)
         {
             string url = string.Format("/user/setting/{0}/{1}", clientType, notificationType);
-            dynamic response = _podio.Get<dynamic>(url);
+            dynamic response =  await _podio.Get<dynamic>(url);
             return (bool) response["value"];
         }
 
@@ -47,10 +48,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="clientType">Client type: "email" and "mobile".</param>
         /// <returns></returns>
-        public Dictionary<string, bool> GetNotificationSettings(string clientType)
+        public async Task<Dictionary<string, bool>> GetNotificationSettings(string clientType)
         {
             string url = string.Format("/user/setting/{0}/", clientType);
-            return _podio.Get<Dictionary<string, bool>>(url);
+            return  await _podio.Get<Dictionary<string, bool>>(url);
         }
 
         /// <summary>
@@ -60,10 +61,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>
-        public List<string> GetProfileField(string key)
+        public async Task<List<string>> GetProfileField(string key)
         {
             string url = string.Format("/user/profile/{0}", key);
-            return _podio.Get<List<string>>(url);
+            return  await _podio.Get<List<string>>(url);
         }
 
         /// <summary>
@@ -71,10 +72,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/users/get-user-22378 </para>
         /// </summary>
         /// <returns></returns>
-        public User GetUser()
+        public async Task<User> GetUser()
         {
             string url = "/user";
-            return _podio.Get<User>(url);
+            return  await _podio.Get<User>(url);
         }
 
         /// <summary>
@@ -87,14 +88,14 @@ namespace PodioAPI.Services
         ///     "subscription", "user", "reminder", "push_notification", "push_notification_sound" or "push_notification_browser".
         /// </param>
         /// <param name="value"></param>
-        public void UpdateNotificationSetting(string clientType, string notificationType, bool value)
+        public async Task<dynamic> UpdateNotificationSetting(string clientType, string notificationType, bool value)
         {
             string url = string.Format("/user/setting/{0}/{1}", clientType, notificationType);
             dynamic requestData = new
             {
                 value = value
             };
-            _podio.Put<dynamic>(url, requestData);
+            return  await _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -106,10 +107,10 @@ namespace PodioAPI.Services
         ///     Notification type: "digest", "bulletin", "reference", "message", "space",
         ///     "subscription", "user", "reminder", "push_notification", "push_notification_sound" or "push_notification_browser".
         /// </param>
-        public void UpdateNotificationSettings(string clientType, Dictionary<string, bool> notificationTypes)
+        public async Task<dynamic> UpdateNotificationSettings(string clientType, Dictionary<string, bool> notificationTypes)
         {
             string url = string.Format("/user/setting/{0}/", clientType);
-            _podio.Put<dynamic>(url, notificationTypes);
+            return  await _podio.Put<dynamic>(url, notificationTypes);
         }
 
         /// <summary>
@@ -118,10 +119,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/users/update-profile-22402 </para>
         /// </summary>
         /// <param name="updatedProfile">The value or list of values for the given field. For a list of fields see the contact area</param>
-        public void UpdateProfile(Contact updatedProfile)
+        public async Task<dynamic> UpdateProfile(Contact updatedProfile)
         {
             string url = "/user/profile/";
-            _podio.Put<dynamic>(url, updatedProfile);
+            return  await _podio.Put<dynamic>(url, updatedProfile);
         }
 
         /// <summary>
@@ -130,14 +131,14 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="key"></param>
         /// <param name="value">The new value for the profile field.</param>
-        public void UpdateProfileField(string key, string value)
+        public async Task<dynamic> UpdateProfileField(string key, string value)
         {
             string url = string.Format("/user/profile/{0}", key);
             dynamic requestData = new
             {
                 value = value
             };
-            _podio.Put<dynamic>(url, requestData);
+            return  await _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -145,10 +146,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/users/get-user-status-22480 </para>
         /// </summary>
         /// <returns></returns>
-        public UserStatus GetUserStatus()
+        public async Task<UserStatus> GetUserStatus()
         {
             string url = "/user/status";
-            return _podio.Get<UserStatus>(url);
+            return  await _podio.Get<UserStatus>(url);
         }
 
         /// <summary>
@@ -158,10 +159,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public JObject GetUserProperty(string name)
+        public async Task<JObject> GetUserProperty(string name)
         {
             string url = string.Format("/user/property/{0}", name);
-            return _podio.Get<JObject>(url);
+            return  await _podio.Get<JObject>(url);
         }
 
         /// <summary>
@@ -171,10 +172,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="name"></param>
         /// <param name="value"></param>
-        public void SetUserProperty(string name, dynamic value)
+        public async Task<dynamic> SetUserProperty(string name, dynamic value)
         {
             string url = string.Format("/user/property/{0}", name);
-            _podio.Put<dynamic>(url, value);
+            return  await _podio.Put<dynamic>(url, value);
         }
 
         /// <summary>
@@ -182,10 +183,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/users/set-user-properties-9052829 </para>
         /// </summary>
         /// <param name="properties">The JSON object value of the property</param>
-        public void SetUserProperties(Dictionary<string, object> properties)
+        public async Task<dynamic> SetUserProperties(Dictionary<string, object> properties)
         {
             string url = "/user/property/";
-            _podio.Put<dynamic>(url, properties);
+            return  await _podio.Put<dynamic>(url, properties);
         }
     }
 }

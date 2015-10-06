@@ -2,6 +2,7 @@
 using PodioAPI.Models;
 using PodioAPI.Models.Request;
 using PodioAPI.Utils;
+using System.Threading.Tasks;
 
 namespace PodioAPI.Services
 {
@@ -20,10 +21,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="spaceId"></param>
         /// <returns></returns>
-        public List<SpaceMember> GetActiveMembersOfSpace(int spaceId)
+        public async Task<List<SpaceMember>> GetActiveMembersOfSpace(int spaceId)
         {
             string url = string.Format("/space/{0}/member/", spaceId);
-            return _podio.Get<List<SpaceMember>>(url);
+            return  await _podio.Get<List<SpaceMember>>(url);
         }
 
         /// <summary>
@@ -33,10 +34,10 @@ namespace PodioAPI.Services
         /// <param name="spaceId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public SpaceMember GetSpaceMember(int spaceId, int userId)
+        public async Task<SpaceMember> GetSpaceMember(int spaceId, int userId)
         {
             string url = string.Format("/space/{0}/member/{1}/v2", spaceId, userId);
-            return _podio.Get<SpaceMember>(url);
+            return  await _podio.Get<SpaceMember>(url);
         }
 
         /// <summary>
@@ -46,10 +47,10 @@ namespace PodioAPI.Services
         /// <param name="spaceId"></param>
         /// <param name="role"></param>
         /// <returns></returns>
-        public List<SpaceMember> GetSpaceMembersByRole(int spaceId, string role)
+        public async Task<List<SpaceMember>> GetSpaceMembersByRole(int spaceId, string role)
         {
             string url = string.Format("/space/{0}/member/{1}/", spaceId, role);
-            return _podio.Get<List<SpaceMember>>(url);
+            return  await _podio.Get<List<SpaceMember>>(url);
         }
 
         /// <summary>
@@ -65,7 +66,7 @@ namespace PodioAPI.Services
         /// <param name="limit">The maximum number of members to return. Default value: 100</param>
         /// <param name="offset">The offset into the member list. Default value: 0</param>
         /// <returns></returns>
-        public List<SpaceMember> GetSpaceMembers(int spaceId, string memberType = null, string query = null,
+        public async Task<List<SpaceMember>> GetSpaceMembers(int spaceId, string memberType = null, string query = null,
             int limit = 100, int offset = 0)
         {
             string url = string.Format("/space/{0}/member/v2/", spaceId);
@@ -76,7 +77,7 @@ namespace PodioAPI.Services
                 {"offset", offset.ToString()},
                 {"query", query}
             };
-            return _podio.Get<List<SpaceMember>>(url, requestData);
+            return  await _podio.Get<List<SpaceMember>>(url, requestData);
         }
 
         /// <summary>
@@ -86,10 +87,10 @@ namespace PodioAPI.Services
         /// <param name="spaceId"></param>
         /// <param name="userId"></param>
         /// <returns></returns>
-        public SpaceMember GetSpaceMembership(int spaceId, int userId)
+        public async Task<SpaceMember> GetSpaceMembership(int spaceId, int userId)
         {
             string url = string.Format("/space/{0}/member/{1}", spaceId, userId);
-            return _podio.Get<SpaceMember>(url);
+            return  await _podio.Get<SpaceMember>(url);
         }
 
         /// <summary>
@@ -97,10 +98,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/join-space-1927286 </para>
         /// </summary>
         /// <param name="spaceId"></param>
-        public void JoinSpace(int spaceId)
+        public async Task<dynamic> JoinSpace(int spaceId)
         {
             string url = string.Format("/space/{0}/join", spaceId);
-            _podio.Post<dynamic>(url);
+            return await _podio.Post<dynamic>(url);
         }
 
         /// <summary>
@@ -108,10 +109,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/leave-space-19410457 </para>
         /// </summary>
         /// <param name="spaceId"></param>
-        public void LeaveSpace(int spaceId)
+        public async Task<dynamic> LeaveSpace(int spaceId)
         {
             string url = string.Format("/space/{0}/leave", spaceId);
-            _podio.Post<dynamic>(url);
+            return await _podio.Post<dynamic>(url);
         }
 
         /// <summary>
@@ -121,15 +122,15 @@ namespace PodioAPI.Services
         /// <param name="spaceId"></param>
         /// <param name="userIds"></param>
         /// <param name="role"></param>
-        public void UpdateSpaceMemberships(int spaceId, int[] userIds, string role)
+        public async Task<dynamic> UpdateSpaceMemberships(int spaceId, int[] userIds, string role)
         {
-            string userIdsCSV = Utilities.ArrayToCSV(userIds);
+            string userIdsCSV = Utility.ArrayToCSV(userIds);
             string url = string.Format("/space/{0}/member/{1}", spaceId, userIdsCSV);
             dynamic requestData = new
             {
                 role = role
             };
-            _podio.Put<dynamic>(url, requestData);
+            return await _podio.Put<dynamic>(url, requestData);
         }
 
         /// <summary>
@@ -138,10 +139,10 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/space-members/request-space-membership-6146231 </para>
         /// </summary>
         /// <param name="spaceId"></param>
-        public void RequestSpaceMembership(int spaceId)
+        public async Task<dynamic> RequestSpaceMembership(int spaceId)
         {
             string url = string.Format("/space/{0}/member_request/", spaceId);
-            _podio.Post<dynamic>(url);
+            return await _podio.Post<dynamic>(url);
         }
 
         /// <summary>
@@ -150,10 +151,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="spaceMemberRequestId"></param>
-        public void AcceptSpaceMembershipRequest(int spaceId, int spaceMemberRequestId)
+        public async Task<dynamic> AcceptSpaceMembershipRequest(int spaceId, int spaceMemberRequestId)
         {
             string url = string.Format("/space/{0}/member_request/{1}/accept", spaceId, spaceMemberRequestId);
-            _podio.Post<dynamic>(url);
+            return await _podio.Post<dynamic>(url);
         }
 
         /// <summary>
@@ -163,10 +164,10 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="addSpaceMemberRequest"></param>
-        public void AddMemberToSpace(int spaceId, AddSpaceMemberRequest addSpaceMemberRequest)
+        public async Task<dynamic> AddMemberToSpace(int spaceId, AddSpaceMemberRequest addSpaceMemberRequest)
         {
             string url = string.Format("/space/{0}/member/", spaceId);
-            _podio.Post<dynamic>(url, addSpaceMemberRequest);
+            return await _podio.Post<dynamic>(url, addSpaceMemberRequest);
         }
 
         /// <summary>
@@ -175,11 +176,11 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="userIds"></param>
-        public void EndSpaceMemberships(int spaceId, int[] userIds)
+        public async Task<dynamic> EndSpaceMemberships(int spaceId, int[] userIds)
         {
-            string userIdsAsCSV = Utilities.ArrayToCSV(userIds);
+            string userIdsAsCSV = Utility.ArrayToCSV(userIds);
             string url = string.Format("/space/{0}/member/{1}", spaceId, userIdsAsCSV);
-            _podio.Delete<dynamic>(url);
+            return await _podio.Delete<dynamic>(url);
         }
     }
 }
