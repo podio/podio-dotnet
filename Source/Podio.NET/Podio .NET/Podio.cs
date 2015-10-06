@@ -253,7 +253,7 @@ namespace PodioAPI
         /// <param name="appId">AppId</param>
         /// <param name="appToken">AppToken</param>
         /// <returns>PodioOAuth object with OAuth data</returns>
-        public async Task<PodioOAuth> AuthenticateWithAppAsync(int appId, string appToken)
+        public async Task<PodioOAuth> AuthenticateWithApp(int appId, string appToken)
         {
             var authRequest = new Dictionary<string, string>()
             {
@@ -261,7 +261,7 @@ namespace PodioAPI
                 {"app_token", appToken},
                 {"grant_type", "app"}
             };
-            return await AuthenticateAsync(authRequest).ConfigureAwait(false);
+            return await Authenticate(authRequest).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -271,7 +271,7 @@ namespace PodioAPI
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns>PodioOAuth object with OAuth data</returns>
-        public async Task<PodioOAuth> AuthenticateWithPasswordAsync(string username, string password)
+        public async Task<PodioOAuth> AuthenticateWithPassword(string username, string password)
         {
             var authRequest = new Dictionary<string, string>()
             {
@@ -279,7 +279,7 @@ namespace PodioAPI
                 {"password", password},
                 {"grant_type", "password"}
             };
-            return await AuthenticateAsync(authRequest).ConfigureAwait(false);
+            return await Authenticate(authRequest).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -289,7 +289,7 @@ namespace PodioAPI
         /// <param name="authorizationCode"></param>
         /// <param name="redirectUri"></param>
         /// <returns>PodioOAuth object with OAuth data</returns>
-        public async Task<PodioOAuth> AuthenticateWithAuthorizationCodeAsync(string authorizationCode, string redirectUri)
+        public async Task<PodioOAuth> AuthenticateWithAuthorizationCode(string authorizationCode, string redirectUri)
         {
             var authRequest = new Dictionary<string, string>()
             {
@@ -297,7 +297,7 @@ namespace PodioAPI
                 {"redirect_uri", redirectUri},
                 {"grant_type", "authorization_code"}
             };
-            return await AuthenticateAsync(authRequest).ConfigureAwait(false);
+            return await Authenticate(authRequest).ConfigureAwait(false);
         }
 
         /// <summary>
@@ -313,10 +313,10 @@ namespace PodioAPI
                 {"refresh_token", OAuth.RefreshToken},
                 {"grant_type", "refresh_token"}
             };
-            return await AuthenticateAsync(authRequest).ConfigureAwait(false);
+            return await Authenticate(authRequest).ConfigureAwait(false);
         }
 
-        private async Task<PodioOAuth> AuthenticateAsync(Dictionary<string, string> attributes)
+        private async Task<PodioOAuth> Authenticate(Dictionary<string, string> attributes)
         {
             attributes["client_id"] = ClientId;
             attributes["client_secret"] = ClientSecret;
