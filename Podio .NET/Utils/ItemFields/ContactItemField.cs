@@ -6,11 +6,10 @@ namespace PodioAPI.Utils.ItemFields
 {
     public class ContactItemField : ItemField
     {
-        private List<Contact> _contacts;
 
         public IEnumerable<Contact> Contacts
         {
-            get { return this.valuesAs<Contact>(_contacts); }
+            get { return this.ValuesAs<Contact>(); }
         }
 
         /// <summary>
@@ -20,7 +19,7 @@ namespace PodioAPI.Utils.ItemFields
         {
             set
             {
-                ensureValuesInitialized();
+                EnsureValuesInitialized();
                 foreach (var contactId in value)
                 {
                     var jobject = new JObject();
@@ -34,7 +33,7 @@ namespace PodioAPI.Utils.ItemFields
         {
             set
             {
-                ensureValuesInitialized();
+                EnsureValuesInitialized();
 
                 var jobject = new JObject();
                 jobject["value"] = value;

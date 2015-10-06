@@ -20,7 +20,7 @@ namespace PodioAPI.Utils.ItemFields
 
             set
             {
-                ensureValuesInitialized();
+                EnsureValuesInitialized();
                 foreach (var location in value)
                 {
                     var jobject = new JObject();
@@ -34,7 +34,7 @@ namespace PodioAPI.Utils.ItemFields
         {
             set
             {
-                ensureValuesInitialized();
+                EnsureValuesInitialized();
 
                 var jobject = new JObject();
                 jobject["value"] = value;

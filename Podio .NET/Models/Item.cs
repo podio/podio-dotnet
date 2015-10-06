@@ -134,7 +134,7 @@ namespace PodioAPI.Models
         }
 
         public T Field<T>(string externalId)
-            where T : ItemField, new()
+             where T : ItemField, new()
         {
             var genericField = this.Fields.Find(field => field.ExternalId == externalId);
             return fieldInstance<T>(genericField, externalId);
@@ -156,7 +156,7 @@ namespace PodioAPI.Models
                 foreach (var property in genericField.GetType().GetProperties())
                 {
                     var jsonAttribute =
-                        ((JsonPropertyAttribute[]) property.GetCustomAttributes(typeof (JsonPropertyAttribute), false));
+                        ((JsonPropertyAttribute[])property.GetCustomAttributes(typeof(JsonPropertyAttribute), false));
                     if (jsonAttribute.Length > 0)
                         specificField.GetType()
                             .GetProperty(property.Name)

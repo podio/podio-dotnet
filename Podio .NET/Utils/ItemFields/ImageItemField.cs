@@ -6,18 +6,16 @@ namespace PodioAPI.Utils.ItemFields
 {
     public class ImageItemField : ItemField
     {
-        private List<FileAttachment> _images;
-
         public IEnumerable<FileAttachment> Images
         {
-            get { return this.valuesAs<FileAttachment>(_images); }
+            get { return this.ValuesAs<FileAttachment>(); }
         }
 
         public IEnumerable<int> FileIds
         {
             set
             {
-                ensureValuesInitialized();
+                EnsureValuesInitialized();
                 foreach (var fileId in value)
                 {
                     var jobject = new JObject();
@@ -31,7 +29,7 @@ namespace PodioAPI.Utils.ItemFields
         {
             set
             {
-                ensureValuesInitialized();
+                EnsureValuesInitialized();
 
                 var jobject = new JObject();
                 jobject["value"] = value;

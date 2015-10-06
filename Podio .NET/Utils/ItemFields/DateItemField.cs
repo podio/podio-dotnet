@@ -100,7 +100,7 @@ namespace PodioAPI.Utils.ItemFields
 
         protected void setDateTime(DateTime? value, string attribute)
         {
-            ensureValuesInitialized(true);
+            EnsureValuesInitialized(true);
             string stringValue = null;
             if (value != null)
             {

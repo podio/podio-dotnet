@@ -214,12 +214,14 @@
     <Compile Include="Utils\ApplicationFields\ContactApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\DateApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\DurationApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\EmailApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\EmbedApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\FileApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\ImageApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\LocationApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\MoneyApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\NumericApplicationField.cs" />
+    <Compile Include="Utils\ApplicationFields\PhoneApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\ProgressApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\QuestionApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\StateApplicationField.cs" />

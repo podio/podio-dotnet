@@ -8,18 +8,17 @@ namespace PodioAPI.Utils.ItemFields
 {
     public class CategoryItemField : ItemField
     {
-        private List<Option> _options;
 
         public IEnumerable<Option> Options
         {
-            get { return this.valuesAs<Option>(_options); }
+            get { return this.ValuesAs<Option>(); }
         }
 
         public int OptionId
         {
             set
             {
-                ensureValuesInitialized(true);
+                EnsureValuesInitialized(true);
                 this.Values.First()["value"] = value;
             }
         }
@@ -28,7 +27,7 @@ namespace PodioAPI.Utils.ItemFields
         {
             set
             {
-                ensureValuesInitialized();
+                EnsureValuesInitialized();
                 foreach (var optionId in value)
                 {
                     var jobject = new JObject();

@@ -21,7 +21,7 @@ namespace PodioAPI.Utils.ItemFields
             }
             set
             {
-                ensureValuesInitialized(true);
+                EnsureValuesInitialized(true);
                 if (value != null)
                 {
                     this.Values.First()["value"] = (Int64) value.Value.TotalSeconds;

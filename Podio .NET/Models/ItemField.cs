@@ -38,18 +38,7 @@ namespace PodioAPI.Models
                         this.Values.First()[key] != null));
         }
 
-        public object GetSetting(string key)
-        {
-            if (this.Config.Settings != null)
-            {
-                var settings = this.Config.Settings;
-                return settings[key];
-            }
-
-            return null;
-        }
-
-        protected T valueAs<T>(JToken value, string key)
+        protected T ValueAs<T>(JToken value, string key)
             where T : class, new()
         {
             if (value != null && value[key] != null)
@@ -58,25 +47,23 @@ namespace PodioAPI.Models
             return null;
         }
 
-        protected List<T> valuesAs<T>(List<T> list)
+        protected List<T> ValuesAs<T>()
             where T : class, new()
         {
-            if (list == null)
+            var list = new List<T>();
+            if (this.Values != null)
             {
-                list = new List<T>();
-                if (this.Values != null)
+                foreach (var itemAttributes in this.Values)
                 {
-                    foreach (var itemAttributes in this.Values)
-                    {
-                        var obj = this.valueAs<T>(itemAttributes, "value");
-                        list.Add(obj);
-                    }
+                    var obj = this.ValueAs<T>(itemAttributes, "value");
+                    list.Add(obj);
                 }
             }
+
             return list;
         }
 
-        protected void ensureValuesInitialized(bool includeFirstChildDict = false)
+        protected void EnsureValuesInitialized(bool includeFirstChildDict = false)
         {
             if (this.Values == null)
             {

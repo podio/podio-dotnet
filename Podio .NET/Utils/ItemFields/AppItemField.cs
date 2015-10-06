@@ -6,18 +6,16 @@ namespace PodioAPI.Utils.ItemFields
 {
     public class AppItemField : ItemField
     {
-        private List<Item> _items;
-
         public IEnumerable<Item> Items
         {
-            get { return this.valuesAs<Item>(_items); }
+            get { return this.ValuesAs<Item>(); }
         }
 
         public IEnumerable<int> ItemIds
         {
             set
             {
-                ensureValuesInitialized();
+                EnsureValuesInitialized();
                 foreach (var itemId in value)
                 {
                     var jobject = new JObject();
@@ -31,7 +29,7 @@ namespace PodioAPI.Utils.ItemFields
         {
             set
             {
-                ensureValuesInitialized();
+                EnsureValuesInitialized();
 
                 var jobject = new JObject();
                 jobject["value"] = value;

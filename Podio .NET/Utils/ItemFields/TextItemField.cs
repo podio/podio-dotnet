@@ -17,7 +17,7 @@ namespace PodioAPI.Utils.ItemFields
 
             set
             {
-                ensureValuesInitialized(true);
+                EnsureValuesInitialized(true);
                 this.Values.First()["value"] = value;
             }
         }
