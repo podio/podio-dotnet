@@ -46,7 +46,7 @@ namespace PodioAPI.Services
         public async Task<dynamic> DeleteFlow(int flowId)
         {
             string url = string.Format("/flow/{0}", flowId);
-            return _podio.Delete<dynamic>(url);
+            return await _podio.Delete<dynamic>(url);
         }
 
         /// <summary>
