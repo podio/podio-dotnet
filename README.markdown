@@ -6,11 +6,11 @@ This is the .NET Client for accessing the Podio API.
 Installation
 -------
 
-The client library requires .NET Framework 4.0 or higher and [Json.NET](http://www.nuget.org/packages/Newtonsoft.Json/) as its dependency.
+The client library requires .NET Framework 4.5 or higher and [Json.NET](http://www.nuget.org/packages/Newtonsoft.Json/) as its dependency.
 
 This package is available on NuGet Gallery. To install the [Podio package](http://www.nuget.org/packages/podio) run the following command in the [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console)
 
-    PM> Install-Package Podio
+    PM> Install-Package Podio.Async
 
 This will install the client library and the required dependency.
 
@@ -87,7 +87,7 @@ All unsuccessful responses returned by the API (everything that has a 4xx or 5xx
 ```csharp
 try
 {
-    await podio.FileService.UploadFile(filePath,"image.jpg")
+    var uploadedFile = await podio.FileService.UploadFile(filePath,"image.jpg")
 }
 catch (PodioException exception)
 {
@@ -143,7 +143,7 @@ appReferenceField.ItemIds = new List<int>
 
 // Embed/Link field with with external_id 'link'
 var embedField = myNewItem.Field<EmbedItemField>("link");
-var embed = podio.EmbedService.AddAnEmbed("https://www.google.com/"); // Creating an embed
+var embed = await podio.EmbedService.AddAnEmbed("https://www.google.com/"); // Creating an embed
 embedField.AddEmbed(embed.EmbedId);
 
 //Uploading a file and attaching it to new item
