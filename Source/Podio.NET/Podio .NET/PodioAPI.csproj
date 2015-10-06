@@ -210,6 +210,9 @@
     <Compile Include="Services\SubscriptionService.cs" />
     <Compile Include="Services\TagService.cs" />
     <Compile Include="Services\TaskService.cs" />
+    <Compile Include="Services\UserService.cs" />
+    <Compile Include="Services\ViewService.cs" />
+    <Compile Include="Services\WidgetService.cs" />
     <Compile Include="Utils\ApplicationFields\AppReferenceApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\CalculationApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\CategoryApplicationField.cs" />

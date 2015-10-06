@@ -405,280 +405,272 @@ namespace PodioAPI
             get { return new TaskService(this); }
         }
 
-        ///// <summary>
-        /////     Provies all API methods in Status Area
-        /////     <para>https://developers.podio.com/doc/status</para>
-        ///// </summary>
-        //public StatusService StatusService
-        //{
-        //    get { return new StatusService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Status Area
+        ///     <para>https://developers.podio.com/doc/status</para>
+        /// </summary>
+        public StatusService StatusService
+        {
+            get { return new StatusService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Contact Area
-        /////     <para>https://developers.podio.com/doc/contacts</para>
-        ///// </summary>
-        //public ContactService ContactService
-        //{
-        //    get { return new ContactService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Contact Area
+        ///     <para>https://developers.podio.com/doc/contacts</para>
+        /// </summary>
+        public ContactService ContactService
+        {
+            get { return new ContactService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Hook Area
-        /////     <para> https://developers.podio.com/doc/hooks </para>
-        ///// </summary>
-        //public HookService HookService
-        //{
-        //    get { return new HookService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Hook Area
+        ///     <para> https://developers.podio.com/doc/hooks </para>
+        /// </summary>
+        public HookService HookService
+        {
+            get { return new HookService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Hook Area
-        /////     <para> https://developers.podio.com/doc/hooks </para>
-        ///// </summary>
-        //public CommentService CommentService
-        //{
-        //    get { return new CommentService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Hook Area
+        ///     <para> https://developers.podio.com/doc/hooks </para>
+        /// </summary>
+        public CommentService CommentService
+        {
+            get { return new CommentService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Organization Area
-        /////     <para> https://developers.podio.com/doc/organizations </para>
-        ///// </summary>
-        //public OrganizationService OrganizationService
-        //{
-        //    get { return new OrganizationService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Organization Area
+        ///     <para> https://developers.podio.com/doc/organizations </para>
+        /// </summary>
+        public OrganizationService OrganizationService
+        {
+            get { return new OrganizationService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Space Area
-        /////     <para> https://developers.podio.com/doc/spaces </para>
-        ///// </summary>
-        //public SpaceService SpaceService
-        //{
-        //    get { return new SpaceService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Space Area
+        ///     <para> https://developers.podio.com/doc/spaces </para>
+        /// </summary>
+        public SpaceService SpaceService
+        {
+            get { return new SpaceService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in SpaceMember Area
-        /////     <para> https://developers.podio.com/doc/space-members </para>
-        ///// </summary>
-        //public SpaceMembersService SpaceMembersService
-        //{
-        //    get { return new SpaceMembersService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in SpaceMember Area
+        ///     <para> https://developers.podio.com/doc/space-members </para>
+        /// </summary>
+        public SpaceMembersService SpaceMembersService
+        {
+            get { return new SpaceMembersService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in  Widgets Area
-        /////     <para> https://developers.podio.com/doc/widgets </para>
-        ///// </summary>
-        //public WidgetService WidgetService
-        //{
-        //    get { return new WidgetService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in  Widgets Area
+        ///     <para> https://developers.podio.com/doc/widgets </para>
+        /// </summary>
+        public WidgetService WidgetService
+        {
+            get { return new WidgetService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies API methods in Stream Area
-        /////     <para> https://developers.podio.com/doc/stream </para>
-        ///// </summary>
-        //public StreamService StreamService
-        //{
-        //    get { return new StreamService(this); }
-        //}
+        /// <summary>
+        ///     Provies API methods in Stream Area
+        ///     <para> https://developers.podio.com/doc/stream </para>
+        /// </summary>
+        public StreamService StreamService
+        {
+            get { return new StreamService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in  Reference Area
-        /////     <para> https://developers.podio.com/doc/reference </para>
-        ///// </summary>
-        //public ReferenceService ReferenceService
-        //{
-        //    get { return new ReferenceService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in  Reference Area
+        ///     <para> https://developers.podio.com/doc/reference </para>
+        /// </summary>
+        public ReferenceService ReferenceService
+        {
+            get { return new ReferenceService(this); }
+        }
 
-        ///// Provies all API methods in Grants area
-        ///// <para> https://developers.nextpodio.dk/doc/grants </para>
-        ///// </summary>
-        //public GrantService GrantService
-        //{
-        //    get { return new GrantService(this); }
-        //}
+        /// Provies all API methods in Grants area
+        /// <para> https://developers.nextpodio.dk/doc/grants </para>
+        /// </summary>
+        public GrantService GrantService
+        {
+            get { return new GrantService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Search area
-        /////     <para> https://developers.podio.com/doc/search </para>
-        ///// </summary>
-        //public SearchService SearchService
-        //{
-        //    get { return new SearchService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Search area
+        ///     <para> https://developers.podio.com/doc/search </para>
+        /// </summary>
+        public SearchService SearchService
+        {
+            get { return new SearchService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Rating Area
-        /////     <para> https://developers.podio.com/doc/ratings </para>
-        ///// </summary>
-        //public RatingService RatingService
-        //{
-        //    get { return new RatingService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Rating Area
+        ///     <para> https://developers.podio.com/doc/ratings </para>
+        /// </summary>
+        public RatingService RatingService
+        {
+            get { return new RatingService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Tag Area
-        /////     <para> https://developers.podio.com/doc/tags </para>
-        ///// </summary>
-        //public TagService TagService
-        //{
-        //    get { return new TagService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Tag Area
+        ///     <para> https://developers.podio.com/doc/tags </para>
+        /// </summary>
+        public TagService TagService
+        {
+            get { return new TagService(this); }
+        }
 
-        ///// Provies all API methods in Batch area
-        ///// <para> https://developers.podio.com/doc/batch </para>
-        ///// </summary>
-        //public BatchService BatchService
-        //{
-        //    get { return new BatchService(this); }
-        //}
+        /// Provies all API methods in Batch area
+        /// <para> https://developers.podio.com/doc/batch </para>
+        /// </summary>
+        public BatchService BatchService
+        {
+            get { return new BatchService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Actions area
-        /////     <para> https://developers.podio.com/doc/actions </para>
-        ///// </summary>
-        //public ActionService ActionService
-        //{
-        //    get { return new ActionService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Actions area
+        ///     <para> https://developers.podio.com/doc/actions </para>
+        /// </summary>
+        public ActionService ActionService
+        {
+            get { return new ActionService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Calendar Area
-        /////     <para> https://developers.podio.com/doc/calendar </para>
-        ///// </summary>
-        //public CalendarService CalendarService
-        //{
-        //    get { return new CalendarService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Calendar Area
+        ///     <para> https://developers.podio.com/doc/calendar </para>
+        /// </summary>
+        public CalendarService CalendarService
+        {
+            get { return new CalendarService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Conversations area
-        /////     <para> https://developers.podio.com/doc/conversations </para>
-        ///// </summary>
-        //public ConversationService ConversationService
-        //{
-        //    get { return new ConversationService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Conversations area
+        ///     <para> https://developers.podio.com/doc/conversations </para>
+        /// </summary>
+        public ConversationService ConversationService
+        {
+            get { return new ConversationService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Notifications area
-        /////     <para> https://developers.podio.com/doc/notifications </para>
-        ///// </summary>
-        //public NotificationService NotificationService
-        //{
-        //    get { return new NotificationService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Notifications area
+        ///     <para> https://developers.podio.com/doc/notifications </para>
+        /// </summary>
+        public NotificationService NotificationService
+        {
+            get { return new NotificationService(this); }
+        }
 
-        ///// Provies all API methods in Reminder area
-        ///// <para> https://developers.podio.com/doc/reminders </para>
-        ///// </summary>
-        //public ReminderService ReminderService
-        //{
-        //    get { return new ReminderService(this); }
-        //}
+        /// Provies all API methods in Reminder area
+        /// <para> https://developers.podio.com/doc/reminders </para>
+        /// </summary>
+        public ReminderService ReminderService
+        {
+            get { return new ReminderService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Recurrence Area
-        /////     <para> https://developers.podio.com/doc/recurrence </para>
-        ///// </summary>
-        //public RecurrenceService RecurrenceService
-        //{
-        //    get { return new RecurrenceService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Recurrence Area
+        ///     <para> https://developers.podio.com/doc/recurrence </para>
+        /// </summary>
+        public RecurrenceService RecurrenceService
+        {
+            get { return new RecurrenceService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Importer area
-        /////     <para> https://developers.podio.com/doc/importer </para>
-        ///// </summary>
-        //public ImporterService ImporterService
-        //{
-        //    get { return new ImporterService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Importer area
+        ///     <para> https://developers.podio.com/doc/importer </para>
+        /// </summary>
+        public ImporterService ImporterService
+        {
+            get { return new ImporterService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Question Area
-        /////     <para> https://developers.podio.com/doc/questions </para>
-        ///// </summary>
-        //public QuestionService QuestionService
-        //{
-        //    get { return new QuestionService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Question Area
+        ///     <para> https://developers.podio.com/doc/questions </para>
+        /// </summary>
+        public QuestionService QuestionService
+        {
+            get { return new QuestionService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in Subscriptions area
-        /////     <para> https://developers.podio.com/doc/subscriptions </para>
-        ///// </summary>
-        //public SubscriptionService SubscriptionService
-        //{
-        //    get { return new SubscriptionService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in Subscriptions area
+        ///     <para> https://developers.podio.com/doc/subscriptions </para>
+        /// </summary>
+        public SubscriptionService SubscriptionService
+        {
+            get { return new SubscriptionService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies API methods in User Area
-        /////     <para> https://developers.podio.com/doc/users </para>
-        ///// </summary>
-        //public UserService UserService
-        //{
-        //    get { return new UserService(this); }
-        //}
+        /// <summary>
+        ///     Provies API methods in User Area
+        ///     <para> https://developers.podio.com/doc/users </para>
+        /// </summary>
+        public UserService UserService
+        {
+            get { return new UserService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies API methods in Forms area
-        /////     <para> https://developers.podio.com/doc/forms </para>
-        ///// </summary>
-        //public FormService FormService
-        //{
-        //    get { return new FormService(this); }
-        //}
+        /// <summary>
+        ///     Provies API methods in Forms area
+        ///     <para> https://developers.podio.com/doc/forms </para>
+        /// </summary>
+        public FormService FormService
+        {
+            get { return new FormService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies all API methods in  AppMarket Area
-        /////     <para> https://developers.podio.com/doc/app-store </para>
-        ///// </summary>
-        //public AppMarketService AppMarketService
-        //{
-        //    get { return new AppMarketService(this); }
-        //}
+        /// <summary>
+        ///     Provies all API methods in  AppMarket Area
+        ///     <para> https://developers.podio.com/doc/app-store </para>
+        /// </summary>
+        public AppMarketService AppMarketService
+        {
+            get { return new AppMarketService(this); }
+        }
 
-        ///// Provies all API methods in Views area
-        ///// <para> https://developers.podio.com/doc/filters </para>
-        ///// </summary>
-        //public ViewService ViewService
-        //{
-        //    get { return new ViewService(this); }
-        //}
+        /// Provies all API methods in Views area
+        /// <para> https://developers.podio.com/doc/filters </para>
+        /// </summary>
+        public ViewService ViewService
+        {
+            get { return new ViewService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies API methods in Integrations area
-        /////     <para> https://developers.podio.com/doc/integrations </para>
-        ///// </summary>
-        //public IntegrationService IntegrationService
-        //{
-        //    get { return new IntegrationService(this); }
-        //}
+        /// <summary>
+        ///     Provies API methods in Integrations area
+        ///     <para> https://developers.podio.com/doc/integrations </para>
+        /// </summary>
+        public IntegrationService IntegrationService
+        {
+            get { return new IntegrationService(this); }
+        }
 
-        ///// <summary>
-        /////     Provies API methods in Flow area
-        /////     <para> https://developers.podio.com/doc/flows </para>
-        ///// </summary>
-        //public FlowService FlowService
-        //{
-        //    get { return new FlowService(this); }
-        //}
+        /// <summary>
+        ///     Provies API methods in Flow area
+        ///     <para> https://developers.podio.com/doc/flows </para>
+        /// </summary>
+        public FlowService FlowService
+        {
+            get { return new FlowService(this); }
+        }
 
         #endregion
-    }
-
-    public enum RequestMethod
-    {
-        GET,
-        POST,
-        PUT,
-        DELETE
     }
 }
