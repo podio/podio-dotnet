@@ -682,6 +682,24 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
+        ///     Reverts the item to the values in the given revision. This will undo any changes made after the given revision.
+        ///     <para>Podio API Reference : https://developers.podio.com/doc/items/revert-to-revision-194362682 </para>
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="revision"></param>
+        /// <returns>revision</returns>
+        public async Task<int?> RevertToRevision(int itemId, int revision)
+        {
+            var url = string.Format("/item/{0}/revision/{1}/revert_to", itemId, revision);
+            var response = await _podio.Delete<dynamic>(url);
+            if (response["revision"] != null)
+            {
+                return (int)response["revision"];
+            }
+            return null;
+        }
+
+        /// <summary>
         ///     Used to find possible items for a given application field. It searches the relevant apps for items matching the
         ///     given text.
         ///     <para>Podio API Reference : https://developers.podio.com/doc/items/get-references-to-item-by-field-7403920 </para>
