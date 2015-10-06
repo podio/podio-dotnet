@@ -1,7 +1,7 @@
-# Podio.NET [![Build status](https://ci.appveyor.com/api/projects/status/mv39ht4y9uk09593?svg=true)](https://ci.appveyor.com/project/AjmalVh/podio-dotnet)
+# Podio.NET [![Build status](https://ci.appveyor.com/api/projects/status/mv39ht4y9uk09593?svg=true)](https://ci.appveyor.com/project/AjmalVh/podio-dotnet) [![NuGet](https://img.shields.io/nuget/dt/Podio.svg?style=flat-square)]()
 
 
-This is the development version of .NET Client for accessing the Podio API.
+This is the .NET Client for accessing the Podio API.
 
 Installation
 -------
