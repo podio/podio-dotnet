@@ -4,7 +4,7 @@ active: async
 ---
 
 # Sync vs Async
-Podio API Client for .NET comes in two favors, [synchronous](https://www.nuget.org/packages/Podio/) and [asynchronous](https://www.nuget.org/packages/Podio.Async/)
+Podio API Client for .NET comes in two flavors, [synchronous](https://www.nuget.org/packages/Podio/) and [asynchronous](https://www.nuget.org/packages/Podio.Async/)
 
 ## Which one to use?
 If you're on .NET 4.5+, and finding that threads in your application are spending a significant percentage of CPU time waiting for API calls to complete, you should notice big improvements with asynchronous version.

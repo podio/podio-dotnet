@@ -9,7 +9,7 @@ Podio-dotnet is a C# client for interacting with the Podio API. All core areas a
 You need .NET Framework 4.5 or higher and [Json.NET](http://www.nuget.org/packages/Newtonsoft.Json/) as its dependency.
 
 ## Installation
-This package is available on NuGet Gallery. It comes in two favors [synchronous](https://www.nuget.org/packages/Podio/) and [asynchronous](https://www.nuget.org/packages/Podio.Async/), To install the Podio package run the following command in the [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console)
+This package is available on NuGet Gallery. It comes in two flavors [synchronous](https://www.nuget.org/packages/Podio/) and [asynchronous](https://www.nuget.org/packages/Podio.Async/), To install the Podio package run the following command in the [Package Manager Console](http://docs.nuget.org/docs/start-here/using-the-package-manager-console)
 
 For synchronous version:
 
