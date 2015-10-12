@@ -74,7 +74,7 @@ else if(string.IsNullOrEmpty(Request["code"]))
     else
     {
         // Finalize authentication. Note that we must pass the redirectURI again.
-        await  await podio.AuthenticateWithAuthorizationCode(Request["code"] , redirectURI);
+        await  podio.AuthenticateWithAuthorizationCode(Request["code"] , redirectURI);
 
         Response.Write("You have been authenticated. Wee!");
     }
@@ -86,7 +86,7 @@ App authentication doesn’t require any direct user authentication and therefor
 
 {% highlight csharp startinline %}
 var podio = new Podio(clientId, clientSecret);
-await podio.AuthenticateWithApp(appId, appToken);
+podio.AuthenticateWithApp(appId, appToken);
 // You can now make API calls.
 {% endhighlight %}
 
@@ -95,7 +95,7 @@ Password authentication works the same way as app authentication, but you have f
 
 {% highlight csharp startinline %}
 var podio = new Podio(clientId, clientSecret);
-await podio.AuthenticateWithPassword(userName, password);
+podio.AuthenticateWithPassword(userName, password);
 // You can now make API calls.
 {% endhighlight %}
 

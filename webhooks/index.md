@@ -13,7 +13,7 @@ int appFieldId = 1234;
 string eventType = "item.update";
 string externalUrl  = "http://example.com/my/hook/url";
 
-int hookId = await podio.HookService.CreateHook("app_field", appFieldId, externalUrl, eventType);
+int hookId = podio.HookService.CreateHook("app_field", appFieldId, externalUrl, eventType);
 {% endhighlight %}
 
 Immediately after you create a webhook you must verify it. Verifying just means the URL you provided must respond to a special type of webhook event called `hook.verify`. See the full example below for how to verify a webhook.
@@ -21,14 +21,14 @@ Immediately after you create a webhook you must verify it. Verifying just means 
 If you create your webhook ahead of the URL being available you must manually request a webhook verification:
 
 {% highlight csharp startinline %}
-await podio.HookService.Verify(hookId);
+podio.HookService.Verify(hookId);
 {% endhighlight %}
 
 ## Checking webhooks status
 If you are unsure of the status of your hooks you can get a list of all hooks for a reference:
 
 {% highlight csharp startinline %}
-List<Hook> hooks = await podio.HookService.GetHooks(refType, refId);
+List<Hook> hooks = podio.HookService.GetHooks(refType, refId);
 
 foreach (var hook in hooks)
 {
@@ -72,7 +72,7 @@ public class Handler : IHttpHandler {
 
         // Setup client and authenticate
         var podio = new Podio(clientId, clientSecret);
-        await podio.AuthenticateWithApp(appId, appToken);
+        podio.AuthenticateWithApp(appId, appToken);
 
         // Big switch statement to handle the different events
 
@@ -81,7 +81,7 @@ public class Handler : IHttpHandler {
         switch (request["type"])
         {
             case "hook.verify":
-                await podio.HookService.ValidateHookVerification(int.Parse(request["hook_id"]), request["code"]);
+                podio.HookService.ValidateHookVerification(int.Parse(request["hook_id"]), request["code"]);
                 break;
             // An item was created
             case "item.create":

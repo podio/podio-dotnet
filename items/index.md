@@ -4,7 +4,7 @@ active: items
 ---
 # Working with Podio items
 
-Apps and app items form the core of await podio. With this client library we have made it easy as possible to read and manipulate app items.
+Apps and app items form the core of podio. With this client library we have made it easy as possible to read and manipulate app items.
 
 ## Individual items
 
@@ -16,12 +16,12 @@ If you have the `item_id` you can use either `GetItem()` or `GetItemBasic()` met
 
 {% highlight csharp startinline %}
 // Get only data about the item
-var item = await podio.ItemService.GetItemBasic(123); // Get item with item_id = 123
+var item = podio.ItemService.GetItemBasic(123); // Get item with item_id = 123
 {% endhighlight %}
 
 {% highlight csharp startinline %}
 // Get item and auxiliary data such as comments
-var item = await podio.ItemService.GetItem(123); // Get item with item_id=123
+var item = podio.ItemService.GetItem(123); // Get item with item_id=123
 {% endhighlight %}
 
 If you have assigned an external_id to an item you can get the item by providing that external_id. Since external_ids are not unique you need to provide the app_id as well.
@@ -32,10 +32,10 @@ If you have assigned an external_id to an item you can get the item by providing
 var appId = 456;
 var externalId = "my_sample_external_id";
 
-var item = await podio.ItemService.GetItemByExternalId(appId, externalId);
+var item = podio.ItemService.GetItemByExternalId(appId, externalId);
 {% endhighlight %}
 
-In a similar fashion each item in an app has a short numeric id called `app_item_id`. These are unique within the app, but not globally unique. It's the numeric id you can see in the URL when viewing an item on await podio. You can also get an item by providing an app_id and the app_item_id.
+In a similar fashion each item in an app has a short numeric id called `app_item_id`. These are unique within the app, but not globally unique. It's the numeric id you can see in the URL when viewing an item on podio. You can also get an item by providing an app_id and the app_item_id.
 
 {% highlight csharp startinline %}
 // Get item by app_item_id
@@ -43,18 +43,18 @@ In a similar fashion each item in an app has a short numeric id called `app_item
 var appId = 456;
 var appItemId = 1;
 
-var item = await podio.ItemService.GetItemByAppItemId(appId, appItemId);
+var item = podio.ItemService.GetItemByAppItemId(appId, appItemId);
 {% endhighlight %}
 
-The final option is to [resolve an item URL](https://developers.await podio.com/doc/reference/resolve-url-66839423) and create an item that way. This is useful in cases where you only have the browser's URL to work with (e.g. when creating browser extensions or when you are asking users to copy and paste URLs into your app).
+The final option is to [resolve an item URL](https://developers.podio.com/doc/reference/resolve-url-66839423) and create an item that way. This is useful in cases where you only have the browser's URL to work with (e.g. when creating browser extensions or when you are asking users to copy and paste URLs into your app).
 
 {% highlight csharp startinline %}
 // Get item by resolving its URL
 
-string url = "http://await podio.com/myorganization/myspace/apps/myapp/items/1";
+string url = "http://podio.com/myorganization/myspace/apps/myapp/items/1";
 
 // Resolve URL to a reference
-var reference = await podio.ReferenceService.ResolveURL(url);
+var reference = podio.ReferenceService.ResolveURL(url);
 
 // Create item from reference
 var item = reference.Data.ToObject<PodioAPI.Models.Item>();
@@ -68,7 +68,7 @@ If you just want see all fields you can iterate over them.
 
 {% highlight csharp startinline %}
 // Get an item to work on
-var item = await podio.ItemService.GetItemBasic(123); // Get item with item_id = 123
+var item = podio.ItemService.GetItemBasic(123); // Get item with item_id = 123
 
 // Iterate over the field collection
 foreach (ItemField field in item.Fields)
@@ -100,7 +100,7 @@ var dateField = myNewItem.Field<DateItemField>("deadline-date");
 dateField.Start = DateTime.Now;
 dateField.End = DateTime.Now.AddMonths(2);
 
-int itemId = await podio.ItemService.AddNewItem(appId, myNewItem);
+int itemId = podio.ItemService.AddNewItem(appId, myNewItem);
 {% endhighlight %}
 
 ### Modifying items
@@ -118,7 +118,7 @@ textfield.Value = "This is a an updated value";
 //A Date field with external_id 'deadline-date'
 var dateField = itemToUpdate.Field<DateItemField>("deadline-date");
 
-await podio.ItemService.UpdateItem(myNewItem);
+podio.ItemService.UpdateItem(myNewItem);
 {% endhighlight %}
 
 To update the item values for a specific field you can use `ItemService.UpdateItemFieldValues` method.
@@ -129,14 +129,14 @@ Item item = new Item();
 item.ItemId = 12345;
 var textfield = item.Field<TextItemField>("title");
 textfield.Value = "My updated title";
-var newRevisionId = await podio.ItemService.UpdateItemFieldValues(item);
+var newRevisionId = podio.ItemService.UpdateItemFieldValues(item);
 {% endhighlight %}
 
 ## Item collections
-One of the most common operations is getting a collection of items from an app, potentially with a filter applied. For this you can use [ItemService.FilterItems()](https://developers.await podio.com/doc/items/filter-items-4496747). It returns a `PodioCollection<Item>` which has two additional properties: filtered (total amount of items with the filter applied) and total (total amount of items in the app).
+One of the most common operations is getting a collection of items from an app, potentially with a filter applied. For this you can use [ItemService.FilterItems()](https://developers.podio.com/doc/items/filter-items-4496747). It returns a `PodioCollection<Item>` which has two additional properties: filtered (total amount of items with the filter applied) and total (total amount of items in the app).
 
 {% highlight csharp startinline %}
-var filteredItems = await podio.ItemService.FilterItems(123);
+var filteredItems = podio.ItemService.FilterItems(123);
 
 Response.Write("The collection contains" + filteredItems.Items.Count() + " items");
 Response.Write("There are " + filteredItems.Total + " items in the app in total");
@@ -150,11 +150,11 @@ foreach (var item in filteredItems.Items)
 {% endhighlight %}
 
 ### Sorting items
-You can sort items by various properties. [See a full list in the API reference](https://developers.await podio.com/doc/filters).
+You can sort items by various properties. [See a full list in the API reference](https://developers.podio.com/doc/filters).
 
 {% highlight csharp startinline %}
 // Sort by last edit date for the items, descending
-var filteredItems = await podio.ItemService.FilterItems(appId:123, sortBy: "last_edit_on", sortDesc: true);
+var filteredItems = podio.ItemService.FilterItems(appId:123, sortBy: "last_edit_on", sortDesc: true);
 
 {% endhighlight %}
 
@@ -162,7 +162,7 @@ var filteredItems = await podio.ItemService.FilterItems(appId:123, sortBy: "last
 
 <span class="note">**Important:** You can use both `field_id` and `external_id` when filtering items. The examples below all use `field_id` for brevity.</span>
 
-You can filter on most fields. Take a look at the [API reference for a full list of filter options](https://developers.await podio.com/doc/filters). When filtering on app fields use the `field_id` or `external_id` as the key for your filter. Some examples below:
+You can filter on most fields. Take a look at the [API reference for a full list of filter options](https://developers.podio.com/doc/filters). When filtering on app fields use the `field_id` or `external_id` as the key for your filter. Some examples below:
 
 {% highlight csharp startinline %}
 // Category: Only items with "FooBar" in category field value
@@ -171,7 +171,7 @@ var filter = new Dictionary<string, object>
 {
     {categoryFieldId, new string[]{"FooBar"} }
 };
-var filteredItems = await podio.ItemService.FilterItems(appId: 123, filters: filter);
+var filteredItems = podio.ItemService.FilterItems(appId: 123, filters: filter);
 {% endhighlight %}
 
 {% highlight csharp startinline %}
@@ -182,7 +182,7 @@ var filter = new Dictionary<string, object>
 {
     {numberFieldId, new { from = 100, to = 200} }
 };
-var filteredItems = await podio.ItemService.FilterItems(appId: 123, filters: filter);
+var filteredItems = podio.ItemService.FilterItems(appId: 123, filters: filter);
 {% endhighlight %}
 
 {% highlight csharp startinline %}
@@ -196,7 +196,7 @@ var filter = new Dictionary<string, object>
 {
     {appReferenceFieldId, new int[]{filterTargetItemId} }
 };
-var filteredItems = await podio.ItemService.FilterItems(appId: 123, filters: filter);
+var filteredItems = podio.ItemService.FilterItems(appId: 123, filters: filter);
 {% endhighlight %}
 
 {% highlight csharp startinline %}
@@ -210,7 +210,7 @@ var filter = new Dictionary<string, object>
 {
     {contactFieldId, new int[]{filterTargetProfileId} }
 };
-var filteredItems = await podio.ItemService.FilterItems(appId: 123, filters: filter);
+var filteredItems = podio.ItemService.FilterItems(appId: 123, filters: filter);
 {% endhighlight %}
 
 {% highlight csharp startinline %}
@@ -224,7 +224,7 @@ var filter = new Dictionary<string, object>
 {
     {dateFieldId, from = new DateTime(2013, 9, 1), to = new DateTime(2013, 9, 30) }
 };
-var filteredItems = await podio.ItemService.FilterItems(appId: 123, filters: filter);
+var filteredItems = podio.ItemService.FilterItems(appId: 123, filters: filter);
 {% endhighlight %}
 
 {% highlight csharp startinline %}
@@ -236,6 +236,6 @@ var filter = new Dictionary<string, object>
     {numberFieldId, new { from = 100, to = 200} },
     {textFieldId, "Support" }
 };
-var filteredItems = await podio.ItemService.FilterItems(appId: 123, filters: filter);
+var filteredItems = podio.ItemService.FilterItems(appId: 123, filters: filter);
 {% endhighlight %}
 

@@ -33,11 +33,13 @@ Writing a AuthStore is straight-forward. You need to create a new class that imp
 ### The `Get` method
 The `Get` method should retrieve an existing authentication when called. It should return a `PodioOAuth` object in all cases. Return an empty `PodioOAuth` object if no existing authentication could be found.
 
+Note: `Get` method is not available in async version. You can assign PodioOAuth object manually [like this](https://github.com/podio/asp-net-sample/blob/master/PodioAspNetSample/Utils/PodioConnection.cs#L54)
+
 ### The `Set` method
 The `Set` method should store a `PodioOAuth` object when called. It has a parameters, `podioOAuth`, which holds the current `PodioOAuth` object.
 
 ## Example: Store access tokens in browser session cookie
-This is a simple example meant for a web application. It stores the authentication data in a HttpContext.Current.Session variable. This avoid having to re-authenticate each time a page is refreshed.
+This is a simple example meant for a web application. It stores the authentication data in a HttpContext.Current.Session variable. This avoid having to re-authenticate each time a page is refreshed. AuthStore implementation using Session will not work in [async version](https://www.nuget.org/packages/Podio.Async/) of API Client because `HttpContext.Current` will not be available in a seperate thread.
 
 {% highlight csharp startinline %}
 using System.Web;
@@ -64,8 +66,8 @@ namespace PodioAPI.Utils.Authentication
     }
 }
 {% endhighlight %}
-The above class is included in the Podio-dotnet library out of box. You just need to initialize it and pass in when you initialze the Podio class. See below.
-You can do your own implementation of IAuthStore interface if you need to store access tokens in database or elsewhere.
+
+See these exam
 
 {% highlight csharp startinline %}
 using PodioAPI;
@@ -79,7 +81,7 @@ if(!podio.IsAuthenticated())
     // No authentication found in AuthStore.
     // You must re-authenticate here.
 
-    await podio.AuthenticateWithApp(appId, appToken);
+    podio.AuthenticateWithApp(appId, appToken);
 }
 
 //Api calls here
