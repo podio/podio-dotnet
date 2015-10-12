@@ -45,7 +45,6 @@ namespace PodioAPI
             ApiUrl = "https://api.podio.com:443";
 
             AuthStore = authStore ?? new NullAuthStore();
-            OAuth = AuthStore.Get();
         }
 
         static Podio()
