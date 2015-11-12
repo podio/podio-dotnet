@@ -37,7 +37,6 @@ namespace PodioAPI
         ///     PodioAPI.Utils.IAuthStore Interface and pass it in.
         ///     <para> You can use the IsAuthenticated method to check if there is a stored access token already present</para>
         /// </param>
-        /// <param name="proxy">To set proxy to HttpWebRequest</param>
         public Podio(string clientId, string clientSecret, IAuthStore authStore = null)
         {
             ClientId = clientId;
@@ -49,7 +48,7 @@ namespace PodioAPI
 
         static Podio()
         {
-           HttpClient = new HttpClient();
+            HttpClient = new HttpClient();
         }
 
         #region Request Helpers
@@ -69,7 +68,7 @@ namespace PodioAPI
 
         internal async Task<T> Post<T>(string url, dynamic requestData = null, bool isOAuthTokenRequest = false) where T : new()
         {
-            var request = CreateHttpRequest(url, HttpMethod.Post);
+            var request = CreateHttpRequest(url, HttpMethod.Post, !isOAuthTokenRequest);
             if (isOAuthTokenRequest)
             {
                 request.Content = new FormUrlEncodedContent(requestData);
@@ -160,7 +159,12 @@ namespace PodioAPI
                     {
                         var authInfo = await RefreshAccessToken().ConfigureAwait(false);
                         if (authInfo != null && !string.IsNullOrEmpty(authInfo.AccessToken))
-                            return await Request<T>(httpRequest);
+                        {
+                            var retryRequest = CreateHttpRequest(httpRequest.RequestUri.OriginalString, httpRequest.Method, true, isFileDownload);
+                            retryRequest.Content = httpRequest.Content;
+
+                            return await Request<T>(retryRequest, isFileDownload, returnAsString);
+                        }
                     }
                     else
                     {
@@ -179,7 +183,7 @@ namespace PodioAPI
         private HttpRequestMessage CreateHttpRequest(string url, HttpMethod httpMethod, bool addAuthorizationHeader = true, bool isFileDownload = false)
         {
             var fullUrl = ApiUrl + url;
-            if (isFileDownload) fullUrl = url;
+            if (url.StartsWith("http")) fullUrl = url;
 
             var request = new HttpRequestMessage()
             {
@@ -318,11 +322,6 @@ namespace PodioAPI
         {
             attributes["client_id"] = ClientId;
             attributes["client_secret"] = ClientSecret;
-
-            var options = new Dictionary<string, bool>()
-            {
-                {"oauth_request", true}
-            };
 
             PodioOAuth podioOAuth = await Post<PodioOAuth>("/oauth/token", attributes, true).ConfigureAwait(false);
             this.OAuth = podioOAuth;
