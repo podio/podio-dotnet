@@ -57,7 +57,7 @@ namespace PodioAPI.Models
         public string UrlAdd { get; private set; }
 
         [JsonProperty("token")]
-        public string Token { get; private set; }
+        public string Token { get; set; }
 
         [JsonProperty("url_label")]
         public string UrlLabel { get; private set; }
