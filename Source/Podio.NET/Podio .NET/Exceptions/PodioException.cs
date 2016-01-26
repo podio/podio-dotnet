@@ -1,8 +1,11 @@
 ﻿using System;
 using Newtonsoft.Json;
+using System.Runtime.Serialization;
+using PodioAPI.Utils;
 
 namespace PodioAPI.Exceptions
 {
+    [Serializable]
     public class PodioException : Exception
     {
         /// <summary>
@@ -15,81 +18,131 @@ namespace PodioAPI.Exceptions
         /// </summary>
         public int StatusCode { get; internal set; }
 
-        public PodioException(int statusCode, PodioError error)
+        public PodioException(int statusCode, PodioError error): base(JSONSerializer.Serilaize(error))
         {
             this.Error = error;
             this.StatusCode = statusCode;
         }
+
+        public PodioException(SerializationInfo info, StreamingContext context)
+            : base(info, context)
+        {
+        }
     }
 
+    [Serializable]
     public class PodioInvalidGrantException : PodioException
     {
         public PodioInvalidGrantException(int status, PodioError error)
             : base(status, error)
         {
         }
+
+        public PodioInvalidGrantException(SerializationInfo info, StreamingContext context): base(info, context)
+        {
+        }
     }
 
+    [Serializable]
     public class PodioBadRequestException : PodioException
     {
         public PodioBadRequestException(int status, PodioError error)
             : base(status, error)
         {
         }
+
+        public PodioBadRequestException(SerializationInfo info, StreamingContext context): base(info, context)
+        {
+        }
     }
 
+    [Serializable]
     public class PodioAuthorizationException : PodioException
     {
         public PodioAuthorizationException(int status, PodioError error)
             : base(status, error)
         {
         }
+
+        public PodioAuthorizationException(SerializationInfo info, StreamingContext context): base(info, context)
+        {
+        }
     }
 
+    [Serializable]
     public class PodioForbiddenException : PodioException
     {
         public PodioForbiddenException(int status, PodioError error)
             : base(status, error)
         {
         }
+
+        public PodioForbiddenException(SerializationInfo info, StreamingContext context): base(info, context)
+        {
+        }
     }
 
+    [Serializable]
     public class PodioNotFoundException : PodioException
     {
         public PodioNotFoundException(int status, PodioError error)
             : base(status, error)
         {
         }
+
+        public PodioNotFoundException(SerializationInfo info, StreamingContext context): base(info, context)
+        {
+        }
     }
 
+    [Serializable]
     public class PodioConflictException : PodioException
     {
         public PodioConflictException(int status, PodioError error)
             : base(status, error)
         {
         }
+
+        public PodioConflictException(SerializationInfo info, StreamingContext context): base(info, context)
+        {
+        }
     }
 
+    [Serializable]
     public class PodioGoneException : PodioException
     {
         public PodioGoneException(int status, PodioError error)
             : base(status, error)
         {
         }
+
+        public PodioGoneException(SerializationInfo info, StreamingContext context): base(info, context)
+        {
+        }
     }
 
+    [Serializable]
     public class PodioRateLimitException : PodioException
     {
         public PodioRateLimitException(int status, PodioError error)
             : base(status, error)
         {
         }
+
+        public PodioRateLimitException(SerializationInfo info, StreamingContext context): base(info, context)
+        {
+        }
     }
 
+    [Serializable]
     public class PodioServerException : PodioException
     {
         public PodioServerException(int status, PodioError error)
             : base(status, error)
+        {
+        }
+
+        public PodioServerException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
     }
@@ -99,6 +152,10 @@ namespace PodioAPI.Exceptions
     {
         public PodioUnavailableException(int status, PodioError error)
             : base(status, error)
+        {
+        }
+
+        public PodioUnavailableException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
     }
