@@ -40,7 +40,7 @@ namespace PodioAPI.Models
         public string[] Rights { get; set; }
 
         [JsonProperty("filter_id")]
-        public int FilterId { get; set; }
+        public string FilterId { get; set; }
 
         [JsonProperty("items")]
         public int Items { get; set; }
