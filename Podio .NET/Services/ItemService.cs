@@ -250,11 +250,16 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="appId"></param>
         /// <param name="filterOptions"></param>
+        /// <param name="includeFiles"></param>
         /// <returns>Collection of matching items</returns>
-        public PodioCollection<Item> FilterItems(int appId, FilterOptions filterOptions)
+        public PodioCollection<Item> FilterItems(int appId, FilterOptions filterOptions, bool includeFiles = false)
         {
             filterOptions.Limit = filterOptions.Limit == 0 ? 30 : filterOptions.Limit;
             string url = string.Format("/item/app/{0}/filter/", appId);
+            if (includeFiles)
+            {
+                url = url + "?fields=items.fields(files)";
+            }
             return _podio.Post<PodioCollection<Item>>(url, filterOptions);
         }
 
@@ -269,9 +274,10 @@ namespace PodioAPI.Services
         /// <param name="remember">True if the view should be remembered, false otherwise</param>
         /// <param name="sortBy">The sort order to use</param>
         /// <param name="sortDesc">True to sort descending, false otherwise</param>
+        /// <param name="includeFiles">True to include files when getting filtered items, defaults to false</param>
         /// <returns></returns>
         public PodioCollection<Item> FilterItems(int appId, int? limit = 30, int? offset = 0, Object filters = null,
-            bool? remember = null, string sortBy = null, bool? sortDesc = null)
+            bool? remember = null, string sortBy = null, bool? sortDesc = null, bool includeFiles = false)
         {
             var filterOptions = new FilterOptions()
             {
@@ -282,7 +288,7 @@ namespace PodioAPI.Services
                 SortBy = sortBy,
                 SortDesc = sortDesc
             };
-            return FilterItems(appId, filterOptions);
+            return FilterItems(appId, filterOptions, includeFiles);
         }
 
         /// <summary>
@@ -294,7 +300,6 @@ namespace PodioAPI.Services
         /// <param name="limit">The maximum number of items to return Default value: 20</param>
         /// <param name="offset">The offset from the start of the items returned</param>
         /// <param name="deletedColumns">Wether to include deleted columns. Default value: false</param>
-        /// <param name="remember">If true the given view is remembered for the user, otherwise it is not. Default value: true</param>
         /// <param name="sortBy">How the items should be sorted</param>
         /// <param name="sortDesc">Use true to sort descending, use false to sort ascending Default value: true</param>
         /// <param name="viewId">Applies the given view, if set to 0, the last used view will be used</param>
@@ -439,11 +444,16 @@ namespace PodioAPI.Services
         /// <param name="limit">The maximum number of items to return, defaults to 30</param>
         /// <param name="offset">The offset into the returned items, defaults to 0</param>
         /// <param name="remember">True if the view should be remembered, defaults to false</param>
+        /// <param name="includeFiles">True to include files when getting filtered items, defaults to false</param>
         /// <returns></returns>
         public PodioCollection<Item> FilterItemsByView(int appId, int viewId, int limit = 30, int offset = 0,
-            bool remember = false)
+            bool remember = false, bool includeFiles = false)
         {
             string url = string.Format("/item/app/{0}/filter/{1}/", appId, viewId);
+            if (includeFiles)
+            {
+                url = url + "?fields=items.fields(files)";
+            }
             var filterOptions = new FilterOptions()
             {
                 Limit = limit,

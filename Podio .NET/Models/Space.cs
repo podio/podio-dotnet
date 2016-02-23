@@ -74,6 +74,9 @@ namespace PodioAPI.Models
         [JsonProperty("owner")]
         public Ref Owner { get; set; }
 
+        [JsonProperty("archived")]
+        public bool? Archived { get; set; }
+
         [JsonProperty("push")]
         public Push Push { get; set; }
     }
