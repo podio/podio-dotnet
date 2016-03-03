@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Utils
 {
@@ -8,15 +9,24 @@ namespace PodioAPI.Utils
     {
         public static string Serilaize(object entity)
         {
-            var settings = new JsonSerializerSettings();
-            settings.NullValueHandling = NullValueHandling.Ignore;
+            var settings = new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore
+            };
 
             return JsonConvert.SerializeObject(entity, settings);
         }
 
         public static T Deserilaize<T>(string json)
         {
-            return JsonConvert.DeserializeObject<T>(json, new JsonConverter[] {new NestedDictionaryConverter()});
+            try
+            {
+                return JsonConvert.DeserializeObject<T>(json, new JsonConverter[] { new NestedDictionaryConverter() });
+            }
+            catch (JsonReaderException)
+            {
+                return default(T);
+            }
         }
     }
 

@@ -108,7 +108,7 @@ namespace PodioAPI.Services
             bool silent = false, bool hook = true)
         {
             string url = string.Format("/comment/{0}/{1}/", type, id);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook, null, alertInvite));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook, null, alertInvite));
             dynamic response = _podio.Post<dynamic>(url, comment);
             return (int) response["comment_id"];
         }

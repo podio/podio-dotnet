@@ -167,7 +167,7 @@ namespace PodioAPI
             request.Method = httpMethod;
             request.UserAgent = "Podio Dotnet Client";
 
-            PodioResponse podioResponse = new PodioResponse();
+            var podioResponse = new PodioResponse();
             var responseHeaders = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase);
             var responseObject = new T();
 
@@ -207,6 +207,9 @@ namespace PodioAPI
                         responseHeaders.Add(key, response.Headers.Get(key));
                     }
 
+                    podioResponse.Headers = responseHeaders;
+                    SetRateLimitInfo(podioResponse);
+
                     if (options != null && options.ContainsKey("file_download"))
                     {
                         using (var memoryStream = new MemoryStream())
@@ -234,7 +237,7 @@ namespace PodioAPI
                             podioResponse.Body = sr.ReadToEnd();
                         }
                     }
-                    podioResponse.Headers = responseHeaders;
+                   
                 }
             }
             catch (WebException e)
@@ -246,22 +249,18 @@ namespace PodioAPI
                     {
                         responseHeaders.Add(key, response.Headers.Get(key));
                     }
+                    podioResponse.Headers = responseHeaders;
+                    SetRateLimitInfo(podioResponse);
 
                     using (StreamReader sr = new StreamReader(response.GetResponseStream()))
                     {
                         podioResponse.Body = sr.ReadToEnd();
                     }
-                    podioResponse.Headers = responseHeaders;
                 }
             }
 
 
-            if (podioResponse.Headers.ContainsKey("X-Rate-Limit-Remaining"))
-                RateLimitRemaining = int.Parse(podioResponse.Headers["X-Rate-Limit-Remaining"]);
-            if (podioResponse.Headers.ContainsKey("X-Rate-Limit-Limit"))
-                RateLimit = int.Parse(podioResponse.Headers["X-Rate-Limit-Limit"]);
-
-            PodioError podioError = new PodioError();
+            var podioError = new PodioError();
             if (podioResponse.Status >= 400)
                 podioError = JSONSerializer.Deserilaize<PodioError>(podioResponse.Body);
 
@@ -330,7 +329,7 @@ namespace PodioAPI
         /// <param name="url"></param>
         /// <param name="options"></param>
         /// <returns></returns>
-        internal string PrepareUrlWithOptions(string url, CreateUpdateOptions options)
+        internal static string PrepareUrlWithOptions(string url, CreateUpdateOptions options)
         {
             string urlWithOptions = "";
             List<string> parameters = new List<string>();
@@ -352,7 +351,7 @@ namespace PodioAPI
         /// </summary>
         /// <param name="obj"></param>
         /// <param name="request">HttpWebRequest object of which request to write</param>
-        internal void WriteToRequestStream(object obj, HttpWebRequest request)
+        internal static void WriteToRequestStream(object obj, HttpWebRequest request)
         {
             if (obj != null)
             {
@@ -398,6 +397,14 @@ namespace PodioAPI
             return encodedString;
         }
 
+        private void SetRateLimitInfo(PodioResponse podioResponse)
+        {
+            if (podioResponse.Headers.ContainsKey("X-Rate-Limit-Remaining"))
+                RateLimitRemaining = int.Parse(podioResponse.Headers["X-Rate-Limit-Remaining"]);
+            if (podioResponse.Headers.ContainsKey("X-Rate-Limit-Limit"))
+                RateLimit = int.Parse(podioResponse.Headers["X-Rate-Limit-Limit"]);
+        }
+
 
         /// <summary>
         ///     Add a file to request stream
@@ -405,7 +412,7 @@ namespace PodioAPI
         /// <param name="filePath">Physical path to file</param>
         /// <param name="fileName">File Name</param>
         /// <param name="request">HttpWebRequest object of which request stream file is added to</param>
-        private void AddFileToRequestStream(string filePath, string fileName, HttpWebRequest request)
+        private static void AddFileToRequestStream(string filePath, string fileName, HttpWebRequest request)
         {
             byte[] inputData;
             string boundary = String.Format("----------{0:N}", Guid.NewGuid());
@@ -432,7 +439,7 @@ namespace PodioAPI
             }
         }
 
-        private void AddFileToRequestStream(string fileName, byte[] data, string mimeType, HttpWebRequest request)
+        private static void AddFileToRequestStream(string fileName, byte[] data, string mimeType, HttpWebRequest request)
         {
             byte[] inputData;
             string boundary = String.Format("----------{0:N}", Guid.NewGuid());
@@ -450,7 +457,7 @@ namespace PodioAPI
 
         private static byte[] PrepareFileInput(string fileName, byte[] data, string mimeType, string boundary)
         {
-            MemoryStream memoryStream = new MemoryStream();
+            var memoryStream = new MemoryStream();
             byte[] inputData;
 
             memoryStream.Write(Encoding.UTF8.GetBytes("\r\n"), 0, Encoding.UTF8.GetByteCount("\r\n"));

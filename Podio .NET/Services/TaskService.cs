@@ -167,7 +167,7 @@ namespace PodioAPI.Services
         public void IncompleteTask(int taskId, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/incomplete", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             _podio.Post<dynamic>(url);
         }
 
@@ -192,7 +192,7 @@ namespace PodioAPI.Services
             {
                 url = string.Format("/task/{0}/{1}/", refType, refId);
             }
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             var createdTasks = new List<Task>();
             if ((task.Responsible is IEnumerable<int> || task.Responsible is IEnumerable<Ref>) &&
                 task.Responsible.Count > 1)
@@ -255,7 +255,7 @@ namespace PodioAPI.Services
         public Task UpdateTask(int taskId, TaskCreateUpdateRequest task, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             return _podio.Put<Task>(url, task);
         }
 
@@ -272,7 +272,7 @@ namespace PodioAPI.Services
         public void DeleteTask(int taskId, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             _podio.Delete<dynamic>(url);
         }
 
@@ -345,7 +345,7 @@ namespace PodioAPI.Services
         public void UpdateTaskDescription(int taskId, string description, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/description", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic requestData = new
             {
                 description = description
@@ -364,7 +364,7 @@ namespace PodioAPI.Services
         public void UpdateTaskPrivate(int taskId, bool isPrivate, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/private", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic requestData = new
             {
                 @private = isPrivate
@@ -383,7 +383,7 @@ namespace PodioAPI.Services
         public void UpdateTaskText(int taskId, string text, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/text", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic requestData = new
             {
                 text = text
@@ -404,7 +404,7 @@ namespace PodioAPI.Services
             bool silent = false)
         {
             string url = string.Format("/task/{0}/due", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic requestData = new
             {
                 due_on = dueOn,
@@ -440,7 +440,7 @@ namespace PodioAPI.Services
         public void UpdateTaskReference(int taskId, string refType, int refId, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/ref", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic requestData = new
             {
                 ref_type = refType,
@@ -580,7 +580,7 @@ namespace PodioAPI.Services
         public int? CompleteTask(int taskId, bool hook = true, bool silent = false)
         {
             string url = string.Format("/task/{0}/complete", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
             dynamic response = _podio.Post<dynamic>(url);
             if (response != null)
                 return (int?) response["recurring_task_id"];
@@ -600,7 +600,7 @@ namespace PodioAPI.Services
         public void AssignTask(int taskId, int? responsible = null, bool silent = false)
         {
             string url = string.Format("/task/{0}/assign", taskId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
             dynamic requestData = new
             {
                 responsible = responsible

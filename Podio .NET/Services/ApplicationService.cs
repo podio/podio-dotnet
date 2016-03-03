@@ -461,7 +461,7 @@ namespace PodioAPI.Services
             */
 
             string url = string.Format("/app/{0}", application.AppId);
-            url = _podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, false));
+            url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, false));
             var requestData = new ApplicationCreateUpdateRequest()
             {
                 Config = application.Config,
