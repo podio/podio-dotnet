@@ -64,13 +64,23 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="includeInactive"> True if inactive apps should be included, false otherwise.Default value: false </param>
+        /// <param name="additionalAttributes">Additional attributes to include in query string</param>
         /// <returns></returns>
-        public List<Application> GetAppsBySpace(int spaceId, bool includeInactive = false)
+        public List<Application> GetAppsBySpace(int spaceId, bool includeInactive = false, Dictionary<string, string> additionalAttributes = null)
         {
             var requestData = new Dictionary<string, string>()
             {
                 {"include_inactive", includeInactive.ToString()}
             };
+
+            if(additionalAttributes != null)
+            {
+                foreach (var keyvaluePair in additionalAttributes)
+                {
+                    requestData.Add(keyvaluePair.Key, keyvaluePair.Value);
+                }
+            }
+
             string url = string.Format("/app/space/{0}/", spaceId);
             return _podio.Get<List<Application>>(url, requestData);
         }

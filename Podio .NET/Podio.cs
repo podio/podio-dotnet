@@ -262,7 +262,19 @@ namespace PodioAPI
 
             var podioError = new PodioError();
             if (podioResponse.Status >= 400)
+            {
                 podioError = JSONSerializer.Deserilaize<PodioError>(podioResponse.Body);
+                if(podioError == null)
+                {
+                    var execeptionMessage = "";
+                    if(podioResponse.Body != null)
+                    {
+                        execeptionMessage = podioResponse.Body;
+                    }
+
+                    throw new Exception(execeptionMessage);
+                }
+            }
 
             switch (podioResponse.Status)
             {

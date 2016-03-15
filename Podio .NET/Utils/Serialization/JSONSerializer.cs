@@ -23,7 +23,7 @@ namespace PodioAPI.Utils
             {
                 return JsonConvert.DeserializeObject<T>(json, new JsonConverter[] { new NestedDictionaryConverter() });
             }
-            catch (JsonReaderException)
+            catch (JsonException)
             {
                 return default(T);
             }
