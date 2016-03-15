@@ -66,13 +66,23 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="spaceId"></param>
         /// <param name="includeInactive"> True if inactive apps should be included, false otherwise.Default value: false </param>
+        /// <param name="additionalAttributes">Additional attributes to include in query string</param>
         /// <returns></returns>
-        public async Task<List<Application>> GetAppsBySpace (int spaceId, bool includeInactive = false)
+        public async Task<List<Application>> GetAppsBySpace (int spaceId, bool includeInactive = false, Dictionary<string, string> additionalAttributes = null)
         {
             var requestData = new Dictionary<string, string>()
             {
                 {"include_inactive", includeInactive.ToString()}
             };
+
+            if (additionalAttributes != null)
+            {
+                foreach (var keyvaluePair in additionalAttributes)
+                {
+                    requestData.Add(keyvaluePair.Key, keyvaluePair.Value);
+                }
+            }
+
             string url = string.Format("/app/space/{0}/", spaceId);
             return await _podio.Get<List<Application>>(url, requestData);
         }
@@ -82,7 +92,7 @@ namespace PodioAPI.Services
         ///     tasks, filters, forms, integration, items.
         ///     <para>Podio API Reference: https://developers.podio.com/doc/applications/get-features-43648 </para>
         /// </summary>
-        /// <param name="appId"> A comma-separated list of app ids from which the features should be extracted </param>
+        /// <param name="appIds"> A comma-separated list of app ids from which the features should be extracted </param>
         /// <param name="includeSpace"></param>
         /// <returns></returns>
         public async Task<List<string>> GetFeatures(int[] appIds, bool includeSpace = false)
