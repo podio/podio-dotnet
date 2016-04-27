@@ -50,10 +50,10 @@ namespace PodioAPI.Models
 
         //Extra properties for full item
         [JsonProperty("ratings")]
-        public Dictionary<string, object> Ratings { get; set; }
+        public JToken Ratings { get; set; }
 
         [JsonProperty("user_ratings")]
-        public Dictionary<string, object> UserRatings { get; set; }
+        public JToken UserRatings { get; set; }
 
         [JsonProperty("last_event_on")]
         public DateTime? LastEventOn { get; set; }

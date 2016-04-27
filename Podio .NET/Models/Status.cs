@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
@@ -25,7 +26,7 @@ namespace PodioAPI.Models
         public bool? Subscribed { get; set; }
 
         [JsonProperty("user_ratings")]
-        public Dictionary<string, object> UserRatings { get; set; }
+        public JToken UserRatings { get; set; }
 
         [JsonProperty("created_on")]
         public DateTime CreatedOn { get; set; }

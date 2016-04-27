@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
@@ -34,7 +35,7 @@ namespace PodioAPI.Models
         public int? Size { get; set; }
 
         [JsonProperty("context")]
-        public Dictionary<string, object> Context { get; set; }
+        public JToken Context { get; set; }
 
         [JsonProperty("created_on")]
         public DateTime CreatedOn { get; set; }

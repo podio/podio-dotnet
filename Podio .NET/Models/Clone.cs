@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
@@ -9,7 +10,7 @@ namespace PodioAPI.Models
         public List<FileAttachment> Files { get; set; }
 
         [JsonProperty("values")]
-        public Dictionary<string, object> Values { get; set; }
+        public JToken Values { get; set; }
 
         [JsonProperty("tags")]
         public List<string> Tags { get; set; }

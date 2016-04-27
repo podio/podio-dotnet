@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
@@ -24,6 +25,6 @@ namespace PodioAPI.Models
         public Contact Profile { get; set; }
 
         [JsonProperty("properties")]
-        public Dictionary<string, object> Properties { get; set; }
+        public JToken Properties { get; set; }
     }
 }
