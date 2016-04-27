@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace PodioAPI.Models
 {
@@ -18,9 +19,9 @@ namespace PodioAPI.Models
         public FieldConfig Config { get; set; }
 
         [JsonProperty("from")]
-        public List<Dictionary<string, object>> From { get; set; }
+        public JToken From { get; set; }
 
         [JsonProperty("to")]
-        public List<Dictionary<string, object>> To { get; set; }
+        public JToken To { get; set; }
     }
 }
