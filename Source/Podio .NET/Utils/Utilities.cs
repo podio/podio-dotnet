@@ -1,7 +1,11 @@
-﻿using PodioAPI.Models.Request;
+﻿using PodioAPI.Models;
+using PodioAPI.Models.Request;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
+using System.Web;
 
 namespace PodioAPI.Utils
 {
@@ -10,9 +14,7 @@ namespace PodioAPI.Utils
         internal static string ArrayToCSV(int[] array, string splitter = ",")
         {
             if (array != null && array.Length > 0)
-            {
                 return string.Join(splitter, array);
-            }
 
             return string.Empty;
         }
@@ -20,9 +22,7 @@ namespace PodioAPI.Utils
         internal static string ArrayToCSV(string[] array, string splitter = ",")
         {
             if (array != null && array.Length > 0)
-            {
                 return string.Join(splitter, array);
-            }
 
             return string.Empty;
         }
@@ -46,9 +46,7 @@ namespace PodioAPI.Utils
                     }
                 }
                 if (parameters.Any())
-                {
                     encodedString = string.Join("&", parameters.ToArray());
-                }
             }
 
             return encodedString;
@@ -62,24 +60,16 @@ namespace PodioAPI.Utils
         /// <returns></returns>
         internal static string PrepareUrlWithOptions(string url, CreateUpdateOptions options)
         {
-            var urlWithOptions = "";
-            var parameters = new List<string>();
+            string urlWithOptions = "";
+            List<string> parameters = new List<string>();
             if (options.Silent)
-            {
                 parameters.Add("silent=true");
-            }
             if (!options.Hook)
-            {
                 parameters.Add("hook=false");
-            }
             if (options.AlertInvite)
-            {
                 parameters.Add("alert_invite=true");
-            }
             if (options.Fields != null && options.Fields.Any())
-            {
                 parameters.Add(string.Join(",", options.Fields.Select(s => s).ToArray()));
-            }
 
             urlWithOptions = parameters.Any() ? url + "?" + string.Join("&", parameters.ToArray()) : url;
             return urlWithOptions;

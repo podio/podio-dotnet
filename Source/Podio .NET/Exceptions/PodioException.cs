@@ -1,13 +1,13 @@
 ﻿using System;
 using Newtonsoft.Json;
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
 using System.Runtime.Serialization;
 #endif
 using PodioAPI.Utils;
 
 namespace PodioAPI.Exceptions
 {
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
     [Serializable]
 #endif
     public class PodioException : Exception
@@ -28,7 +28,7 @@ namespace PodioAPI.Exceptions
             this.StatusCode = statusCode;
         }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
         public PodioException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -37,7 +37,7 @@ namespace PodioAPI.Exceptions
     }
 
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
     [Serializable]
 #endif
     public class PodioInvalidGrantException : PodioException
@@ -47,7 +47,7 @@ namespace PodioAPI.Exceptions
         {
         }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
         public PodioInvalidGrantException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
@@ -55,7 +55,7 @@ namespace PodioAPI.Exceptions
     }
 
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
     [Serializable]
 #endif
     public class PodioBadRequestException : PodioException
@@ -66,7 +66,7 @@ namespace PodioAPI.Exceptions
         }
 
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
         public PodioBadRequestException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
@@ -74,7 +74,7 @@ namespace PodioAPI.Exceptions
     }
 
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
     [Serializable]
 #endif
     public class PodioAuthorizationException : PodioException
@@ -84,14 +84,14 @@ namespace PodioAPI.Exceptions
         {
         }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
         public PodioAuthorizationException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
 #endif
     }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
     [Serializable]
 #endif
     public class PodioForbiddenException : PodioException
@@ -101,14 +101,14 @@ namespace PodioAPI.Exceptions
         {
         }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
         public PodioForbiddenException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
 #endif
     }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
     [Serializable]
 #endif
     public class PodioNotFoundException : PodioException
@@ -118,14 +118,14 @@ namespace PodioAPI.Exceptions
         {
         }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
         public PodioNotFoundException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
 #endif
     }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
     [Serializable]
 #endif
     public class PodioConflictException : PodioException
@@ -135,14 +135,14 @@ namespace PodioAPI.Exceptions
         {
         }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
         public PodioConflictException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
 #endif
     }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
     [Serializable]
 #endif
     public class PodioGoneException : PodioException
@@ -152,14 +152,14 @@ namespace PodioAPI.Exceptions
         {
         }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
         public PodioGoneException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
 #endif
     }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
     [Serializable]
 #endif
     public class PodioRateLimitException : PodioException
@@ -169,14 +169,14 @@ namespace PodioAPI.Exceptions
         {
         }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
         public PodioRateLimitException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
 #endif
     }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
     [Serializable]
 #endif
     public class PodioServerException : PodioException
@@ -186,7 +186,7 @@ namespace PodioAPI.Exceptions
         {
         }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
         public PodioServerException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
@@ -201,7 +201,7 @@ namespace PodioAPI.Exceptions
         {
         }
 
-#if !NETSTANDARD1_6
+#if !NETSTANDARD1_3
         public PodioUnavailableException(SerializationInfo info, StreamingContext context): base(info, context)
         {
         }
