@@ -6,7 +6,7 @@ namespace PodioAPI.Utils
     public static class MimeTypeMapping
     {
         private static readonly IDictionary<string, string> _mappings =
-            new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
+            new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 #region Big freaking list of mime types
 
