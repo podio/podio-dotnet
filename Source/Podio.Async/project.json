@@ -7,7 +7,14 @@
   },
 
   "buildOptions": {
-    "xmlDoc": true
+    "compile": {
+      "include": [
+        "../Podio .NET/**/*.cs"
+      ],
+      "exclude": [
+        "../Podio .NET/obj/**/*.cs"
+      ]
+    }
   },
 
   "frameworks": {
