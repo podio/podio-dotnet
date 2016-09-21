@@ -1,11 +1,7 @@
-﻿using PodioAPI.Models;
-using PodioAPI.Models.Request;
+﻿using PodioAPI.Models.Request;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
-using System.Web;
 
 namespace PodioAPI.Utils
 {
