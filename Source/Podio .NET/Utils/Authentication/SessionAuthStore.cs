@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿#if !NETSTANDARD1_3
+using System.Web;
 
 namespace PodioAPI.Utils.Authentication
 {
@@ -18,3 +19,4 @@ namespace PodioAPI.Utils.Authentication
         }
     }
 }
+#endif
