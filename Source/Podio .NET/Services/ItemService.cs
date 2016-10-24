@@ -681,11 +681,28 @@ namespace PodioAPI.Services
         /// <returns>The id of the new revision</returns>
         public int? RevertItemRevision(int itemId, int revisionId)
         {
-            var url = string.Format(" /item/{0}/revision/{1}", itemId, revisionId);
+            var url = string.Format("/item/{0}/revision/{1}", itemId, revisionId);
             var response = _podio.Delete<dynamic>(url);
             if (response["revision"] != null)
             {
                 return (int) response["revision"];
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Reverts the item to the values in the given revision. This will undo any changes made after the given revision.
+        /// </summary>
+        /// <param name="itemId"></param>
+        /// <param name="revisionId"></param>
+        /// <returns>The id of the new revision</returns>
+        public int? RevertToRevision(int itemId, int revisionId)
+        {
+            var url = string.Format("/item/{0}/revision/{1}/revert_to", itemId, revisionId);
+            var response = _podio.Post<dynamic>(url);
+            if (response["revision"] != null)
+            {
+                return (int)response["revision"];
             }
             return null;
         }
