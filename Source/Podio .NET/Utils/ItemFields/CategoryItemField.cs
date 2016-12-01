@@ -37,6 +37,29 @@ namespace PodioAPI.Utils.ItemFields
             }
         }
 
+        public string OptionText
+        {
+            set
+            {
+                EnsureValuesInitialized(true);
+                this.Values.First()["value"] = value;
+            }
+        }
+
+        public IEnumerable<string> OptionTexts
+        {
+            set
+            {
+                EnsureValuesInitialized();
+                foreach (var optionId in value)
+                {
+                    var jobject = new JObject();
+                    jobject["value"] = optionId;
+                    this.Values.Add(jobject);
+                }
+            }
+        }
+
         public class Option
         {
             [JsonProperty("status")]
