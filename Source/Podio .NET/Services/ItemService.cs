@@ -682,7 +682,7 @@ namespace PodioAPI.Services
         /// <returns>The id of the new revision</returns>
         public async Task<int?> RevertItemRevision(int itemId, int revisionId)
         {
-            var url = string.Format(" /item/{0}/revision/{1}", itemId, revisionId);
+            var url = string.Format("/item/{0}/revision/{1}", itemId, revisionId);
             var response = await _podio.Delete<dynamic>(url);
             if (response["revision"] != null)
             {
