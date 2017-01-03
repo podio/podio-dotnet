@@ -161,6 +161,7 @@ namespace PodioAPI
                         if (authInfo != null && !string.IsNullOrEmpty(authInfo.AccessToken))
                         {
                             var retryRequest = CreateHttpRequest(httpRequest.RequestUri.OriginalString, httpRequest.Method, true, isFileDownload);
+
                             retryRequest.Content = httpRequest.Content;
 
                             return await Request<T>(retryRequest, isFileDownload, returnAsString);
@@ -185,7 +186,7 @@ namespace PodioAPI
             var fullUrl = ApiUrl + url;
             if (url.StartsWith("http")) fullUrl = url;
 
-            var request = new HttpRequestMessage()
+            var request = new HttpRequestMessage
             {
                 RequestUri = new Uri(fullUrl),
                 Method = httpMethod
