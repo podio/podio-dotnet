@@ -8,13 +8,14 @@
 
   "buildOptions": {
     "compile": {
-      "include": [
-        "../Podio .NET/**/*.cs"
-      ],
-      "exclude": [
-        "../Podio .NET/obj/**/*.cs"
-      ]
-    }
+        "include": [
+            "../Podio .NET/**/*.cs"
+        ],
+        "exclude": [
+            "../Podio .NET/obj/**/*.cs"
+        ]
+    },
+    "xmlDoc": true
   },
 
   "frameworks": {
