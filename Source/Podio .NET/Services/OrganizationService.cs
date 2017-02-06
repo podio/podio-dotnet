@@ -172,7 +172,7 @@ namespace PodioAPI.Services
         public Organization GetOrganizationByURL(string orgUrl)
         {
             string url = "/org/url";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"url", orgUrl}
             };
@@ -219,7 +219,7 @@ namespace PodioAPI.Services
             int offset = 0)
         {
             string url = string.Format("/org/{0}/report/login/", organizationId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"offset", offset.ToString()}

@@ -51,7 +51,7 @@ namespace PodioAPI.Services
         public List<View> GetViews(int appId, bool includeStandardViews = false)
         {
             string url = string.Format("/view/app/{0}/", appId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"include_standard_views", includeStandardViews.ToString()}
             };

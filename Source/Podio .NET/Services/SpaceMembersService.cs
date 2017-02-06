@@ -69,7 +69,7 @@ namespace PodioAPI.Services
             int limit = 100, int offset = 0)
         {
             string url = string.Format("/space/{0}/member/v2/", spaceId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"member_type", memberType},

@@ -34,7 +34,7 @@ namespace PodioAPI.Services
         {
             JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new {external_id = f.ExternalId, field_id = f.FieldId, values = f.Values}));
 
-            var requestData = new ItemCreateUpdateRequest()
+            var requestData = new ItemCreateUpdateRequest
             {
                 ExternalId = item.ExternalId,
                 Fields = fieldValues,
@@ -72,7 +72,7 @@ namespace PodioAPI.Services
                 JArray.FromObject(
                     item.Fields.Select(f => new {external_id = f.ExternalId, field_id = f.FieldId, values = f.Values}));
 
-            var requestData = new ItemCreateUpdateRequest()
+            var requestData = new ItemCreateUpdateRequest
             {
                 ExternalId = item.ExternalId,
                 Revision = revision,
@@ -190,7 +190,7 @@ namespace PodioAPI.Services
         public Item GetItem(int itemId, bool markedAsViewed = true)
         {
             string markAsViewdValue = markedAsViewed == true ? "1" : "0";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"mark_as_viewed", markAsViewdValue}
             };
@@ -212,7 +212,7 @@ namespace PodioAPI.Services
         public Item GetItemBasic(int itemId, bool markedAsViewed = true)
         {
             string viewedVal = markedAsViewed == true ? "1" : "0";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"mark_as_viewed", viewedVal}
             };
@@ -279,7 +279,7 @@ namespace PodioAPI.Services
         public PodioCollection<Item> FilterItems(int appId, int? limit = 30, int? offset = 0, Object filters = null,
             bool? remember = null, string sortBy = null, bool? sortDesc = null, bool includeFiles = false)
         {
-            var filterOptions = new FilterOptions()
+            var filterOptions = new FilterOptions
             {
                 Limit = limit,
                 Offset = offset,
@@ -309,7 +309,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/item/app/{0}/xlsx/", appId);
             var requestData = new Dictionary<string, string>();
-            var parameters = new Dictionary<string, string>()
+            var parameters = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"offset", offset.ToString()},
@@ -318,7 +318,7 @@ namespace PodioAPI.Services
                 {"view_id", viewId.HasValue ? viewId.ToString() : null},
                 {"sort_by", sortBy}
             };
-            var options = new Dictionary<string, bool>()
+            var options = new Dictionary<string, bool>
             {
                 {"file_download", true}
             };
@@ -422,7 +422,7 @@ namespace PodioAPI.Services
         public int ExportItems(int appId, string exporter, int? limit = null, int? offset = null, int? viewId = null,
             Object filters = null, string sortBy = null, bool? sortDesc = null)
         {
-            var requestData = new ExportFilter()
+            var requestData = new ExportFilter
             {
                 Limit = limit,
                 Offset = offset,
@@ -454,7 +454,7 @@ namespace PodioAPI.Services
             {
                 url = url + "?fields=items.fields(files)";
             }
-            var filterOptions = new FilterOptions()
+            var filterOptions = new FilterOptions
             {
                 Limit = limit,
                 Offset = offset,
@@ -474,7 +474,7 @@ namespace PodioAPI.Services
         public List<Item> GetTopValuesByField(int fieldId, int limit = 13, int[] notItemIds = null)
         {
             string itemIdCSV = Utilities.ArrayToCSV(notItemIds);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"not_item_id", itemIdCSV}
@@ -645,7 +645,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<ItemMicro> GetReferencesToItemByField(int itemId, int fieldId, int limit = 20)
         {
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()}
             };
@@ -725,7 +725,7 @@ namespace PodioAPI.Services
             string sort = null, string text = null)
         {
             string itemIdCSV = Utilities.ArrayToCSV(notItemIds);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"not_item_id", itemIdCSV},

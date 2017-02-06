@@ -24,7 +24,7 @@ namespace PodioAPI.Services
         public TaskSummary GetTaskSummary(int limit = 4)
         {
             string url = "/task/summary";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()}
             };
@@ -41,7 +41,7 @@ namespace PodioAPI.Services
         public TaskSummary GetTaskSummaryForOrganization(int orgId, int limit = 4)
         {
             string url = string.Format("/task/org/{0}/summary", orgId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()}
             };
@@ -57,7 +57,7 @@ namespace PodioAPI.Services
         public TaskSummary GetTaskSummaryForPersonal(int limit = 4)
         {
             string url = "/task/personal/summary";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()}
             };
@@ -75,7 +75,7 @@ namespace PodioAPI.Services
         public TaskSummary GetTaskSummaryForReference(string refType, int refId, int limit = 4)
         {
             string url = string.Format("/task/{0}/{1}/summary", refType, refId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()}
             };
@@ -92,7 +92,7 @@ namespace PodioAPI.Services
         public TaskSummary GetTaskSummaryForSpace(int spaceId, int limit = 4)
         {
             string url = string.Format("/task/space/{0}/summary", spaceId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()}
             };
@@ -146,7 +146,7 @@ namespace PodioAPI.Services
         public int GetTaskTotalsByTime(string time, int spaceId)
         {
             string url = string.Format("/task/total/{0}", time);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"space_id", spaceId.ToString()}
             };
@@ -499,7 +499,7 @@ namespace PodioAPI.Services
             int? space = null, string view = null)
         {
             string url = "/task/";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"app", appId.ToStringOrNull()},
                 {"completed", completed.ToStringOrNull()},

@@ -132,7 +132,7 @@ namespace PodioAPI.Services
             DateTime? viewedFrom = null)
         {
             string url = "/notification/";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"context_type", contextType},
                 {"created_from", createdFrom.ToStringOrNull()},

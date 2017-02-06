@@ -28,7 +28,7 @@ namespace PodioAPI.Services
         public Application GetApp(int appId, string type = "full")
         {
             string url = string.Format("/app/{0}", appId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"type", type}
             };
@@ -68,7 +68,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<Application> GetAppsBySpace(int spaceId, bool includeInactive = false, Dictionary<string, string> additionalAttributes = null)
         {
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"include_inactive", includeInactive.ToString()}
             };
@@ -97,7 +97,7 @@ namespace PodioAPI.Services
         {
             string appIdCSV = Utilities.ArrayToCSV(appIds);
             string url = "/app/features/";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"app_ids", appIdCSV},
                 {"include_space", includeSpace.ToString()}
@@ -126,7 +126,7 @@ namespace PodioAPI.Services
         public List<int> GetIconSuggestions(string query)
         {
             string url = "/app/icon/search";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"query", query}
             };
@@ -143,7 +143,7 @@ namespace PodioAPI.Services
         public List<Application> GetTopApps(bool excludeDemo = false, int limit = 4)
         {
             string url = "/app/top/";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"exclude_demo", excludeDemo.ToString()},
                 {"limit", limit.ToString()}
@@ -220,7 +220,7 @@ namespace PodioAPI.Services
         {
             string appIdCSV = Utilities.ArrayToCSV(excludeAppIds);
             string url = "/app/v2/";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"exclude_app_ids", appIdCSV},
                 {"exclude_demo", excludeDemo.ToString()},
@@ -247,7 +247,7 @@ namespace PodioAPI.Services
         public Application GetAppOnSpaceByURLLabel(int spaceId, string UrlLabel, string type = "full")
         {
             string url = string.Format("/app/space/{0}/{1}", spaceId, UrlLabel);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"type", type}
             };
@@ -390,7 +390,7 @@ namespace PodioAPI.Services
              */
 
             string url = "/app/";
-            var requestDate = new ApplicationCreateUpdateRequest()
+            var requestDate = new ApplicationCreateUpdateRequest
             {
                 SpaceId = application.SpaceId,
                 Config = application.Config,
@@ -472,7 +472,7 @@ namespace PodioAPI.Services
 
             string url = string.Format("/app/{0}", application.AppId);
             url = Podio.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, false));
-            var requestData = new ApplicationCreateUpdateRequest()
+            var requestData = new ApplicationCreateUpdateRequest
             {
                 Config = application.Config,
                 Fields = application.Fields

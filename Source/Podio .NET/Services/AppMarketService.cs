@@ -23,7 +23,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public AppMarketCategory GetCategories(bool only_used = true)
         {
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"only_used", only_used.ToString()}
             };
@@ -53,7 +53,7 @@ namespace PodioAPI.Services
         public AppMarketShares GetOwnShares(string type, int limit = 6, int offset = 0)
         {
             string url = string.Format("/app_store/{0}/own/", type);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"offset", offset.ToString()},
@@ -119,7 +119,7 @@ namespace PodioAPI.Services
             string sort = "install")
         {
             string url = string.Format("/app_store/{0}/author/{1}/", type, userId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"offset", offset.ToString()},

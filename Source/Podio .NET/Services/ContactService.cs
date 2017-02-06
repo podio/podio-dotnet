@@ -73,7 +73,7 @@ namespace PodioAPI.Services
         /// <returns></returns>
         public List<string> GetSkills(string text, int limit = 12)
         {
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"text", text}
@@ -117,7 +117,7 @@ namespace PodioAPI.Services
         {
             string profileIdCSV = Utilities.ArrayToCSV(profileIds);
             string url = string.Format("/contact/{0}/v2", profileIdCSV);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"space_id", spaceId.ToStringOrNull()}
             };
@@ -160,7 +160,7 @@ namespace PodioAPI.Services
         {
             string url = "/contact/";
             var requestData = new Dictionary<string, string>();
-            var parameters = new Dictionary<string, string>()
+            var parameters = new Dictionary<string, string>
             {
                 {"contact_type", contactType.ToStringOrNull()},
                 {"exclude_self", excludeSelf.ToStringOrNull()},
@@ -211,7 +211,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/contact/org/{0}", orgId);
             var requestData = new Dictionary<string, string>();
-            var parameters = new Dictionary<string, string>()
+            var parameters = new Dictionary<string, string>
             {
                 {"contact_type", contactType.ToStringOrNull()},
                 {"exclude_self", excludeSelf.ToStringOrNull()},
@@ -262,7 +262,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/contact/space/{0}/", spaceId);
             var requestData = new Dictionary<string, string>();
-            var parameters = new Dictionary<string, string>()
+            var parameters = new Dictionary<string, string>
             {
                 {"contact_type", contactType.ToStringOrNull()},
                 {"exclude_self", excludeSelf.ToStringOrNull()},
@@ -300,7 +300,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/contact/app/{0}/", appId);
             var requestData = new Dictionary<string, string>();
-            var parameters = new Dictionary<string, string>()
+            var parameters = new Dictionary<string, string>
             {
                 {"limit", limit.ToStringOrNull()},
                 {"offset", offset.ToStringOrNull()},
@@ -337,7 +337,7 @@ namespace PodioAPI.Services
         public string GetvCard(int profileId)
         {
             string url = string.Format("/contact/{0}/vcard", profileId);
-            var options = new Dictionary<string, bool>()
+            var options = new Dictionary<string, bool>
             {
                 {"return_raw", true}
             };

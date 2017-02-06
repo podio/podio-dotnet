@@ -47,7 +47,7 @@ namespace PodioAPI.Services
         public List<Contact> FindUserWithAccess(string refType, int refId, int? limit = null, int? offset = null)
         {
             string url = string.Format("/reference/{0}/{1}/accessible_by/", refType, refId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToStringOrNull()},
                 {"offset", offset.ToStringOrNull()}
@@ -72,7 +72,7 @@ namespace PodioAPI.Services
             string contextType = null)
         {
             string url = string.Format("/reference/{0}/{1}", refType, refId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"accessor_count", accessorCount.ToStringOrNull()},
                 {"context_id", contextId.ToStringOrNull()},
@@ -94,7 +94,7 @@ namespace PodioAPI.Services
         public Reference ResolveURL(string referenceUrl)
         {
             string url = "/reference/resolve";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"url", referenceUrl}
             };

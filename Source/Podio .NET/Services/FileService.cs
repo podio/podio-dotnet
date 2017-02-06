@@ -39,7 +39,7 @@ namespace PodioAPI.Services
                 filePath,
                 fileName
             };
-            Dictionary<string, bool> options = new Dictionary<string, bool>() {{"upload", true}};
+            Dictionary<string, bool> options = new Dictionary<string, bool> {{"upload", true}};
             return _podio.Post<FileAttachment>(url, requestData, options);
         }
 
@@ -61,7 +61,7 @@ namespace PodioAPI.Services
                 mimeType
             };
 
-            Dictionary<string, bool> options = new Dictionary<string, bool>() { { "byteUpload", true } };
+            Dictionary<string, bool> options = new Dictionary<string, bool> { { "byteUpload", true } };
             return _podio.Post<FileAttachment>(url, requestData, options);
         }
 
@@ -190,7 +190,7 @@ namespace PodioAPI.Services
             string filetype = null, string hostedBy = null, int limit = 20, string sortBy = null, bool sortDesc = false)
         {
             string url = "/file/";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"attached_to", attachedTo},
                 {"created_by", createdBy},
@@ -237,7 +237,7 @@ namespace PodioAPI.Services
             string sortBy = null, bool sortDesc = false)
         {
             string url = string.Format("/file/app/{0}/", appId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"attached_to", attachedTo},
                 {"created_by", createdBy},
@@ -284,7 +284,7 @@ namespace PodioAPI.Services
             string sortBy = null, bool sortDesc = false)
         {
             string url = string.Format("/file/space/{0}/", spaceId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"attached_to", attachedTo},
                 {"created_by", createdBy},
@@ -310,7 +310,7 @@ namespace PodioAPI.Services
             var fileLink = fileAttachment.Link;
 
             //For URL's other than of root 'api.podio.com' , pass the url as an option
-            var options = new Dictionary<string, dynamic>()
+            var options = new Dictionary<string, dynamic>
             {
                 {"file_download", true},
                 {"url", fileLink}

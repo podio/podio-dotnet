@@ -21,7 +21,7 @@ namespace PodioAPI.Models.Request
         ///     Temporary files that have been uploaded and should be attached to this comment.
         /// </summary>
         [JsonProperty(PropertyName = "file_ids", NullValueHandling = NullValueHandling.Ignore)]
-        public List<int> FieldIds { get; set; }
+        public List<int> FileIds { get; set; }
 
         /// <summary>
         ///     The id of an embedded link that has been created with the Add an embed operation in the Embed area.

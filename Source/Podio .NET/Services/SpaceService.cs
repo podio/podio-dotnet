@@ -143,7 +143,7 @@ namespace PodioAPI.Services
         public Space GetSpaceByUrl(string orgSlug, string spaceSlug, string spaceUrl)
         {
             string url = "/space/url";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"org_slug", orgSlug},
                 {"space_slug", spaceSlug},
@@ -161,7 +161,7 @@ namespace PodioAPI.Services
         public List<Space> GetTopSpaces(int limit = 6)
         {
             string url = "/space/top/";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()}
             };

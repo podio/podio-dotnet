@@ -89,7 +89,7 @@ namespace PodioAPI.Services
         public List<Contact> GetWhoLikedAnObject(string refType, int refId, int limit = 10)
         {
             string url = string.Format("/rating/{0}/{1}/liked_by/", refType, refId);
-            Dictionary<string, string> requestData = new Dictionary<string, string>()
+            Dictionary<string, string> requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()}
             };

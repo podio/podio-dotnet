@@ -38,7 +38,7 @@ namespace PodioAPI.Services
         public List<TaggedObject> GetObjectsOnAppWithTag(int appId, string text)
         {
             string url = string.Format("/tag/app/{0}/search/", appId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"text", text}
             };
@@ -56,7 +56,7 @@ namespace PodioAPI.Services
         public List<TaggedObject> GetObjectsOnOrganizationWithTag(int orgId, string text)
         {
             string url = string.Format("/tag/org/{0}/search/", orgId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"text", text}
             };
@@ -74,7 +74,7 @@ namespace PodioAPI.Services
         public List<TaggedObject> GetObjectsOnSpaceWithTag(int spaceId, string text)
         {
             string url = string.Format("/tag/space/{0}/search/", spaceId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"text", text}
             };
@@ -93,7 +93,7 @@ namespace PodioAPI.Services
         public List<Tag> GetTagsOnApp(int appId, int? limit = null, string text = null)
         {
             string url = string.Format("/tag/app/{0}/", appId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToStringOrNull()},
                 {"text", text}
@@ -112,7 +112,7 @@ namespace PodioAPI.Services
         public List<string> GetTagsOnAppTop(int appId, int? limit = null, string text = null)
         {
             string url = string.Format("/tag/app/{0}/top/", appId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToStringOrNull()},
                 {"text", text}
@@ -133,7 +133,7 @@ namespace PodioAPI.Services
         public List<Tag> GetTagsOnOrganization(int orgId, int? limit = null, string text = null)
         {
             string url = string.Format("/tag/org/{0}/", orgId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToStringOrNull()},
                 {"text", text}
@@ -153,7 +153,7 @@ namespace PodioAPI.Services
         public List<Tag> GetTagsOnSpace(int spaceId, int? limit = null, string text = null)
         {
             string url = string.Format("/tag/space/{0}/", spaceId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToStringOrNull()},
                 {"text", text}

@@ -141,7 +141,7 @@ namespace PodioAPI.Services
         {
             string url = "/stream/v3/";
             string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"groups_event_types", groupEventTypesCSV},
                 {"groups_limit", groupsLimit.ToString()},
@@ -166,7 +166,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/stream/app/{0}/v3", appId);
             string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"groups_event_types", groupEventTypesCSV},
                 {"groups_limit", groupsLimit.ToString()},
@@ -192,7 +192,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/stream/org/{0}/v3/", orgId);
             string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"groups_event_types", groupEventTypesCSV},
                 {"groups_limit", groupsLimit.ToString()},
@@ -214,7 +214,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/stream/space/{0}/v3/", spaceId);
             string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"groups_event_types", groupEventTypesCSV},
                 {"groups_limit", groupsLimit.ToString()}
@@ -238,7 +238,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/stream/user/{0}/v3", userId);
             string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"groups_event_types", groupEventTypesCSV},
                 {"groups_limit", groupsLimit.ToString()},
@@ -262,7 +262,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/stream/{0}/{1}/v3", refType, refId);
             string groupEventTypesCSV = Utilities.ArrayToCSV(groupsEventTypes);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"groups_event_types", groupEventTypesCSV},
                 {"groups_limit", groupsLimit.ToString()}

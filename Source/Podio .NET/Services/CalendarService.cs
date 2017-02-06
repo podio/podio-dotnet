@@ -67,7 +67,7 @@ namespace PodioAPI.Services
         public string GetAppCalendarAsiCal(int appId, int userId, string token)
         {
             string url = string.Format("/calendar/app/{0}/ics/{1}/{2}/", appId, userId, token);
-            var options = new Dictionary<string, bool>()
+            var options = new Dictionary<string, bool>
             {
                 {"return_raw", true}
             };
@@ -86,7 +86,7 @@ namespace PodioAPI.Services
         public string GetGlobalCalendarAsiCal(int userId, string token)
         {
             string url = string.Format("/calendar/ics/{0}/{1}/", userId, token);
-            var options = new Dictionary<string, bool>()
+            var options = new Dictionary<string, bool>
             {
                 {"return_raw", true}
             };
@@ -129,7 +129,7 @@ namespace PodioAPI.Services
         public string GetSpaceCalendarAsiCal(int spaceId, int userId, string token)
         {
             string url = string.Format("/calendar/space/{0}/ics/{1}/{2}/", spaceId, userId, token);
-            var options = new Dictionary<string, bool>()
+            var options = new Dictionary<string, bool>
             {
                 {"return_raw", true}
             };
@@ -148,7 +148,7 @@ namespace PodioAPI.Services
         public string GetTaskCalendarAsiCal(int taskId)
         {
             string url = string.Format("/calendar/task/{0}/ics/", taskId);
-            var options = new Dictionary<string, bool>()
+            var options = new Dictionary<string, bool>
             {
                 {"return_raw", true}
             };

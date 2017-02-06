@@ -164,6 +164,7 @@ namespace PodioAPI
             var request = (HttpWebRequest) WebRequest.Create(url);
             ServicePointManager.Expect100Continue = false;
             request.Proxy = this.Proxy;
+            request.KeepAlive = false;
             request.Method = httpMethod;
             request.UserAgent = "Podio Dotnet Client";
 
@@ -343,8 +344,8 @@ namespace PodioAPI
         /// <returns></returns>
         internal static string PrepareUrlWithOptions(string url, CreateUpdateOptions options)
         {
-            string urlWithOptions = "";
-            List<string> parameters = new List<string>();
+            var urlWithOptions = string.Empty;
+            var parameters = new List<string>();
             if (options.Silent)
                 parameters.Add("silent=true");
             if (!options.Hook)
@@ -512,7 +513,7 @@ namespace PodioAPI
         /// <returns>PodioOAuth object with OAuth data</returns>
         public PodioOAuth AuthenticateWithApp(int appId, string appToken)
         {
-            var authRequest = new Dictionary<string, string>()
+            var authRequest = new Dictionary<string, string>
             {
                 {"app_id", appId.ToString()},
                 {"app_token", appToken},
@@ -530,7 +531,7 @@ namespace PodioAPI
         /// <returns>PodioOAuth object with OAuth data</returns>
         public PodioOAuth AuthenticateWithPassword(string username, string password)
         {
-            var authRequest = new Dictionary<string, string>()
+            var authRequest = new Dictionary<string, string>
             {
                 {"username", username},
                 {"password", password},
@@ -548,7 +549,7 @@ namespace PodioAPI
         /// <returns>PodioOAuth object with OAuth data</returns>
         public PodioOAuth AuthenticateWithAuthorizationCode(string authorizationCode, string redirectUri)
         {
-            var authRequest = new Dictionary<string, string>()
+            var authRequest = new Dictionary<string, string>
             {
                 {"code", authorizationCode},
                 {"redirect_uri", redirectUri},
@@ -565,7 +566,7 @@ namespace PodioAPI
         /// <returns>PodioOAuth object with OAuth data</returns>
         public PodioOAuth RefreshAccessToken()
         {
-            var authRequest = new Dictionary<string, string>()
+            var authRequest = new Dictionary<string, string>
             {
                 {"refresh_token", OAuth.RefreshToken},
                 {"grant_type", "refresh_token"}
@@ -578,7 +579,7 @@ namespace PodioAPI
             attributes["client_id"] = ClientId;
             attributes["client_secret"] = ClientSecret;
 
-            var options = new Dictionary<string, object>()
+            var options = new Dictionary<string, object>
             {
                 {"oauth_request", true}
             };

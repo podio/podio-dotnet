@@ -93,7 +93,7 @@ namespace PodioAPI.Services
         public List<ConversationEvent> GetConversationEvents(int conversationId, int limit = 10, int offset = 0)
         {
             string url = string.Format("/conversation/{0}/event/", conversationId);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"offset", offset.ToString()}
@@ -111,7 +111,7 @@ namespace PodioAPI.Services
         public List<Conversation> GetConversations(int limit = 10, int offset = 0)
         {
             string url = "/conversation/";
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"offset", offset.ToString()}
@@ -168,7 +168,7 @@ namespace PodioAPI.Services
         public List<Conversation> GetFlaggedConversations(string flag, int limit = 10, int offset = 0)
         {
             string url = string.Format("/conversation/{0}/", flag);
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"offset", offset.ToString()}
@@ -284,7 +284,7 @@ namespace PodioAPI.Services
             bool participants = false)
         {
             string url = string.Format("/conversation/search/");
-            var requestData = new Dictionary<string, string>()
+            var requestData = new Dictionary<string, string>
             {
                 {"limit", limit.ToString()},
                 {"offset", offset.ToString()},
