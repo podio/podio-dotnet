@@ -5,6 +5,7 @@ using PodioAPI.Utils;
 using PodioAPI.Utils.Authentication;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -115,6 +116,11 @@ namespace PodioAPI
 
         internal async Task<T> Request<T>(HttpRequestMessage httpRequest, bool isFileDownload = false, bool returnAsString = false) where T : new()
         {
+
+            // for retry in case of failure.
+            var requestCopy = CreateHttpRequest(httpRequest.RequestUri.OriginalString, httpRequest.Method, true, isFileDownload);
+            await Utility.CopyHttpRequestMessageContent(httpRequest, requestCopy);
+
             var response = await HttpClient.SendAsync(httpRequest);
 
             // Get rate limits from header values
@@ -139,7 +145,7 @@ namespace PodioAPI
                     var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     if (returnAsString)
                     {
-                        var stringResponse = new StringResponse() { Data = responseBody };
+                        var stringResponse = new StringResponse { Data = responseBody };
                         return stringResponse.ChangeType<T>();
                     }
 
@@ -160,11 +166,8 @@ namespace PodioAPI
                         var authInfo = await RefreshAccessToken().ConfigureAwait(false);
                         if (authInfo != null && !string.IsNullOrEmpty(authInfo.AccessToken))
                         {
-                            var retryRequest = CreateHttpRequest(httpRequest.RequestUri.OriginalString, httpRequest.Method, true, isFileDownload);
-
-                            retryRequest.Content = httpRequest.Content;
-
-                            return await Request<T>(retryRequest, isFileDownload, returnAsString);
+                            requestCopy.Headers.Authorization = new AuthenticationHeaderValue("OAuth2", authInfo.AccessToken);
+                            return await Request<T>(requestCopy, isFileDownload, returnAsString);
                         }
                     }
                     else

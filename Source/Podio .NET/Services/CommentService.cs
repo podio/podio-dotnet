@@ -60,7 +60,7 @@ namespace PodioAPI.Services
         /// <param name="id"></param>
         /// <param name="text">The comment to be made</param>
         /// <param name="externalId">The external id of the comment</param>
-        /// <param name="fieldIds">Temporary files that have been uploaded and should be attached to this comment</param>
+        /// <param name="fileIds">Temporary files that have been uploaded and should be attached to this comment</param>
         /// <param name="embedUrl">The url to be attached</param>
         /// <param name="embedId">
         ///     The id of an embedded link that has been created with the Add an embed operation in the Embed
@@ -74,16 +74,17 @@ namespace PodioAPI.Services
         ///     If set to true, the object will not be bumped up in the stream and notifications will not be
         ///     generated. Default value: false
         /// </param>
+        /// <param name="hook">todo: describe hook parameter on AddCommentToObject</param>
         /// <returns></returns>
         public async Task<int> AddCommentToObject(string type, int id, string text, string externalId = null,
-            List<int> fieldIds = null, string embedUrl = null, int? embedId = null, bool alertInvite = false,
+            List<int> fileIds = null, string embedUrl = null, int? embedId = null, bool alertInvite = false,
             bool silent = false, bool hook = true)
         {
             CommentCreateUpdateRequest comment = new CommentCreateUpdateRequest()
             {
                 Value = text,
                 ExternalId = externalId,
-                FieldIds = fieldIds,
+                FileIds = fileIds,
                 EmbedUrl = embedUrl,
                 EmbedId = embedId
             };
@@ -105,6 +106,7 @@ namespace PodioAPI.Services
         ///     If set to true, the object will not be bumped up in the stream and notifications will not be
         ///     generated. Default value: false
         /// </param>
+        /// <param name="hook">todo: describe hook parameter on AddCommentToObject</param>
         /// <returns></returns>
         public async Task<int> AddCommentToObject(string type, int id, CommentCreateUpdateRequest comment, bool alertInvite = false,
             bool silent = false, bool hook = true)
@@ -123,20 +125,20 @@ namespace PodioAPI.Services
         /// <param name="commentId"></param>
         /// <param name="text">The comment to be made</param>
         /// <param name="externalId">The external id of the comment</param>
-        /// <param name="fieldIds">Temporary files that have been uploaded and should be attached to this comment</param>
+        /// <param name="fileIds">Temporary files that have been uploaded and should be attached to this comment</param>
         /// <param name="embedUrl">The url to be attached</param>
         /// <param name="embedId">
         ///     The id of an embedded link that has been created with the Add an embed operation in the Embed
         ///     area
         /// </param>
-        public async Task<dynamic>  UpdateComment(int commentId, string text, string externalId = null, List<int> fieldIds = null,
+        public async Task<dynamic>  UpdateComment(int commentId, string text, string externalId = null, List<int> fileIds = null,
             string embedUrl = null, int? embedId = null)
         {
             var requestData = new CommentCreateUpdateRequest()
             {
                 Value = text,
                 ExternalId = externalId,
-                FieldIds = fieldIds,
+                FileIds = fileIds,
                 EmbedUrl = embedUrl,
                 EmbedId = embedId
             };
