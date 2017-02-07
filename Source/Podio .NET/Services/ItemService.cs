@@ -614,7 +614,7 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/item/{0}/meeting/url", itemId);
             dynamic response = await _podio.Get<dynamic>(url);
-            if (response["url"] != null)
+            if (response != null && response["url"] != null)
                 return response["url"];
             else
                 return string.Empty;
@@ -684,7 +684,7 @@ namespace PodioAPI.Services
         {
             var url = string.Format("/item/{0}/revision/{1}", itemId, revisionId);
             var response = await _podio.Delete<dynamic>(url);
-            if (response["revision"] != null)
+            if (response != null && response["revision"] != null)
             {
                 return (int)response["revision"];
             }
@@ -701,8 +701,8 @@ namespace PodioAPI.Services
         public async Task<int?> RevertToRevision(int itemId, int revision)
         {
             var url = string.Format("/item/{0}/revision/{1}/revert_to", itemId, revision);
-            var response = await _podio.Post<dynamic>(url);
-            if (response["revision"] != null)
+            var response = await _podio.Delete<dynamic>(url);
+            if (response != null && response["revision"] != null)
             {
                 return (int)response["revision"];
             }

@@ -121,6 +121,19 @@ namespace PodioAPI.Services
         }
 
         /// <summary>
+        ///     Returns a single field from an app.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/applications/get-app-field-22353 </para>
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="externalId"></param>
+        /// <returns></returns>
+        public async Task<ApplicationField> GetAppField(int appId, string externalId)
+        {
+            string url = string.Format("/app/{0}/field/{1}", appId, externalId);
+            return await _podio.Get<ApplicationField>(url);
+        }
+
+        /// <summary>
         ///     <para>Podio API Reference: https://developers.podio.com/doc/applications/get-icon-suggestions-82045764 </para>
         /// </summary>
         /// <param name="query">Any search term to match.</param>

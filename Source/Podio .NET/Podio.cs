@@ -142,6 +142,11 @@ namespace PodioAPI
                 }
                 else
                 {
+                    if (response.StatusCode == HttpStatusCode.NoContent)
+                    {
+                        return default(T);
+                    }
+
                     var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     if (returnAsString)
                     {
