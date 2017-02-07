@@ -92,6 +92,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="appId"> A comma-separated list of app ids from which the features should be extracted </param>
         /// <param name="includeSpace"></param>
+        /// <param name="appIds">todo: describe appIds parameter on GetFeatures</param>
         /// <returns></returns>
         public List<string> GetFeatures(int[] appIds, bool includeSpace = false)
         {
@@ -269,6 +270,19 @@ namespace PodioAPI.Services
         {
             string url = string.Format("/app/org/{0}/space/{1}/{2}", orgLabel, spaceLabel, appLabel);
             return _podio.Get<Application>(url);
+        }
+
+        /// <summary>
+        ///     Returns a single field from an app.
+        ///     <para>Podio API Reference: https://developers.podio.com/doc/applications/get-app-field-22353 </para>
+        /// </summary>
+        /// <param name="appId"></param>
+        /// <param name="externalId"></param>
+        /// <returns></returns>
+        public ApplicationField GetAppField(int appId, string externalId)
+        {
+            string url = string.Format("/app/{0}/field/{1}", appId, externalId);
+            return _podio.Get<ApplicationField>(url);
         }
 
         /// <summary>

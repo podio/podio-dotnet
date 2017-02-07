@@ -1,10 +1,13 @@
 ﻿using System;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace PodioAPI.Models
 {
     public class SearchResult
     {
+       
         [JsonProperty("id")]
         public int Id { get; set; }
 
@@ -34,5 +37,11 @@ namespace PodioAPI.Models
 
         [JsonProperty("created_by")]
         public ByLine CreatedBy { get; set; }
+
+        [JsonProperty("highlight")]
+
+        public JToken Highlight { get; set; }
     }
+
+   
 }

@@ -110,8 +110,7 @@ namespace PodioAPI.Services
         public int? UpdateItemFieldValues(Item item, bool silent = false, bool hook = true)
         {
             /*
-                Example Usage: Updating a text field
-                
+                Example Usage: Updating a text field               
                 Item item = new Item();
                 item.ItemId = 123456;
                 var textfield = item.Field<TextItemField>("title");
@@ -224,6 +223,8 @@ namespace PodioAPI.Services
         ///     Returns the full item by its app_item_id, which is a unique ID for items per app.
         ///     <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-by-app-item-id-66506688 </para>
         /// </summary>
+        /// <param name="appId">todo: describe appId parameter on GetItemByAppItemId</param>
+        /// <param name="appItemId">todo: describe appItemId parameter on GetItemByAppItemId</param>
         public Item GetItemByAppItemId(int appId, int appItemId)
         {
             string url = string.Format("/app/{0}/item/{1}", appId, appItemId);
@@ -659,7 +660,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="type">The type of the reference</param>
-        /// <param name="id">The id of the reference</param>
+        /// <param name="referenceId">todo: describe referenceId parameter on UpdateItemReference</param>
         public void UpdateItemReference(int itemId, string type, int referenceId)
         {
             dynamic requestData = new
