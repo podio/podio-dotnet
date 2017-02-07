@@ -149,6 +149,7 @@
     <Compile Include="Models\Request\ViewCreateUpdateRequest.cs" />
     <Compile Include="Models\RowPreview.cs" />
     <Compile Include="Models\SearchResult.cs" />
+    <Compile Include="Models\SearchResultV2.cs" />
     <Compile Include="Models\Seat.cs" />
     <Compile Include="Models\Space.cs" />
     <Compile Include="Models\SpaceContactTotal.cs" />
