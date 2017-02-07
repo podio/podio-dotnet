@@ -16,7 +16,7 @@ namespace PodioAPI.Models
         public string RichValue { get; set; }
 
         [JsonProperty("external_id")]
-        public int? ExternalId { get; set; }
+        public string ExternalId { get; set; }
 
         [JsonProperty("space_id")]
         public object SpaceId { get; set; }
