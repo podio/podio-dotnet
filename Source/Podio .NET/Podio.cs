@@ -164,7 +164,6 @@ namespace PodioAPI
             var request = (HttpWebRequest) WebRequest.Create(url);
             ServicePointManager.Expect100Continue = false;
             request.Proxy = this.Proxy;
-            request.KeepAlive = false;
             request.Method = httpMethod;
             request.UserAgent = "Podio Dotnet Client";
 
