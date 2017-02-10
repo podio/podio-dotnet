@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Newtonsoft.Json;
+using System;
 
 namespace PodioAPI.Models.Request
 {
@@ -48,6 +49,6 @@ namespace PodioAPI.Models.Request
         public List<Grouping> Groupings { get; set; }
 
         [JsonProperty("filters", NullValueHandling = NullValueHandling.Ignore)]
-        public List<Filter> Filters { get; set; }
+        public Object Filters { get; set; }
     }
 }
