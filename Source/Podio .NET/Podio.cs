@@ -5,7 +5,6 @@ using PodioAPI.Utils;
 using PodioAPI.Utils.Authentication;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -19,11 +18,11 @@ namespace PodioAPI
     {
         protected string ClientId { get; set; }
         protected string ClientSecret { get; set; }
-        public PodioOAuth OAuth { get; set; }
+        public OAuth OAuth { get; set; }
         public IAuthStore AuthStore { get; set; }
         public int RateLimit { get; private set; }
         public int RateLimitRemaining { get; private set; }
-        private string ApiUrl { get; set; }
+        protected virtual string ApiUrl { get; set; }
 
         private static readonly HttpClient HttpClient;
 
@@ -162,11 +161,10 @@ namespace PodioAPI
                 var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                 var podioError = JSONSerializer.Deserialize<PodioError>(responseBody);
 
-                if (response.StatusCode == HttpStatusCode.Unauthorized && 
-                    podioError.ErrorDescription == "expired_token" || podioError.Error == "invalid_token")
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     // If RefreshToken exists, refresh the access token and try the request again
-                    if (!string.IsNullOrEmpty(OAuth.RefreshToken))
+                    if (OAuth is PodioOAuth podioOAuth && !string.IsNullOrEmpty(podioOAuth.RefreshToken) && podioError.ErrorDescription == "expired_token" || podioError.Error == "invalid_token")
                     {
                         var authInfo = await RefreshAccessToken().ConfigureAwait(false);
                         if (authInfo != null && !string.IsNullOrEmpty(authInfo.AccessToken))
@@ -177,6 +175,7 @@ namespace PodioAPI
                     }
                     else
                     {
+                        OAuth = null;
                         throw new PodioAuthorizationException((int)response.StatusCode, podioError);
                     } 
                 }
@@ -207,10 +206,7 @@ namespace PodioAPI
 
             if (addAuthorizationHeader)
             {
-                if (OAuth != null && !string.IsNullOrEmpty(OAuth.AccessToken))
-                {
-                    request.Headers.Authorization = new AuthenticationHeaderValue("OAuth2", OAuth.AccessToken);
-                } 
+                OAuth?.AddAuthorizationHeader(request.Headers);
             }
 
             return request;
@@ -225,7 +221,7 @@ namespace PodioAPI
                     if (podioError.Error == "invalid_grant")
                     {
                         //Reset auth info
-                        OAuth = new PodioOAuth();
+                        OAuth = null;
                         throw new PodioInvalidGrantException(status, podioError);
                     }
                     else
@@ -312,6 +308,25 @@ namespace PodioAPI
         }
 
         /// <summary>
+        ///     Authenticate with ShareFile OAuth context
+        /// </summary>
+        /// <param name="shareFileAccountId"></param>
+        /// <param name="shareFileAccessToken"></param>
+        /// <returns>ShareFileOAuth object with OAuth data</returns>
+        public ShareFileOAuth AuthenticateWithShareFile(string shareFileAccountId, string shareFileAccessToken)
+        {
+            this.OAuth = new ShareFileOAuth
+            {
+                AccountId = shareFileAccountId,
+                AccessToken = shareFileAccessToken
+            };
+
+            AuthStore.Set(null);
+
+            return (ShareFileOAuth)OAuth;
+        }
+
+        /// <summary>
         ///     Refresh the Access Token.
         ///     <para>When the access token expires, you can use this method to refresh your access, and gain another access_token</para>
         ///     <para>Podio API Reference: https://developers.podio.com/authentication </para>
@@ -319,9 +334,14 @@ namespace PodioAPI
         /// <returns>PodioOAuth object with OAuth data</returns>
         public async Task<PodioOAuth> RefreshAccessToken()
         {
+            if (!(OAuth is PodioOAuth podioOAuth))
+            {
+                return null;
+            }
+
             var authRequest = new Dictionary<string, string>()
             {
-                {"refresh_token", OAuth.RefreshToken},
+                {"refresh_token", podioOAuth.RefreshToken},
                 {"grant_type", "refresh_token"}
             };
             return await Authenticate(authRequest).ConfigureAwait(false);
@@ -359,7 +379,7 @@ namespace PodioAPI
         /// <returns></returns>
         public bool IsAuthenticated()
         {
-            return (this.OAuth != null && !string.IsNullOrEmpty(this.OAuth.AccessToken));
+            return OAuth != null && OAuth.IsAuthenticated();
         }
 
         #endregion

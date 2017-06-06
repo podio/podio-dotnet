@@ -231,6 +231,8 @@
     <Compile Include="Utils\ApplicationFields\StateApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\EmailApplicationField.cs" />
     <Compile Include="Utils\ApplicationFields\TextApplicationField.cs" />
+    <Compile Include="Utils\Authentication\OAuth.cs" />
+    <Compile Include="Utils\Authentication\ShareFileOAuth.cs" />
     <Compile Include="Utils\Authentication\IAuthStore.cs" />
     <Compile Include="Utils\Authentication\NullAuthStore.cs" />
     <Compile Include="Utils\Authentication\PodioOAuth.cs" />
