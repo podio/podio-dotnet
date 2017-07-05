@@ -90,6 +90,9 @@ namespace PodioAPI.Models
         [JsonProperty("item_name")]
         public string ItemName { get; set; }
 
+        [JsonProperty("space")]
+        public Space Space { get; set; }
+
 
         /// <summary>
         ///     Only for retrival
