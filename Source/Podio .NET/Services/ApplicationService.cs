@@ -21,20 +21,30 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/applications/get-app-22349 </para>
         /// </summary>
         /// <param name="appId"></param>
-        /// <param name="type">
+        /// <param name="view">
         ///     The type of the view of the app requested. Can be either "full", "short", "mini" or "micro". Default
         ///     value: full
         /// </param>
+        /// <param name="fields">
+        ///     This parameter can be used to include more or less content in responses than the defaults provided by Podio.
+        ///     E.g. space.view(full)
+        /// </param>
         /// <returns></returns>
-        public async Task<Application> GetApp(int appId, string type = "full")
+        public async Task<Application> GetApp(int appId, string view = "full", string fields = null)
         {
             string url = string.Format("/app/{0}", appId);
             var requestData = new Dictionary<string, string>()
             {
-                {"type", type}
+                {"view", view}
             };
+
+            if (!string.IsNullOrEmpty(fields))
+            {
+                requestData.Add("fields", fields);
+            }
+
             return await _podio.Get<Application>(url, requestData);
-            
+
         }
 
         /// <summary>
