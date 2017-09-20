@@ -13,9 +13,13 @@ namespace PodioAPI.Utils.ItemFields
             get
             {
                 if (this.Values != null && this.Values.Any())
+                {
                     return new List<string>(this.Values.Select(s => (string) s["value"]));
+                }
                 else
-                    return new List<String>();
+                {
+                    return new List<string>();
+                }
             }
 
             set
@@ -23,8 +27,10 @@ namespace PodioAPI.Utils.ItemFields
                 EnsureValuesInitialized();
                 foreach (var location in value)
                 {
-                    var jobject = new JObject();
-                    jobject["value"] = location;
+                    var jobject = new JObject
+                    {
+                        ["value"] = location
+                    };
                     this.Values.Add(jobject);
                 }
             }
@@ -36,8 +42,10 @@ namespace PodioAPI.Utils.ItemFields
             {
                 EnsureValuesInitialized();
 
-                var jobject = new JObject();
-                jobject["value"] = value;
+                var jobject = new JObject
+                {
+                    ["value"] = value
+                };
                 this.Values.Add(jobject);
             }
         }
@@ -53,11 +61,6 @@ namespace PodioAPI.Utils.ItemFields
 
                 return null;
             }
-            set
-            {
-                EnsureValuesInitialized(true);
-                this.Values.First()["lat"] = value;
-            }        
         }
 
         public double? Longitude
@@ -71,10 +74,44 @@ namespace PodioAPI.Utils.ItemFields
 
                 return null;
             }
-            set
+        }
+
+        public string StreetAddress
+        {
+            get
             {
-                EnsureValuesInitialized(true);
-                this.Values.First()["lng"] = value;
+                if (this.Values.Any())
+                {
+                    return (string)this.Values.First["street_address"];
+                }
+
+                return null;
+            }
+        }
+
+        public string City
+        {
+            get
+            {
+                if (this.Values.Any())
+                {
+                    return (string)this.Values.First["city"];
+                }
+
+                return null;
+            }
+        }
+
+        public string PostalCode
+        {
+            get
+            {
+                if (this.Values.Any())
+                {
+                    return (string)this.Values.First["postal_code"];
+                }
+
+                return null;
             }
         }
 
@@ -102,6 +139,6 @@ namespace PodioAPI.Utils.ItemFields
 
                 return null;
             }
-        }     
+        }
     }
 }

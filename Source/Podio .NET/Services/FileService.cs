@@ -318,5 +318,15 @@ namespace PodioAPI.Services
             };
             return await _podio.Get<FileResponse>(fileLink, new Dictionary<string, string>(), true);
         }
+
+        public async Task<FileAttachment> UploadLinkedAccountFile(int linkedAccountId, string externalFileId, bool preservePermissions = true)
+        {
+            var url = $"/file/linked_account/{linkedAccountId}/";
+            var request = new
+            {
+                external_file_id = externalFileId
+            };
+            return await _podio.Post<FileAttachment>(url, request);
+        }
     }
 }
