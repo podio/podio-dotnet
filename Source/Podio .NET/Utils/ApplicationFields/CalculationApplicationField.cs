@@ -28,6 +28,28 @@ namespace PodioAPI.Utils.ApplicationFields
             }
         }
 
+        private string _script;
+
+        /// <summary>
+        /// Script as string
+        /// </summary>
+        public string ScriptAsString
+        {
+            get
+            {
+                if (_script == null)
+                {
+                    _script = (string)this.GetSetting("script");
+                }
+                return _script;
+            }
+            set
+            {
+                InitializeFieldSettings();
+                this.InternalConfig.Settings["script"] = value;
+            }
+        }
+
         private string _unit;
 
         /// <summary>
@@ -47,6 +69,23 @@ namespace PodioAPI.Utils.ApplicationFields
             {
                 InitializeFieldSettings();
                 this.InternalConfig.Settings["unit"] = value;
+            }
+        }
+
+        private string _returnType;
+
+        /// <summary>
+        ///     The type of the script result, can be text, number or date
+        /// </summary>
+        public string ReturnType
+        {
+            get
+            {
+                if (_returnType == null)
+                {
+                    _returnType = (string)this.GetSetting("return_type");
+                }
+                return _returnType;
             }
         }
 
