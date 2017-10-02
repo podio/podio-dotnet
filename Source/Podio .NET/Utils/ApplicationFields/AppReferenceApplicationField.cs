@@ -27,5 +27,18 @@ namespace PodioAPI.Utils.ApplicationFields
                 this.InternalConfig.Settings["referenceable_types"] = value != null ? JToken.FromObject(value) : null;
             }
         }
+
+        /// <summary>
+        ///     True if multiple references should be allowed, False otherwise
+        /// </summary>
+        public bool Multiple
+        {
+            get { return (bool)this.GetSetting("multiple"); }
+            set
+            {
+                InitializeFieldSettings();
+                this.InternalConfig.Settings["multiple"] = value;
+            }
+        }
     }
 }
