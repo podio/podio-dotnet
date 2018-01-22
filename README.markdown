@@ -1,3 +1,5 @@
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
+
 # Podio.NET [![Build status](https://ci.appveyor.com/api/projects/status/mv39ht4y9uk09593?svg=true)](https://ci.appveyor.com/project/AjmalVh/podio-dotnet) [![NuGet](https://img.shields.io/nuget/v/Podio.svg)](https://www.nuget.org/packages/Podio/)
 
 
