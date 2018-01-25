@@ -75,10 +75,12 @@ namespace PodioAPI
             }
             else
             {
-                var jsonString = JSONSerializer.Serilaize(requestData);
-                request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                if (requestData != null)
+                {
+                    var jsonString = JSONSerializer.Serilaize(requestData);
+                    request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                }
             }
-
             return await Request<T>(request);
         }
 

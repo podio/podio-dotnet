@@ -225,10 +225,9 @@ namespace PodioAPI.Services
         ///     If set to true, the object will not be bumped up in the stream and notifications will not be
         ///     generated. Default value: false
         /// </param>
+        /// <param name="externalId"></param>
         /// <returns></returns>
-        public async Task<List<Models.Task>> CreateTask(string text, DateTime? dueDate = null, string description = null,
-            int? responsible = null, bool isPrivate = true, string refType = null, int? refId = null, bool hook = true,
-            bool silent = false)
+        public async Task<List<Models.Task>> CreateTask(string text, DateTime? dueDate = null, string description = null, int? responsible = null, bool isPrivate = true, string refType = null, int? refId = null, bool hook = true, bool silent = false, string externalId = null)
         {
             var task = new TaskCreateUpdateRequest
             {
@@ -236,7 +235,8 @@ namespace PodioAPI.Services
                 Description = description,
                 DueDate = dueDate,
                 Responsible = responsible,
-                Private = isPrivate
+                Private = isPrivate,
+                ExternalId = externalId
             };
             return await CreateTask(task, refType, refId, hook, silent);
         }
