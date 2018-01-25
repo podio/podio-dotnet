@@ -9,7 +9,7 @@ namespace PodioAPI.Models
         public int Revision { get; set; }
 
         [JsonProperty("item_revision_id")]
-        public int? ItemRevisionId { get; set; }
+        public long? ItemRevisionId { get; set; }
 
         [JsonProperty("app_revision")]
         public int? AppRevision { get; set; }
