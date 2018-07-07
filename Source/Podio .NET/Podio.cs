@@ -195,7 +195,7 @@ namespace PodioAPI
                 {
                     throw new PodioInvalidJsonException((int)response.StatusCode, new PodioError
                     {
-                        Error = "Invalid json string",
+                        Error = "Error response is not a valid Json string.",
                         ErrorDescription = ex.ToString(),
                         ErrorDetail = responseBody
                     });
