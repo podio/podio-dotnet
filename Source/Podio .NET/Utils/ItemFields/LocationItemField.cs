@@ -77,6 +77,44 @@ namespace PodioAPI.Utils.ItemFields
                 this.Values.First()["lng"] = value;
             }
         }
+        public string StreetAddress
+        {
+            get
+            {
+                if (this.Values.Any())
+                {
+                    return (string)this.Values.First["street_address"];
+                }
+
+                return null;
+            }
+        }
+
+        public string City
+        {
+            get
+            {
+                if (this.Values.Any())
+                {
+                    return (string)this.Values.First["city"];
+                }
+
+                return null;
+            }
+        }
+
+        public string PostalCode
+        {
+            get
+            {
+                if (this.Values.Any())
+                {
+                    return (string)this.Values.First["postal_code"];
+                }
+
+                return null;
+            }
+        }
 
         public string Country
         {
