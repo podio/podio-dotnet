@@ -11,6 +11,7 @@ using PodioAPI.Models.Request;
 using PodioAPI.Services;
 using PodioAPI.Utils;
 using PodioAPI.Utils.Authentication;
+using Newtonsoft.Json;
 
 namespace PodioAPI
 {
@@ -264,13 +265,16 @@ namespace PodioAPI
             var podioError = new PodioError();
             if (podioResponse.Status >= 400)
             {
-                podioError = JSONSerializer.Deserilaize<PodioError>(podioResponse.Body);
-                if(podioError == null)
+                try
+                {
+                    podioError = JSONSerializer.Deserilaize<PodioError>(podioResponse.Body);
+                }
+                catch (JsonException ex)
                 {
                     throw new PodioInvalidJsonException(podioResponse.Status, new PodioError
                     {
-                        Error = "Invalid json string",
-                        ErrorDescription = podioResponse.Body,
+                        Error = "Error response is not a valid Json string.",
+                        ErrorDescription = ex.ToString(),
                         ErrorDetail = podioResponse.Body
                     });
                 }

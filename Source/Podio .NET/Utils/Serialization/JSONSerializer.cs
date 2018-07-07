@@ -19,14 +19,7 @@ namespace PodioAPI.Utils
 
         public static T Deserilaize<T>(string json)
         {
-            try
-            {
-                return JsonConvert.DeserializeObject<T>(json, new JsonConverter[] { new NestedDictionaryConverter() });
-            }
-            catch (JsonException)
-            {
-                return default(T);
-            }
+            return JsonConvert.DeserializeObject<T>(json, new JsonConverter[] { new NestedDictionaryConverter() });
         }
     }
 
