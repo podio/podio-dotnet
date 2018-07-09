@@ -11,6 +11,7 @@ using PodioAPI.Models.Request;
 using PodioAPI.Services;
 using PodioAPI.Utils;
 using PodioAPI.Utils.Authentication;
+using Newtonsoft.Json;
 
 namespace PodioAPI
 {
@@ -163,6 +164,7 @@ namespace PodioAPI
 
             var request = (HttpWebRequest) WebRequest.Create(url);
             ServicePointManager.Expect100Continue = false;
+            ServicePointManager.SecurityProtocol = (SecurityProtocolType)3072;
             request.Proxy = this.Proxy;
             request.Method = httpMethod;
             request.UserAgent = "Podio Dotnet Client";
@@ -263,16 +265,18 @@ namespace PodioAPI
             var podioError = new PodioError();
             if (podioResponse.Status >= 400)
             {
-                podioError = JSONSerializer.Deserilaize<PodioError>(podioResponse.Body);
-                if(podioError == null)
+                try
                 {
-                    var execeptionMessage = "";
-                    if(podioResponse.Body != null)
+                    podioError = JSONSerializer.Deserilaize<PodioError>(podioResponse.Body);
+                }
+                catch (JsonException ex)
+                {
+                    throw new PodioInvalidJsonException(podioResponse.Status, new PodioError
                     {
-                        execeptionMessage = podioResponse.Body;
-                    }
-
-                    throw new Exception(execeptionMessage);
+                        Error = "Error response is not a valid Json string.",
+                        ErrorDescription = ex.ToString(),
+                        ErrorDetail = podioResponse.Body
+                    });
                 }
             }
 
@@ -392,7 +396,7 @@ namespace PodioAPI
         internal static string EncodeAttributes(Dictionary<string, string> attributes)
         {
             var encodedString = string.Empty;
-            if (attributes.Any())
+            if (attributes != null && attributes.Any())
             {
                 var parameters = new List<string>();
                 foreach (var item in attributes)

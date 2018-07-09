@@ -317,5 +317,21 @@ namespace PodioAPI.Services
             };
             return _podio.Get<FileResponse>(url: null, options: options);
         }
+        /// <summary>
+        /// Upload linked account file (like sharefile, google drive)
+        /// </summary>
+        /// <param name="linkedAccountId"></param>
+        /// <param name="externalFileId"></param>
+        /// <param name="preservePermissions"></param>
+        /// <returns></returns>
+        public FileAttachment UploadLinkedAccountFile(int linkedAccountId, string externalFileId, bool preservePermissions = true)
+        {
+            var url = $"/file/linked_account/{linkedAccountId}/";
+            var request = new
+            {
+                external_file_id = externalFileId
+            };
+            return _podio.Post<FileAttachment>(url, request);
+        }
     }
 }
