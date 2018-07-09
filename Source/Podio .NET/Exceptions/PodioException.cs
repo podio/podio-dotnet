@@ -207,7 +207,18 @@ namespace PodioAPI.Exceptions
         }
 #endif
     }
-
+    public class PodioInvalidJsonException : PodioException
+    {
+        public PodioInvalidJsonException(int status, PodioError error)
+            : base(status, error)
+        {
+        }
+#if !NETSTANDARD1_3
+        public PodioInvalidJsonException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+#endif
+    }
     /// <summary>
     ///     Represent the error response from API
     /// </summary>

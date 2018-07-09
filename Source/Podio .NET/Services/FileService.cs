@@ -318,5 +318,21 @@ namespace PodioAPI.Services
             };
             return await _podio.Get<FileResponse>(fileLink, new Dictionary<string, string>(), true);
         }
+        /// <summary>
+        /// Add linked account file (like sharefile, google drive)
+        /// </summary>
+        /// <param name="linkedAccountId"></param>
+        /// <param name="externalFileId"></param>
+        /// <param name="preservePermissions"></param>
+        /// <returns></returns>
+        public async Task<FileAttachment> UploadLinkedAccountFile(int linkedAccountId, string externalFileId, bool preservePermissions = true)
+        {
+            var url = $"/file/linked_account/{linkedAccountId}/";
+            var request = new
+            {
+                external_file_id = externalFileId
+            };
+            return await _podio.Post<FileAttachment>(url, request);
+        }
     }
 }

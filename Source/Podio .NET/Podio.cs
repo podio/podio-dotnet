@@ -1,4 +1,5 @@
-﻿using PodioAPI.Exceptions;
+﻿using Newtonsoft.Json;
+using PodioAPI.Exceptions;
 using PodioAPI.Models;
 using PodioAPI.Services;
 using PodioAPI.Utils;
@@ -75,8 +76,11 @@ namespace PodioAPI
             }
             else
             {
-                var jsonString = JSONSerializer.Serilaize(requestData);
-                request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                if (requestData != null)
+                {
+                    var jsonString = JSONSerializer.Serilaize(requestData);
+                    request.Content = new StringContent(jsonString, Encoding.UTF8, "application/json");
+                }
             }
 
             return await Request<T>(request);
@@ -159,31 +163,44 @@ namespace PodioAPI
             else
             {
                 var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-                var podioError = JSONSerializer.Deserialize<PodioError>(responseBody);
-
-                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                try
                 {
-                    // If RefreshToken exists, refresh the access token and try the request again
-                    if (OAuth is PodioOAuth podioOAuth && !string.IsNullOrEmpty(podioOAuth.RefreshToken) && podioError.ErrorDescription == "expired_token" || podioError.Error == "invalid_token")
+                    var podioError = JSONSerializer.Deserialize<PodioError>(responseBody);
+
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
                     {
-                        var authInfo = await RefreshAccessToken().ConfigureAwait(false);
-                        if (authInfo != null && !string.IsNullOrEmpty(authInfo.AccessToken))
+                        // If RefreshToken exists, refresh the access token and try the request again
+                        if (OAuth is PodioOAuth podioOAuth && !string.IsNullOrEmpty(podioOAuth.RefreshToken) && podioError.ErrorDescription == "expired_token" || podioError.Error == "invalid_token")
                         {
-                            requestCopy.Headers.Authorization = new AuthenticationHeaderValue("OAuth2", authInfo.AccessToken);
-                            return await Request<T>(requestCopy, isFileDownload, returnAsString);
+                            var authInfo = await RefreshAccessToken().ConfigureAwait(false);
+                            if (authInfo != null && !string.IsNullOrEmpty(authInfo.AccessToken))
+                            {
+                                requestCopy.Headers.Authorization = new AuthenticationHeaderValue("OAuth2", authInfo.AccessToken);
+                                return await Request<T>(requestCopy, isFileDownload, returnAsString);
+                            }
+                        }
+                        else
+                        {
+                            OAuth = null;
+                            throw new PodioAuthorizationException((int)response.StatusCode, podioError);
                         }
                     }
                     else
                     {
-                        OAuth = null;
-                        throw new PodioAuthorizationException((int)response.StatusCode, podioError);
-                    } 
-                }
-                else
-                {
-                    ProcessErrorResponse(response.StatusCode, podioError);
-                }
+                        ProcessErrorResponse(response.StatusCode, podioError);
+                    }
 
+                }
+                catch (JsonException ex)
+                {
+                    throw new PodioInvalidJsonException((int)response.StatusCode, new PodioError
+                    {
+                        Error = "Error response is not a valid Json string.",
+                        ErrorDescription = ex.ToString(),
+                        ErrorDetail = responseBody
+                    });
+                }
+               
                 return default(T);
             }
         }
@@ -215,6 +232,7 @@ namespace PodioAPI
         private void ProcessErrorResponse(HttpStatusCode statusCode, PodioError podioError)
         {
             var status = (int)statusCode;
+           
             switch (status)
             {
                 case 400:
