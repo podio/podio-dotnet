@@ -45,6 +45,6 @@ namespace PodioAPI.Models
         public Application App { get; set; }
 
         [JsonProperty("color")]
-        public Application Color { get; set; }
+        public string Color { get; set; }
     }
 }
