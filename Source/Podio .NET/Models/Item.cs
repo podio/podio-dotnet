@@ -9,7 +9,7 @@ namespace PodioAPI.Models
     public class Item
     {
         [JsonProperty("item_id")]
-        public int ItemId { get; set; }
+        public long ItemId { get; set; }
 
         [JsonProperty("external_id")]
         public string ExternalId { get; set; }
