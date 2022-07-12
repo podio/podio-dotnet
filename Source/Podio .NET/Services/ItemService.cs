@@ -31,7 +31,7 @@ namespace PodioAPI.Services
         /// </param>
         /// <param name="hook">If set to false, hooks will not be executed for the change</param>
         /// <returns>Id of the created item</returns>
-        public async Task<int> AddNewItem(long appId, Item item, int? spaceId = null, bool silent = false, bool hook = true)
+        public async Task<long> AddNewItem(long appId, Item item, int? spaceId = null, bool silent = false, bool hook = true)
         {
             JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
 

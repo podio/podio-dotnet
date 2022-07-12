@@ -141,7 +141,7 @@ namespace PodioAPI.Services
         /// </param>
         /// <param name="refId"></param>
         /// <returns></returns>
-        public async System.Threading.Tasks.Task AttachFile(int fileId, string refType, int refId)
+        public async System.Threading.Tasks.Task AttachFile(int fileId, string refType, long refId)
         {
             string url = string.Format("/file/{0}/attach", fileId);
             dynamic requestData = new
