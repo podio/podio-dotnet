@@ -278,7 +278,7 @@ namespace PodioAPI
         /// <param name="appId">AppId</param>
         /// <param name="appToken">AppToken</param>
         /// <returns>PodioOAuth object with OAuth data</returns>
-        public async Task<PodioOAuth> AuthenticateWithApp(int appId, string appToken)
+        public async Task<PodioOAuth> AuthenticateWithApp(long appId, string appToken)
         {
             var authRequest = new Dictionary<string, string>()
             {

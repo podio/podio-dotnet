@@ -31,7 +31,7 @@ namespace PodioAPI.Services
         /// </param>
         /// <param name="hook">If set to false, hooks will not be executed for the change</param>
         /// <returns>Id of the created item</returns>
-        public async Task<int> AddNewItem(int appId, Item item, int? spaceId = null, bool silent = false, bool hook = true)
+        public async Task<long> AddNewItem(long appId, Item item, int? spaceId = null, bool silent = false, bool hook = true)
         {
             JArray fieldValues = JArray.FromObject(item.Fields.Select(f => new { external_id = f.ExternalId, field_id = f.FieldId, values = f.Values }));
 
@@ -188,7 +188,7 @@ namespace PodioAPI.Services
         ///     If true marks any new notifications on the given item as viewed, otherwise leaves any
         ///     notifications untouched, Default value true
         /// </param>
-        public async Task<Item> GetItem(int itemId, bool markedAsViewed = true)
+        public async Task<Item> GetItem(long itemId, bool markedAsViewed = true)
         {
             string markAsViewdValue = markedAsViewed == true ? "1" : "0";
             var requestData = new Dictionary<string, string>()
@@ -210,7 +210,7 @@ namespace PodioAPI.Services
         ///     notifications untouched, Default value true
         /// </param>
         /// <returns></returns>
-        public async Task<Item> GetItemBasic(int itemId, bool markedAsViewed = true)
+        public async Task<Item> GetItemBasic(long itemId, bool markedAsViewed = true)
         {
             string viewedVal = markedAsViewed == true ? "1" : "0";
             var requestData = new Dictionary<string, string>()
@@ -225,7 +225,7 @@ namespace PodioAPI.Services
         ///     Returns the full item by its app_item_id, which is a unique ID for items per app.
         ///     <para>Podio API Reference: https://developers.podio.com/doc/items/get-item-by-app-item-id-66506688 </para>
         /// </summary>
-        public async Task<Item> GetItemByAppItemId(int appId, int appItemId)
+        public async Task<Item> GetItemByAppItemId(long appId, int appItemId)
         {
             string url = string.Format("/app/{0}/item/{1}", appId, appItemId);
             return await _podio.Get<Item>(url);
@@ -238,7 +238,7 @@ namespace PodioAPI.Services
         /// <param name="appId"></param>
         /// <param name="external_id"></param>
         /// <returns></returns>
-        public async Task<Item> GetItemByExternalId(int appId, string external_id)
+        public async Task<Item> GetItemByExternalId(long appId, string external_id)
         {
             string url = string.Format("/item/app/{0}/external_id/{1}", appId, external_id);
             return await _podio.Get<Item>(url);
@@ -253,7 +253,7 @@ namespace PodioAPI.Services
         /// <param name="filterOptions"></param>
         /// <param name="includeFiles"></param>
         /// <returns>Collection of matching items</returns>
-        public async Task<PodioCollection<Item>> FilterItems(int appId, FilterOptions filterOptions, bool includeFiles = false)
+        public async Task<PodioCollection<Item>> FilterItems(long appId, FilterOptions filterOptions, bool includeFiles = false)
         {
             filterOptions.Limit = filterOptions.Limit == 0 ? 30 : filterOptions.Limit;
             string url = string.Format("/item/app/{0}/filter/", appId);
@@ -277,7 +277,7 @@ namespace PodioAPI.Services
         /// <param name="sortDesc">True to sort descending, false otherwise</param>
         /// <param name="includeFiles">True to include files when getting filtered items, defaults to false</param>
         /// <returns></returns>
-        public async Task<PodioCollection<Item>> FilterItems(int appId, int? limit = 30, int? offset = 0, Object filters = null,
+        public async Task<PodioCollection<Item>> FilterItems(long appId, int? limit = 30, int? offset = 0, Object filters = null,
             bool? remember = null, string sortBy = null, bool? sortDesc = null, bool includeFiles = false)
         {
             var filterOptions = new FilterOptions()
@@ -305,7 +305,7 @@ namespace PodioAPI.Services
         /// <param name="sortDesc">Use true to sort descending, use false to sort ascending Default value: true</param>
         /// <param name="viewId">Applies the given view, if set to 0, the last used view will be used</param>
         /// <returns></returns>
-        public async Task<FileResponse> GetItemsAsXlsx(int appId, Dictionary<string, string> filters, int limit = 20, int offset = 0,
+        public async Task<FileResponse> GetItemsAsXlsx(long appId, Dictionary<string, string> filters, int limit = 20, int offset = 0,
             bool deletedColumns = false, string sortBy = null, bool sortDesc = true, int? viewId = null)
         {
             string url = string.Format("/item/app/{0}/xlsx/", appId);
@@ -340,7 +340,7 @@ namespace PodioAPI.Services
         ///     generated
         /// </param>
         /// <returns>Collection of matching items</returns>
-        public async Task<BulkDeletionStatus> BulkDeleteItems(int appId, BulkDeleteRequest deleteRequest, bool silent = false)
+        public async Task<BulkDeletionStatus> BulkDeleteItems(long appId, BulkDeleteRequest deleteRequest, bool silent = false)
         {
             string url = string.Format("/item/app/{0}/delete", appId);
             url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
@@ -357,7 +357,7 @@ namespace PodioAPI.Services
         ///     generated
         /// </param>
         /// <returns>The id of the cloned item</returns>
-        public async Task<int> CloneItem(int itemId, bool silent = false)
+        public async Task<int> CloneItem(long itemId, bool silent = false)
         {
             string url = string.Format("/item/{0}/clone", itemId);
             url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent));
@@ -375,7 +375,7 @@ namespace PodioAPI.Services
         ///     generated
         /// </param>
         /// <param name="hook">If set to false, hooks will not be executed for the change</param>
-        public async System.Threading.Tasks.Task DeleteItem(int itemId, bool silent = false, bool hook = true)
+        public async System.Threading.Tasks.Task DeleteItem(long itemId, bool silent = false, bool hook = true)
         {
             string url = string.Format("/item/{0}", itemId);
             url = Utility.PrepareUrlWithOptions(url, new CreateUpdateOptions(silent, hook));
@@ -387,7 +387,7 @@ namespace PodioAPI.Services
         ///     <para>Podio API Reference: https://developers.podio.com/doc/items/delete-item-reference-7302326 </para>
         /// </summary>
         /// <param name="itemId"></param>
-        public async System.Threading.Tasks.Task DeleteItemReference(int itemId)
+        public async System.Threading.Tasks.Task DeleteItemReference(long itemId)
         {
             string url = string.Format("/item/{0}/ref", itemId);
             await _podio.Delete<dynamic>(url);
@@ -401,7 +401,7 @@ namespace PodioAPI.Services
         /// <param name="exporter">Valid exporters are currently "xls" and "xlsx"</param>
         /// <param name="filter">The list of filters to apply</param>
         /// <returns>The id of the batch created for this export</returns>
-        public async Task<int> ExportItems(int appId, string exporter, ExportFilter filter)
+        public async Task<int> ExportItems(long appId, string exporter, ExportFilter filter)
         {
             string url = string.Format("/item/app/{0}/export/{1}", appId, exporter);
             dynamic response = await _podio.Post<dynamic>(url, filter);
@@ -420,7 +420,7 @@ namespace PodioAPI.Services
         /// <param name="sortBy">The sorting order if not using predefined filter</param>
         /// <param name="sortDesc">True if sorting should be descending, false otherwise</param>
         /// <returns>The id of the batch created for this export</returns>
-        public async Task<int> ExportItems(int appId, string exporter, int? limit = null, int? offset = null, int? viewId = null,
+        public async Task<int> ExportItems(long appId, string exporter, int? limit = null, int? offset = null, int? viewId = null,
             Object filters = null, string sortBy = null, bool? sortDesc = null)
         {
             var requestData = new ExportFilter()
@@ -447,7 +447,7 @@ namespace PodioAPI.Services
         /// <param name="remember">True if the view should be remembered, defaults to false</param>
         /// <param name="includeFiles">True to include files when getting filtered items, defaults to false</param>
         /// <returns></returns>
-        public async Task<PodioCollection<Item>> FilterItemsByView(int appId, int viewId, int limit = 30, int offset = 0,
+        public async Task<PodioCollection<Item>> FilterItemsByView(long appId, int viewId, int limit = 30, int offset = 0,
             bool remember = false, bool includeFiles = false)
         {
             string url = string.Format("/item/app/{0}/filter/{1}/", appId, viewId);
@@ -495,7 +495,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public async Task<AppValues> GetAppValues(int appId)
+        public async Task<AppValues> GetAppValues(long appId)
         {
             string url = string.Format("/item/app/{0}/values", appId);
             return await _podio.Get<AppValues>(url);
@@ -509,7 +509,7 @@ namespace PodioAPI.Services
         /// <param name="itemId"></param>
         /// <param name="fieldId"></param>
         /// <returns></returns>
-        public async Task<T> GetItemFieldValues<T>(int itemId, int fieldId) where T : new()
+        public async Task<T> GetItemFieldValues<T>(long itemId, int fieldId) where T : new()
         {
             string url = string.Format("/item/{0}/value/{1}", itemId, fieldId);
             return await _podio.Get<T>(url);
@@ -522,7 +522,7 @@ namespace PodioAPI.Services
         /// <param name="itemId"></param>
         /// <param name="fieldId"></param>
         /// <returns></returns>
-        public async Task<Item> GetItemBasicByField(int itemId, string fieldId)
+        public async Task<Item> GetItemBasicByField(long itemId, string fieldId)
         {
             string url = string.Format("/item/{0}/reference/{1}/preview", itemId, fieldId);
             return await _podio.Get<Item>(url);
@@ -535,7 +535,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        public async Task<List<ItemReference>> GetItemReferences(int itemId)
+        public async Task<List<ItemReference>> GetItemReferences(long itemId)
         {
             string url = string.Format("/item/{0}/reference/", itemId);
             return await _podio.Get<List<ItemReference>>(url);
@@ -547,7 +547,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="appId"></param>
         /// <returns></returns>
-        public async Task<int> GetItemCount(int appId)
+        public async Task<int> GetItemCount(long appId)
         {
             string url = string.Format("/item/app/{0}/count", appId);
             dynamic countObj = await _podio.Get<dynamic>(url);
@@ -573,7 +573,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        public async Task<List<ItemField>> GetItemValues(int itemId)
+        public async Task<List<ItemField>> GetItemValues(long itemId)
         {
             string url = string.Format("/item/{0}/value", itemId);
             return await _podio.Get<List<ItemField>>(url);
@@ -585,7 +585,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        public async Task<ItemRevision> GetItemRevision(int itemId, int revision)
+        public async Task<ItemRevision> GetItemRevision(long itemId, int revision)
         {
             string url = string.Format("/item/{0}/revision/{1}", itemId, revision);
             return await _podio.Get<ItemRevision>(url);
@@ -597,7 +597,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        public async Task<List<ItemRevision>> GetItemRevisions(int itemId)
+        public async Task<List<ItemRevision>> GetItemRevisions(long itemId)
         {
             string url = string.Format("/item/{0}/revision/", itemId);
             return await _podio.Get<List<ItemRevision>>(url);
@@ -610,7 +610,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        public async Task<string> GetMeetingUrl(int itemId)
+        public async Task<string> GetMeetingUrl(long itemId)
         {
             string url = string.Format("/item/{0}/meeting/url", itemId);
             dynamic response = await _podio.Get<dynamic>(url);
@@ -626,7 +626,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="itemId"></param>
         /// <param name="status">The new status, either "invited", "accepted", "declined" or "tentative"</param>
-        public async System.Threading.Tasks.Task SetParticipation(int itemId, string status)
+        public async System.Threading.Tasks.Task SetParticipation(long itemId, string status)
         {
             dynamic requestData = new
             {
@@ -644,7 +644,7 @@ namespace PodioAPI.Services
         /// <param name="fieldId"></param>
         /// <param name="limit"></param>
         /// <returns></returns>
-        public async Task<List<ItemMicro>> GetReferencesToItemByField(int itemId, int fieldId, int limit = 20)
+        public async Task<List<ItemMicro>> GetReferencesToItemByField(long itemId, int fieldId, int limit = 20)
         {
             var requestData = new Dictionary<string, string>()
             {
@@ -661,7 +661,7 @@ namespace PodioAPI.Services
         /// <param name="itemId"></param>
         /// <param name="type">The type of the reference</param>
         /// <param name="id">The id of the reference</param>
-        public async System.Threading.Tasks.Task UpdateItemReference(int itemId, string type, int referenceId)
+        public async System.Threading.Tasks.Task UpdateItemReference(long itemId, string type, int referenceId)
         {
             dynamic requestData = new
             {
@@ -680,7 +680,7 @@ namespace PodioAPI.Services
         /// <param name="itemId"></param>
         /// <param name="revisionId"></param>
         /// <returns>The id of the new revision</returns>
-        public async Task<int?> RevertItemRevision(int itemId, int revisionId)
+        public async Task<int?> RevertItemRevision(long itemId, int revisionId)
         {
             var url = string.Format("/item/{0}/revision/{1}", itemId, revisionId);
             var response = await _podio.Delete<dynamic>(url);
@@ -698,7 +698,7 @@ namespace PodioAPI.Services
         /// <param name="itemId"></param>
         /// <param name="revision"></param>
         /// <returns>revision</returns>
-        public async Task<int?> RevertToRevision(int itemId, int revision)
+        public async Task<int?> RevertToRevision(long itemId, int revision)
         {
             var url = string.Format("/item/{0}/revision/{1}/revert_to", itemId, revision);
             var response = await _podio.Delete<dynamic>(url);
@@ -744,7 +744,7 @@ namespace PodioAPI.Services
         /// </summary>
         /// <param name="itemId"></param>
         /// <returns></returns>
-        public async Task<Clone> GetItemClone(int itemId)
+        public async Task<Clone> GetItemClone(long itemId)
         {
             string url = string.Format("/item/{0}/clone", itemId);
             return await _podio.Get<Clone>(url);
@@ -758,13 +758,13 @@ namespace PodioAPI.Services
         /// <param name="revisionFrom"></param>
         /// <param name="revisionTo"></param>
         /// <returns></returns>
-        public async Task<List<ItemDiff>> GetItemRevisionDifference(int itemId, int revisionFrom, int revisionTo)
+        public async Task<List<ItemDiff>> GetItemRevisionDifference(long itemId, int revisionFrom, int revisionTo)
         {
             string url = string.Format("/item/{0}/revision/{1}/{2}", itemId, revisionFrom, revisionTo);
             return await _podio.Get<List<ItemDiff>>(url);
         }
 
-        public async Task<ItemCalculate> Calcualate(int itemId, ItemCalculateRequest ItemCalculateRequest, int limit = 30)
+        public async Task<ItemCalculate> Calcualate(long itemId, ItemCalculateRequest ItemCalculateRequest, int limit = 30)
         {
             ItemCalculateRequest.Limit = ItemCalculateRequest.Limit == 0 ? 30 : ItemCalculateRequest.Limit;
             string url = string.Format("/item/app/{0}/calculate", itemId);
