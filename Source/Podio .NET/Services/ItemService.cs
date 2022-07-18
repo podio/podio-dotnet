@@ -188,7 +188,7 @@ namespace PodioAPI.Services
         ///     If true marks any new notifications on the given item as viewed, otherwise leaves any
         ///     notifications untouched, Default value true
         /// </param>
-        public async Task<Item> GetItem(int itemId, bool markedAsViewed = true)
+        public async Task<Item> GetItem(long itemId, bool markedAsViewed = true)
         {
             string markAsViewdValue = markedAsViewed == true ? "1" : "0";
             var requestData = new Dictionary<string, string>()
@@ -472,7 +472,7 @@ namespace PodioAPI.Services
         /// <param name="limit">The maximum number of results to return Default value: 13</param>
         /// <param name="notItemIds">If supplied the items with these ids will not be returned</param>
         /// <returns></returns>
-        public async Task<List<Item>> GetTopValuesByField(int fieldId, int limit = 13, int[] notItemIds = null)
+        public async Task<List<Item>> GetTopValuesByField(int fieldId, int limit = 13, long[] notItemIds = null)
         {
             string itemIdCSV = Utility.ArrayToCSV(notItemIds);
             var requestData = new Dictionary<string, string>()
@@ -723,7 +723,7 @@ namespace PodioAPI.Services
         /// </param>
         /// <param name="text">The text to search for. The search will be lower case, and with a wildcard in each end.</param>
         /// <returns></returns>
-        public async Task<List<Item>> FindReferenceableItems(int fieldId, int limit = 13, int[] notItemIds = null,
+        public async Task<List<Item>> FindReferenceableItems(int fieldId, int limit = 13, long[] notItemIds = null,
             string sort = null, string text = null)
         {
             string itemIdCSV = Utility.ArrayToCSV(notItemIds);
