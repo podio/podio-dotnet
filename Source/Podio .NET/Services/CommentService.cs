@@ -76,7 +76,7 @@ namespace PodioAPI.Services
         /// </param>
         /// <param name="hook">todo: describe hook parameter on AddCommentToObject</param>
         /// <returns></returns>
-        public async Task<int> AddCommentToObject(string type, int id, string text, string externalId = null,
+        public async Task<int> AddCommentToObject(string type, long id, string text, string externalId = null,
             List<int> fileIds = null, string embedUrl = null, int? embedId = null, bool alertInvite = false,
             bool silent = false, bool hook = true)
         {
