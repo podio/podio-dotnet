@@ -7,7 +7,7 @@ namespace PodioAPI.Models
     public class Comment
     {
         [JsonProperty("comment_id")]
-        public int CommentId { get; set; }
+        public long CommentId { get; set; }
 
         [JsonProperty("value")]
         public string Value { get; set; }
