@@ -40,3 +40,4 @@ Source/packages/*
  
 Source/.vs/* 
 project.lock.json
+/.vs

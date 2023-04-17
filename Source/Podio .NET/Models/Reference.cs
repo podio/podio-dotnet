@@ -10,7 +10,7 @@ namespace PodioAPI.Models
         public string Type { get; set; }
 
         [JsonProperty(PropertyName = "id")]
-        public int? Id { get; set; }
+        public long? Id { get; set; }
 
         [JsonProperty(PropertyName = "title")]
         public string Title { get; private set; }
